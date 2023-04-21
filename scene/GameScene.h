@@ -23,7 +23,7 @@ public: // メンバ関数
 
 	/// <summary>
 	/// デストラクタ
-	
+
 	/// </summary>
 	~GameScene();
 
@@ -53,7 +53,7 @@ private: // メンバ変数
 	//テクスチャハンドル
 	uint32_t textureHandle_ = 0;
 	//スプライト
-	Sprite* sprite_=nullptr;
+	Sprite* sprite_ = nullptr;
 
 	//3Dモデル
 	Model* model_ = nullptr;
@@ -70,7 +70,7 @@ private: // メンバ変数
 	uint32_t voiceHandle_ = 0;
 
 	//ImGuiで値を入力する変数
-	float inputFloat3[3] = {0, 0, 0};
+	float inputFloat3[3] = { 0, 0, 0 };
 
 	//デバッグカメラ
 	DebugCamera* debugCamera_ = nullptr;

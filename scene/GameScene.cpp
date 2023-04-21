@@ -9,7 +9,7 @@ GameScene::GameScene() {}
 
 GameScene::~GameScene()
 {
-	delete sprite_; 
+	delete sprite_;
 	delete model_;
 	delete debugCamera_;
 }
@@ -23,7 +23,7 @@ void GameScene::Initialize() {
 	//ファイル名を指定してテクスチャを読み込む
 	textureHandle_ = TextureManager::Load("Sample.png");
 	//スプライトの生成
-	sprite_ = Sprite::Create(textureHandle_, {100, 50});
+	sprite_ = Sprite::Create(textureHandle_, { 100, 50 });
 
 	//3Dモデルの生成
 	model_ = Model::Create();
@@ -125,7 +125,7 @@ void GameScene::Draw() {
 	Model::PostDraw();
 
 	//ラインを描画する
-	PrimitiveDrawer::GetInstance()->DrawLine3d({0, 0, 0}, {0, 10, 0}, {1.0f, 0.0f, 0.0f, 1.0f});
+	PrimitiveDrawer::GetInstance()->DrawLine3d({ 0, 0, 0 }, { 0, 10, 0 }, { 1.0f, 0.0f, 0.0f, 1.0f });
 
 #pragma endregion
 
