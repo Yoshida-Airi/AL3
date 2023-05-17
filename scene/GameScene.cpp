@@ -4,10 +4,9 @@
 
 GameScene::GameScene() {}
 
-GameScene::~GameScene()
-{ 
-	delete model_; 
-	//自キャラの解放
+GameScene::~GameScene() {
+	delete model_;
+	// 自キャラの解放
 	delete player_;
 }
 
@@ -32,9 +31,8 @@ void GameScene::Initialize() {
 	player_->Initialize(model_, textureHandle_);
 }
 
-void GameScene::Update()
-{
-	//自キャラの更新
+void GameScene::Update() {
+	// 自キャラの更新
 	player_->Update();
 }
 
@@ -60,7 +58,6 @@ void GameScene::Draw() {
 #pragma region 3Dオブジェクト描画
 	// 3Dオブジェクト描画前処理
 	Model::PreDraw(commandList);
-
 
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
