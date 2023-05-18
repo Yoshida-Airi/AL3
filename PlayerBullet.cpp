@@ -11,7 +11,7 @@ void PlayerBullet::Initialize(Model* model, const Vector3& position)
 
 	
 	//引数で受け取った初期座標をセット
-	worldTransform_.translation_=
+	worldTransform_.translation_;
 }
 
 void PlayerBullet::Update()
@@ -19,4 +19,7 @@ void PlayerBullet::Update()
 
 }
 
-void PlayerBullet::Draw(ViewProjection viewProjection);
+void PlayerBullet::Draw(ViewProjection viewProjection)
+{
+
+}
