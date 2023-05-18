@@ -1,6 +1,6 @@
 #pragma once
 #include "Model.h"
-#include "WorldTransform.h"
+#include "WorldTransformEX.h"
 #include"Input.h"
 #include"DebugCamera.h"
 
@@ -40,4 +40,5 @@ private:
 	// ImGuiで値を入力する変数
 	float inputFloat3[3] = {0, 0, 0};
 
+	WorldTransformEX transform;
 };

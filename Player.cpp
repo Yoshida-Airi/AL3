@@ -1,6 +1,6 @@
 #include "Player.h"
 #include<cassert>
-#include "WorldTransform.h"
+#include "WorldTransformEX.h"
 #include"Vector.h"
 #include"ImGuiManager.h"
 void Player::Initialize(Model* model, uint32_t textureHandle)
@@ -18,7 +18,6 @@ void Player::Initialize(Model* model, uint32_t textureHandle)
 	//シングルトンインスタンスを取得する
 	input_ = Input::GetInstance();
 
-	
 	worldTransform_.scale_ = {1.0f, 1.0f, 1.0f};
 	worldTransform_.rotation_ = {0.0f, 0.0f, 0.0f};
 	worldTransform_.translation_ = {0.0f, 0.0f, 0.0f};
@@ -72,7 +71,7 @@ void Player::Update()
 
 
 	//行列更新
-	worldTransform_.matWorld_ = MakeAffinMatrix
+	worldTransform_.matWorld_ = transform.MakeAffinMatrix
 	(
 	    worldTransform_.scale_,
 		worldTransform_.rotation_, 
