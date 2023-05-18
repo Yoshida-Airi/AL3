@@ -2,6 +2,7 @@
 #include "Model.h"
 #include "WorldTransform.h"
 #include"Input.h"
+#include"DebugCamera.h"
 
 /// <summary>
 /// 自キャラ
@@ -36,4 +37,7 @@ private:
 	uint32_t textureHandle_ = 0u;
 	//キーボード入力
 	Input* input_ = nullptr;
+	// ImGuiで値を入力する変数
+	float inputFloat3[3] = {0, 0, 0};
+
 };
