@@ -26,6 +26,22 @@ void Player::Initialize(Model* model, uint32_t textureHandle)
 
 }
 
+void Player::Rotate()
+{
+	//回転速さ[ラジアン/frame]
+	const float kRotSpeed = 0.02f;
+
+	//押した方向で移動ベクトルを変更
+	if (input_->PushKey(DIK_A))
+	{
+		worldTransform_.rotation_.y -= kRotSpeed;
+	} 
+	else if (input_->PushKey(DIK_D))
+	{
+		worldTransform_.rotation_.y += kRotSpeed;
+	}
+}
+
 void Player::Update()
 {
 	
@@ -54,6 +70,9 @@ void Player::Update()
 	{
 		move.y -= kCharcterSpeed;
 	}
+
+	//回転
+	Rotate();
 
 	//座標移動(ベクトルの加算)
 	worldTransform_.translation_.x += move.x;

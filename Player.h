@@ -21,6 +21,7 @@ public:
 	/// 更新
 	/// </summary>
 	void Update();
+	void Rotate();
 
 	/// <summary>
 	/// 描画
