@@ -1,6 +1,7 @@
 #include "Player.h"
 #include<cassert>
 #include"WorldTransform.h"
+#include"Vector.h"
 #include"ImGuiManager.h"
 void Player::Initialize(Model* model, uint32_t textureHandle)
 {

@@ -2,7 +2,7 @@
 #include <Vector.h>
 #include <assert.h>
 #include <cmath>
-#include<WorldTransform.h>
+#include"WorldTransform.h"
 
 // 行列の掛け算の関数
 Matrix4x4 Multiply(const Matrix4x4& m1, const Matrix4x4& m2) {
