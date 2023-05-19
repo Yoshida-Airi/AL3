@@ -7,7 +7,7 @@
 
 // 定数バッファ用データ構造体
 struct ConstBufferDataWorldTransform {
-	Matrix4x4 matWorld; // ローカル → ワールド変換行列
+	Matrix4x4 matWorld = {}; // ローカル → ワールド変換行列
 };
 
 /// <summary>
@@ -45,4 +45,11 @@ struct WorldTransform {
 	/// 行列を転送する
 	/// </summary>
 	void TransferMatrix();
+
+	/// <summary>
+	/// 行列を転送する
+	/// </summary>
+	void UpdateMatrix();
+
+
 };

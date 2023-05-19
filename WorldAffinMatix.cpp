@@ -1,11 +1,12 @@
 #pragma once
 #include <Vector.h>
+#include<WorldTransform.h>
+#include <WorldAffinMatrix.h>
 #include <assert.h>
 #include <cmath>
-#include<Worldtransform.h>
 
 // 行列の掛け算の関数
-Matrix4x4 WorldTransform::Multiply(const Matrix4x4& m1, const Matrix4x4& m2) {
+Matrix4x4 WorldTransformEX::Multiply(const Matrix4x4& m1, const Matrix4x4& m2) {
 	Matrix4x4 resultMultiply;
 	for (int row = 0; row < 4; ++row) {
 		for (int column = 0; column < 4; ++column) {
@@ -19,7 +20,7 @@ Matrix4x4 WorldTransform::Multiply(const Matrix4x4& m1, const Matrix4x4& m2) {
 
 // 平行移動(translate)
 // 平行移動行列の関数
-Matrix4x4 WorldTransform::MakeTranselateMatrix(const Vector3& transelate) {
+Matrix4x4 WorldTransformEX::MakeTranselateMatrix(const Vector3& transelate) {
 	Matrix4x4 result;
 	result.m[0][0] = 1.0f;
 	result.m[0][1] = 0.0f;
@@ -46,7 +47,7 @@ Matrix4x4 WorldTransform::MakeTranselateMatrix(const Vector3& transelate) {
 
 // 拡大縮小(scale)
 // 拡大縮小行列の関数
-Matrix4x4 WorldTransform::MakeScaleMatrix(const Vector3& scale) {
+Matrix4x4 WorldTransformEX::MakeScaleMatrix(const Vector3& scale) {
 	Matrix4x4 result;
 	result.m[0][0] = scale.x;
 	result.m[0][1] = 0.0f;
@@ -74,7 +75,7 @@ Matrix4x4 WorldTransform::MakeScaleMatrix(const Vector3& scale) {
 // 回転(rotate)
 
 // x軸回転行列の関数
-Matrix4x4 WorldTransform::MakeRotateXMatrix(float radian) {
+Matrix4x4 WorldTransformEX::MakeRotateXMatrix(float radian) {
 	Matrix4x4 resultMakeRotatedMatrix;
 	resultMakeRotatedMatrix.m[0][0] = 1;
 	resultMakeRotatedMatrix.m[0][1] = 0;
@@ -100,7 +101,7 @@ Matrix4x4 WorldTransform::MakeRotateXMatrix(float radian) {
 }
 
 // y軸回転行列の関数
-Matrix4x4 WorldTransform::MakeRotateYMatrix(float radian) {
+Matrix4x4 WorldTransformEX::MakeRotateYMatrix(float radian) {
 	Matrix4x4 resultMakeRotatedMatrix;
 	resultMakeRotatedMatrix.m[0][0] = std::cos(radian);
 	resultMakeRotatedMatrix.m[0][1] = 0;
@@ -126,7 +127,7 @@ Matrix4x4 WorldTransform::MakeRotateYMatrix(float radian) {
 }
 
 // z軸回転行列の関数
-Matrix4x4 WorldTransform::MakeRotateZMatrix(float radian) {
+Matrix4x4 WorldTransformEX::MakeRotateZMatrix(float radian) {
 	Matrix4x4 resultMakeRotatedMatrix;
 	resultMakeRotatedMatrix.m[0][0] = std::cos(radian);
 	resultMakeRotatedMatrix.m[0][1] = std::sin(radian);
@@ -152,7 +153,7 @@ Matrix4x4 WorldTransform::MakeRotateZMatrix(float radian) {
 }
 
 // 3次元アフィン変換行列の関数
-Matrix4x4 WorldTransform::MakeAffinMatrix(
+Matrix4x4 WorldTransformEX::MakeAffinMatrix(
     const Vector3& scale, const Vector3& rotate, const Vector3& translate) {
 	Matrix4x4 resultMakeAffinMatrix;
 	Matrix4x4 resultMakeScaleMatrix = MakeScaleMatrix(scale);
@@ -169,5 +170,3 @@ Matrix4x4 WorldTransform::MakeAffinMatrix(
 
 	return resultMakeAffinMatrix;
 }
-
-void 

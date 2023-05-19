@@ -2,6 +2,9 @@
 #include<Model.h>
 #include<WorldTransform.h>
 
+/// <summary>
+/// 自キャラの弾
+/// </summary>
 class PlayerBullet
 {
 public:

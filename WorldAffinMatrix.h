@@ -4,8 +4,8 @@
 #include <assert.h>
 #include <cmath>
 
-class WorldTransform {
-private:
+class WorldTransformEX {
+public:
 	// 行列の掛け算の関数
 	Matrix4x4 Multiply(const Matrix4x4& m1, const Matrix4x4& m2);
 
@@ -28,9 +28,5 @@ private:
 	Matrix4x4 MakeRotateZMatrix(float radian);
 
 	// 3次元アフィン変換行列の関数
-	Matrix4x4
-	    MakeAffinMatrix(const Vector3& scale, const Vector3& rotate, const Vector3& translate);
-
-	// スケール、回転、平行移動を合成して行列を計算する
-	void UpdateMatrix();
+	Matrix4x4 MakeAffinMatrix(const Vector3& scale, const Vector3& rotate, const Vector3& translate);
 };
