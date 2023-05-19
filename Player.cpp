@@ -45,12 +45,6 @@ void Player::Attack()
 {
 	if (input_->TriggerKey(DIK_SPACE))
 	{
-		//弾があれば解放する
-		if (bullet_)
-		{
-			delete bullet_;
-			bullet_ = nullptr;
-		}
 
 		// 弾を生成し、初期化
 		PlayerBullet* newBullet = new PlayerBullet();
