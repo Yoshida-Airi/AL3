@@ -4,6 +4,10 @@
 #include "WorldAffinMatrix.h"
 #include <cassert>
 
+Player::~Player()
+{
+	delete bullet_;
+}
 
 void Player::Initialize(Model* model, uint32_t textureHandle) 
 {

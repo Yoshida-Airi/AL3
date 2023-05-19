@@ -10,6 +10,12 @@
 /// </summary>
 class Player {
 public:
+
+	/// <summary>
+	/// デストラクタ
+	/// </summary>
+	~Player();
+
 	/// <summary>
 	/// 初期化
 	/// </summary>
