@@ -4,7 +4,6 @@
 #include"Input.h"
 #include"DebugCamera.h"
 #include"PlayerBullet.h"
-#include<List>
 
 /// <summary>
 /// 自キャラ
@@ -34,11 +33,6 @@ public:
 	/// </summary>
 	void Rotate();
 
-	/// <summary>
-	/// デストラクタ
-	/// </summary>
-	~Player();
-
 private:
 	// ワールド変換データ
 	WorldTransform worldTransform_;
@@ -52,7 +46,7 @@ private:
 	// ImGuiで値を入力する変数
 	float inputFloat3[3] = {0, 0, 0};
 	//弾
-	std::list<PlayerBullet*> bullet_;
+	PlayerBullet* bullet_ = nullptr;
 
 	//攻撃
 	void Attack();

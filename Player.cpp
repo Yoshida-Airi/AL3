@@ -4,15 +4,6 @@
 #include "WorldAffinMatrix.h"
 #include <cassert>
 
-//デストラクタ
-Player::~Player()
-{
-	//bullet_の解放
-	for (PlayerBullet* bullet : bullet_) 
-	{
-		delete bullet;
-	}
-}
 
 void Player::Initialize(Model* model, uint32_t textureHandle) 
 {
@@ -54,12 +45,19 @@ void Player::Attack()
 {
 	if (input_->TriggerKey(DIK_SPACE))
 	{
+		//弾があれば解放する
+		if (bullet_)
+		{
+			delete bullet_;
+			bullet_ = nullptr;
+		}
+
 		// 弾を生成し、初期化
 		PlayerBullet* newBullet = new PlayerBullet();
 		newBullet->Initialize(model_,worldTransform_.translation_);
 
 		// 弾を登録する
-		bullet_.push_back(newBullet);
+		bullet_ = newBullet;
 	}
 }
 
@@ -105,9 +103,9 @@ void Player::Update()
 	Attack();
 
 	// 弾更新
-	for (PlayerBullet* bullet : bullet_)
+	if (bullet_)
 	{
-		bullet->Update();
+		bullet_->Update();
 	}
 
 
@@ -148,11 +146,10 @@ void Player::Update()
 void Player::Draw(ViewProjection viewProjection_)
 {
 	model_->Draw(worldTransform_, viewProjection_, textureHandle_);
-	
-	//弾の描画
-	for (PlayerBullet* bullet : bullet_)
+
+	if (bullet_)
 	{
-		bullet->Draw(viewProjection_);
+		bullet_->Draw(viewProjection_);
 	}
 }
 
