@@ -29,4 +29,6 @@ public:
 
 	// 3次元アフィン変換行列の関数
 	Matrix4x4 MakeAffinMatrix(const Vector3& scale, const Vector3& rotate, const Vector3& translate);
+
+	Vector3 TransformNormal(const Vector3& v, const Matrix4x4& m);
 };
