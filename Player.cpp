@@ -3,7 +3,19 @@
 #include "Vector.h"
 #include "WorldAffinMatrix.h"
 #include <cassert>
-void Player::Initialize(Model* model, uint32_t textureHandle) {
+
+//デストラクタ
+Player::~Player()
+{
+	//bullet_の解放
+	for (PlayerBullet* bullet : bullet_) 
+	{
+		delete bullet;
+	}
+}
+
+void Player::Initialize(Model* model, uint32_t textureHandle) 
+{
 	// NULLポインタチェック
 	assert(model);
 
@@ -38,18 +50,21 @@ void Player::Rotate()
 }
 
 // 攻撃処理
-void Player::Attack() {
-	if (input_->PushKey(DIK_SPACE)) {
+void Player::Attack()
+{
+	if (input_->TriggerKey(DIK_SPACE))
+	{
 		// 弾を生成し、初期化
 		PlayerBullet* newBullet = new PlayerBullet();
 		newBullet->Initialize(model_,worldTransform_.translation_);
 
 		// 弾を登録する
-		bullet_ = newBullet;
+		bullet_.push_back(newBullet);
 	}
 }
 
-void Player::Update() {
+void Player::Update() 
+{
 
 	// キャラクターの移動ベクトル
 	Vector3 move = {0, 0, 0};
@@ -61,16 +76,22 @@ void Player::Update() {
 	const float kCharcterSpeed = 0.2f;
 
 	// 押した方向で移動ベクトルを変更（左右）
-	if (input_->PushKey(DIK_LEFT)) {
+	if (input_->PushKey(DIK_LEFT))
+	{
 		move.x -= kCharcterSpeed;
-	} else if (input_->PushKey(DIK_RIGHT)) {
+	}
+	else if (input_->PushKey(DIK_RIGHT))
+	{
 		move.x += kCharcterSpeed;
 	}
 
 	// 押した方向で移動ベクトルを変更（上下）
-	if (input_->PushKey(DIK_UP)) {
+	if (input_->PushKey(DIK_UP))
+	{
 		move.y += kCharcterSpeed;
-	} else if (input_->PushKey(DIK_DOWN)) {
+	} 
+	else if (input_->PushKey(DIK_DOWN)) 
+	{
 		move.y -= kCharcterSpeed;
 	}
 
@@ -84,9 +105,9 @@ void Player::Update() {
 	Attack();
 
 	// 弾更新
-	if (bullet_)
+	for (PlayerBullet* bullet : bullet_)
 	{
-		bullet_->Update();
+		bullet->Update();
 	}
 
 
@@ -127,10 +148,11 @@ void Player::Update() {
 void Player::Draw(ViewProjection viewProjection_)
 {
 	model_->Draw(worldTransform_, viewProjection_, textureHandle_);
-
-	if (bullet_)
+	
+	//弾の描画
+	for (PlayerBullet* bullet : bullet_)
 	{
-		bullet_->Draw(viewProjection_);
+		bullet->Draw(viewProjection_);
 	}
 }
 
