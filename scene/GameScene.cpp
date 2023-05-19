@@ -3,12 +3,15 @@
 #include <cassert>
 #include"AxisIndicator.h"
 
+
 GameScene::GameScene() {}
 
 GameScene::~GameScene() {
 	delete model_;
 	// 自キャラの解放
 	delete player_;
+	//敵キャラの解放
+	delete enemy_;
 	//デバッグカメラ
 	delete debugCamera_;
 }
@@ -20,6 +23,8 @@ void GameScene::Initialize() {
 	audio_ = Audio::GetInstance();
 	// 自キャラの生成
 	player_ = new Player();
+	//敵キャラの生成
+	enemy_ = new Enemy();
 
 	// ファイル名を指定してテクスチャを読み込む
 	textureHandle_ = TextureManager::Load("Sample.png");
@@ -32,6 +37,12 @@ void GameScene::Initialize() {
 
 	// 自キャラの初期化
 	player_->Initialize(model_, textureHandle_);
+	
+	// 敵の速度
+	const float kEnemySpeed = -0.5f;
+	Vector3 velocity(0, 0, kEnemySpeed);
+
+	enemy_->Initialize(model_, {0.0f, 2.0f, 30.0f}, velocity);
 
 	//デバッグカメラの生成
 	debugCamera_ = new DebugCamera(1280, 720);
@@ -45,6 +56,8 @@ void GameScene::Initialize() {
 void GameScene::Update() {
 	// 自キャラの更新
 	player_->Update();
+	//敵キャラの更新
+	enemy_->Update();
 	//デバッグカメラの更新
 	debugCamera_->Update();
 
@@ -98,7 +111,9 @@ void GameScene::Draw() {
 
 	// 自キャラの描画
 	player_->Draw(viewProjection_);
-
+	//敵キャラの描画
+	enemy_->Draw(viewProjection_);
+	
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
 #pragma endregion

@@ -1,6 +1,7 @@
 #pragma once
 #include<Model.h>
 #include<WorldTransform.h>
+#include"WorldAffinMatrix.h"
 
 /// <summary>
 /// 自キャラの弾
@@ -30,6 +31,7 @@ public:
 private:
 	// ワールド変換データ
 	WorldTransform worldTransform_;
+	WorldTransformEX AffinMatrix_;
 	// モデル
 	Model* model_ = nullptr;
 	// テクスチャハンドル
@@ -44,8 +46,5 @@ private:
 	//デスフラグ
 	bool isDead_ = false;
 
-
-	//Vector3の計算
-	Vector3 SumVector3(Vector3& num1, Vector3& num2);
 
 };

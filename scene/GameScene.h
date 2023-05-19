@@ -10,6 +10,7 @@
 #include "ViewProjection.h"
 #include "WorldTransform.h"
 #include"DebugCamera.h"
+#include"Enemy.h"
 
 /// <summary>
 /// ゲームシーン
@@ -48,6 +49,8 @@ private: // メンバ変数
 	Audio* audio_ = nullptr;
 	// 自キャラ
 	Player* player_ = nullptr;
+	//敵キャラ
+	Enemy* enemy_ = nullptr;
 	//デバッグカメラ
 	DebugCamera* debugCamera_ = nullptr;
 	//デバッグカメラ有効

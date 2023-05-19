@@ -31,4 +31,11 @@ public:
 	Matrix4x4 MakeAffinMatrix(const Vector3& scale, const Vector3& rotate, const Vector3& translate);
 
 	Vector3 TransformNormal(const Vector3& v, const Matrix4x4& m);
+
+	// Vector3の計算
+	Vector3 SumVector3(Vector3& num1, Vector3& num2);
+
+
 };
+
+

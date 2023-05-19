@@ -181,3 +181,11 @@ Vector3 WorldTransformEX::TransformNormal(const Vector3& v, const Matrix4x4& m) 
 
 	return result;
 }
+
+Vector3 WorldTransformEX::SumVector3(Vector3& num1, Vector3& num2) {
+	Vector3 result{};
+	result.x = num1.x += num2.x;
+	result.y = num1.y += num2.y;
+	result.z = num1.z += num2.z;
+	return result;
+}
