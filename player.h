@@ -4,7 +4,7 @@
 #include"Input.h"
 #include"DebugCamera.h"
 #include"PlayerBullet.h"
-
+#include <list>
 /// <summary>
 /// 自キャラ
 /// </summary>
@@ -52,7 +52,7 @@ private:
 	// ImGuiで値を入力する変数
 	float inputFloat3[3] = {0, 0, 0};
 	//弾
-	PlayerBullet* bullet_ = nullptr;
+	std::list<PlayerBullet*> bullets_;
 
 	//攻撃
 	void Attack();
