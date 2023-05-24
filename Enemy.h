@@ -42,6 +42,4 @@ private:
 	/// </summary>
 	void Leave();
 
-	
-
 };
