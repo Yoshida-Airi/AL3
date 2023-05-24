@@ -18,30 +18,26 @@ void Enemy::Initialize(
 	LeaveVelocity_ = velocityB;
 }
 
-void Enemy::Update() {
+void Enemy::Update() 
+{
+	
+	(this->*spFuncTable[static_cast<size_t>(phase_)])();
 
 	// 行列更新
 	worldTransform_.UpdateMatrix();
 
-	// 状態遷移
-	switch (phase_) {
-	case Enemy::Phase::Approach:
-	default:
-		Approach();
-		break;
-	case Enemy::Phase::Leave:
-		Leave();
-		break;
-	}
+
 }
 
 // 描画
-void Enemy::Draw(const ViewProjection& viewProjection) {
+void Enemy::Draw(const ViewProjection& viewProjection)
+{
 	model_->Draw(worldTransform_, viewProjection, textureHandle_);
 }
 
 // 接近フェーズ
-void Enemy::Approach() {
+void Enemy::Approach()
+{
 	// 移動
 	AffinMatrix_.SumVector3(worldTransform_.translation_, ApprochVelocity_);
 	if (worldTransform_.translation_.z < 0.0f) {
@@ -50,7 +46,15 @@ void Enemy::Approach() {
 }
 
 // 離脱フェーズ
-void Enemy::Leave() {
+void Enemy::Leave()
+{
 	// 移動(ベクトルを加算)
 	AffinMatrix_.SumVector3(worldTransform_.translation_, LeaveVelocity_);
 }
+
+
+void (Enemy::*Enemy::spFuncTable[])() =
+{
+	&Enemy::Approach,	//接近
+	&Enemy::Leave		//離脱
+};

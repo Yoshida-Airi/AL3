@@ -30,6 +30,7 @@ private:
 	Vector3 LeaveVelocity_;
 	//フェーズ
 	Phase phase_ = {};
+	
 
 private:
 	/// <summary>
@@ -41,5 +42,8 @@ private:
 	/// 離脱フェーズの更新関数
 	/// </summary>
 	void Leave();
+
+	//メンバ関数ポインタのテーブル
+	static void (Enemy::*spFuncTable[])();
 
 };
