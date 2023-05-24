@@ -38,11 +38,15 @@ void GameScene::Initialize() {
 	// 自キャラの初期化
 	player_->Initialize(model_, textureHandle_);
 	
+
 	// 敵の速度
 	const float kEnemySpeed = -0.5f;
-	Vector3 velocity(0, 0, kEnemySpeed);
+	const float kEnemySpeedB = 0.5f;
+	Vector3 velocityA(0, 0, kEnemySpeed);
+	Vector3 velocityB(kEnemySpeed, kEnemySpeedB, 0);
+	
 
-	enemy_->Initialize(model_, {0.0f, 2.0f, 30.0f}, velocity);
+	enemy_->Initialize(model_, {0.0f, 2.0f, 30.0f}, velocityA, velocityB);
 
 	//デバッグカメラの生成
 	debugCamera_ = new DebugCamera(1280, 720);
