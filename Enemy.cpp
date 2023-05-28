@@ -63,13 +63,6 @@ void Enemy::Leave()
 }
 
 
-void (Enemy::*Enemy::spFuncTable[])() =
-{
-	&Enemy::Approach,	//接近
-	&Enemy::Leave		//離脱
-};
-
-
 void Enemy::ChangeState(BaseEnemyState*newState)
 {
 	delete state; 

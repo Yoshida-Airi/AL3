@@ -5,6 +5,7 @@
 
 class Enemy;	//前方宣言
 
+
 class BaseEnemyState
 {
 protected:
@@ -19,12 +20,14 @@ public:
 	virtual void update(Enemy* pEnemy, Vector3& velocity) = 0;
 };
 
+//接近
 class EnemyStateApproach : public BaseEnemyState
 {
 public:
 	void update(Enemy* pEnemy, Vector3& velocity);
 };
 
+//離脱
 class EnemyStateLeave : public BaseEnemyState
 {
 public:
@@ -62,7 +65,7 @@ public:
 	void Leave();
 
 	/// <summary>
-	/// 
+	/// 移動
 	/// </summary>
 	void Move(Vector3& velocity);
 
@@ -87,8 +90,6 @@ private:
 
 private:
 	
-	//メンバ関数ポインタのテーブル
-	static void (Enemy::*spFuncTable[])();
 
 };
 
