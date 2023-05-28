@@ -1,7 +1,18 @@
 #include "Enemy.h"
 
+Enemy::Enemy() 
+{ 
+	state = new EnemyStateApproach();
+}
+
+Enemy::~Enemy()
+{
+	delete state; 
+}
+
 void Enemy::Initialize(
-    Model* model, const Vector3& position, const Vector3& velocityA, const Vector3& velocityB) {
+    Model* model, const Vector3& position, const Vector3& velocityA, const Vector3& velocityB)
+{
 	// NULLポインタチェック
 	assert(model);
 
@@ -21,11 +32,10 @@ void Enemy::Initialize(
 void Enemy::Update() 
 {
 	
-	(this->*spFuncTable[static_cast<size_t>(phase_)])();
-
 	// 行列更新
 	worldTransform_.UpdateMatrix();
 
+	state->update(this,ApprochVelocity_);
 
 }
 
@@ -37,19 +47,15 @@ void Enemy::Draw(const ViewProjection& viewProjection)
 
 // 接近フェーズ
 void Enemy::Approach()
-{
-	// 移動
-	AffinMatrix_.SumVector3(worldTransform_.translation_, ApprochVelocity_);
-	if (worldTransform_.translation_.z < 0.0f) {
-		phase_ = Phase::Leave;
-	}
+{ 
+	state->update(this, ApprochVelocity_); 
 }
 
+
 // 離脱フェーズ
-void Enemy::Leave()
-{
-	// 移動(ベクトルを加算)
-	AffinMatrix_.SumVector3(worldTransform_.translation_, LeaveVelocity_);
+void Enemy::Leave() 
+{ 
+	state->update(this, LeaveVelocity_);
 }
 
 
@@ -58,3 +64,28 @@ void (Enemy::*Enemy::spFuncTable[])() =
 	&Enemy::Approach,	//接近
 	&Enemy::Leave		//離脱
 };
+
+
+void Enemy::ChangeState(BaseEnemyState*newState)
+{
+	delete state; 
+	state = newState;
+}
+
+
+void EnemyStateApproach::update(Enemy* pEnemy, Vector3& velocity)
+{ 
+	pEnemy->Move(velocity);
+	pEnemy->ChangeState(new EnemyStateLeave());
+}
+
+void EnemyStateLeave::update(Enemy* pEnemy, Vector3& velocity)
+{ 
+	pEnemy->Move(velocity);
+}
+
+//移動
+void Enemy::Move(Vector3& velocity) 
+{
+	AffinMatrix_.SumVector3(worldTransform_.translation_, velocity);
+}
