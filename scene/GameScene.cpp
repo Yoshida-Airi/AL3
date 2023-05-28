@@ -39,15 +39,7 @@ void GameScene::Initialize() {
 	player_->Initialize(model_, textureHandle_);
 	
 
-	// 敵の速度
-	const float kEnemySpeed = -0.5f;
-	const float kEnemySpeedB = 0.5f;
-	Vector3 velocityA(0, 0, kEnemySpeed);
-	Vector3 velocityB(kEnemySpeed, kEnemySpeedB, 0);
-	
-
-	enemy_->Initialize(model_, {0.0f, 2.0f, 30.0f}, velocityA, velocityB);
-
+	enemy_->Initialize(model_, {0.0f, 2.0f, 30.0f});
 	//デバッグカメラの生成
 	debugCamera_ = new DebugCamera(1280, 720);
 

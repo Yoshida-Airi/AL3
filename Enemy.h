@@ -7,9 +7,14 @@ class Enemy;	//前方宣言
 
 class BaseEnemyState
 {
-public:
+protected:
 	Enemy* enemy_ = {0};
-	Vector3& velocity;
+
+public:
+
+	 // 仮想デストラクタ
+	virtual ~BaseEnemyState(){};
+
 	//純粋仮想関数
 	virtual void update(Enemy* pEnemy, Vector3& velocity) = 0;
 };
@@ -37,8 +42,7 @@ public:
 	~Enemy();
 
 
-	void Initialize(
-	    Model* model, const Vector3& position, const Vector3& velocityA, const Vector3& velocityB);
+	void Initialize(Model* model, const Vector3& position);
 	void Update();
 	void Draw(const ViewProjection& viewProjection);
 

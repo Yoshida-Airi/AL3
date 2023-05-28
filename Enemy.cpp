@@ -3,6 +3,8 @@
 Enemy::Enemy() 
 { 
 	state = new EnemyStateApproach();
+	ApprochVelocity_ = {0, 0, -0.5f};
+	LeaveVelocity_ = {-0.5f, 0.5f, 0};
 }
 
 Enemy::~Enemy()
@@ -10,8 +12,7 @@ Enemy::~Enemy()
 	delete state; 
 }
 
-void Enemy::Initialize(
-    Model* model, const Vector3& position, const Vector3& velocityA, const Vector3& velocityB)
+void Enemy::Initialize( Model* model, const Vector3& position)
 {
 	// NULLポインタチェック
 	assert(model);
@@ -24,9 +25,7 @@ void Enemy::Initialize(
 	worldTransform_.Initialize();
 	// 初期座標の設定
 	worldTransform_.translation_ = position;
-	// 引数で受け取った速度をメンバ変数に代入
-	ApprochVelocity_ = velocityA;
-	LeaveVelocity_ = velocityB;
+
 }
 
 void Enemy::Update() 
@@ -35,7 +34,12 @@ void Enemy::Update()
 	// 行列更新
 	worldTransform_.UpdateMatrix();
 
-	state->update(this,ApprochVelocity_);
+	Approach();
+	if (worldTransform_.translation_.z < 0.0f)
+	{
+		Leave();
+	}
+
 
 }
 
