@@ -10,6 +10,12 @@ Enemy::Enemy()
 Enemy::~Enemy()
 {
 	delete state; 
+
+	for (EnemyBullet* bullet : this->bullets_)
+	{
+		delete bullet;
+	}
+
 }
 
 void Enemy::Initialize( Model* model, const Vector3& position)
@@ -26,7 +32,18 @@ void Enemy::Initialize( Model* model, const Vector3& position)
 	// 初期座標の設定
 	worldTransform_.translation_ = position;
 
+	//接近フェーズ初期化
+	ApproachInitialize();
+
 }
+
+//接近フェーズ初期化
+void Enemy::ApproachInitialize()
+{ 
+	//発射タイマーの初期化
+	timer = kFireInterval;
+}
+
 
 void Enemy::Update() 
 {
@@ -41,18 +58,40 @@ void Enemy::Update()
 	}
 
 
+	//弾更新
+	for (EnemyBullet* bullet : this->bullets_)
+	{
+		bullet->Update();
+	}
 }
 
 // 描画
 void Enemy::Draw(const ViewProjection& viewProjection)
 {
 	model_->Draw(worldTransform_, viewProjection, textureHandle_);
+
+	//弾描画
+	for (EnemyBullet* bullet : this->bullets_)
+	{
+		bullet->Draw(viewProjection);
+	}
 }
 
-// 接近フェーズ
+// 接近フェーズ(更新)
 void Enemy::Approach()
 { 
+	//発射タイマーカウントダウン
+	timer--;
+	if (timer == 0)
+	{
+		//弾を発射
+		Fire();
+		//発射タイマーを初期化
+		timer = kFireInterval;
+	}
+
 	state->update(this, ApprochVelocity_); 
+
 }
 
 
@@ -85,4 +124,18 @@ void EnemyStateLeave::update(Enemy* pEnemy, Vector3& velocity)
 void Enemy::Move(Vector3& velocity) 
 {
 	AffinMatrix_.SumVector3(worldTransform_.translation_, velocity);
+}
+
+//弾の発射
+void Enemy::Fire() {
+	// 弾の速度
+	const float kBulletSpeed = -1.0f;
+	Vector3 velocity(0, 0, kBulletSpeed);
+
+	// 弾を生成し、初期化
+	EnemyBullet* newBullet = new EnemyBullet();
+	newBullet->Initialize(model_, worldTransform_.translation_, velocity);
+
+	//弾を登録する
+	bullets_.push_back(newBullet);
 }

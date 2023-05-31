@@ -2,6 +2,8 @@
 #include "Model.h"
 #include "WorldAffinMatrix.h"
 #include <cassert>
+#include"EnemyBullet.h"
+#include<list>
 
 class Enemy;	//前方宣言
 
@@ -55,6 +57,11 @@ public:
 	void ChangeState(BaseEnemyState* newState);
 
 	/// <summary>
+	/// 接近フェーズの初期化
+	/// </summary>
+	void ApproachInitialize();
+
+	/// <summary>
 	/// 接近フェーズの更新関数
 	/// </summary>
 	void Approach();
@@ -69,15 +76,21 @@ public:
 	/// </summary>
 	void Move(Vector3& velocity);
 
-/// <summary>
-/// ゲッター
-/// </summary>
+	/// <summary>
+	/// ゲッター
+	/// </summary>
 	Vector3 GetWorldTrans() const { return worldTransform_.translation_; };
+
+
+public:
+	//発射間隔
+	static const int kFireInterval = 20;
 
 private:
 	// ワールド変換データ
 	WorldTransform worldTransform_;
 	WorldTransformEX AffinMatrix_;
+	WorldTransformEX transform;
 	// モデル
 	Model* model_ = nullptr;
 	// テクスチャハンドル
@@ -88,9 +101,19 @@ private:
 	//ステート
 	BaseEnemyState* state;
 
-private:
-	
+	// 弾
+	std::list<EnemyBullet*> bullets_;
 
+	//発射タイマー
+	int32_t timer = 0;
+
+private:
+
+
+	/// <summary>
+	/// 弾発射
+	/// </summary>
+	void Fire();
 };
 
 

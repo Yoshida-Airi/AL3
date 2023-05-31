@@ -37,9 +37,9 @@ void GameScene::Initialize() {
 
 	// 自キャラの初期化
 	player_->Initialize(model_, textureHandle_);
-	
+	//敵の初期化
+	enemy_->Initialize(model_, {20.0f, 2.0f, 100.0f});
 
-	enemy_->Initialize(model_, {0.0f, 2.0f, 30.0f});
 	//デバッグカメラの生成
 	debugCamera_ = new DebugCamera(1280, 720);
 
@@ -54,6 +54,8 @@ void GameScene::Update() {
 	player_->Update();
 	//敵キャラの更新
 	enemy_->Update();
+
+
 	//デバッグカメラの更新
 	debugCamera_->Update();
 
