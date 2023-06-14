@@ -105,6 +105,9 @@
     <ClCompile Include="Object\Player\PlayerBullet.cpp">
       <Filter>Object\Player</Filter>
     </ClCompile>
+    <ClCompile Include="Object\Enemy\TimedCall.cpp">
+      <Filter>Object\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3d\ViewProjection.h">
@@ -205,6 +208,9 @@
     </ClInclude>
     <ClInclude Include="Object\Player\PlayerBullet.h">
       <Filter>ヘッダー ファイル\Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Enemy\TimedCall.h">
+      <Filter>ヘッダー ファイル\Object\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

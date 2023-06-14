@@ -4,6 +4,7 @@
 #include <cassert>
 #include"EnemyBullet.h"
 #include<list>
+#include "TimedCall.h"
 
 class Enemy;	//前方宣言
 
@@ -20,6 +21,7 @@ public:
 
 	//純粋仮想関数
 	virtual void update(Enemy* pEnemy, Vector3& velocity) = 0;
+
 };
 
 //接近
@@ -81,12 +83,16 @@ public:
 	/// </summary>
 	Vector3 GetWorldTrans() const { return worldTransform_.translation_; };
 
+	/// <summary>
+	/// 弾を発射し、タイマーをリセットするコールバック関数
+	/// </summary>
+	void AttackReset();
 
-public:
+public:	//静的メンバ変数
 	//発射間隔
-	static const int kFireInterval = 20;
+	static const int kFireInterval = 10;
 
-private:
+private:	//メンバ変数
 	// ワールド変換データ
 	WorldTransform worldTransform_;
 	WorldTransformEX AffinMatrix_;
@@ -107,7 +113,10 @@ private:
 	//発射タイマー
 	int32_t timer = 0;
 
-private:
+	//時限発動のリスト
+	std::list<TimedCall*> timedCalls_;
+
+private:	//プライベートメソッド
 
 
 	/// <summary>
