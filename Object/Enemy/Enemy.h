@@ -90,7 +90,7 @@ public:
 
 public:	//静的メンバ変数
 	//発射間隔
-	static const int kFireInterval = 10;
+	static const int kFireInterval = 30;
 
 private:	//メンバ変数
 	// ワールド変換データ
@@ -106,15 +106,15 @@ private:	//メンバ変数
 	Vector3 LeaveVelocity_;
 	//ステート
 	BaseEnemyState* state;
-
 	// 弾
 	std::list<EnemyBullet*> bullets_;
-
 	//発射タイマー
 	int32_t timer = 0;
-
 	//時限発動のリスト
 	std::list<TimedCall*> timedCalls_;
+
+	bool isAttacEvent = false;
+	
 
 private:	//プライベートメソッド
 
@@ -123,6 +123,8 @@ private:	//プライベートメソッド
 	/// 弾発射
 	/// </summary>
 	void Fire();
+
+	
 };
 
 

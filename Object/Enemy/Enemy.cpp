@@ -17,15 +17,14 @@ Enemy::~Enemy()
 		delete bullet;
 	}
 
-	
-	for (TimedCall* timeCall : this->timedCalls_)
+	for (TimedCall* timeCall : this->timedCalls_) 
 	{
 		delete timeCall;
 	}
 
 }
 
-void Enemy::Initialize( Model* model, const Vector3& position)
+void Enemy::Initialize(Model* model, const Vector3& position)
 {
 	// NULLポインタチェック
 	assert(model);
@@ -38,29 +37,26 @@ void Enemy::Initialize( Model* model, const Vector3& position)
 	worldTransform_.Initialize();
 	// 初期座標の設定
 	worldTransform_.translation_ = position;
-
-	//接近フェーズ初期化
+	isAttacEvent = true;
+	// 接近フェーズ初期化
 	ApproachInitialize();
-
+	
 }
 
 
 
 void Enemy::Update() 
 {
-	
 	// 行列更新
 	worldTransform_.UpdateMatrix();
 
 	//接近フェーズの呼び出し
 	Approach();
 
-	
-
 	if (worldTransform_.translation_.z < 0.0f)
 	{
+		isAttacEvent = false;
 		Leave();
-
 	}
 
 	// 終了したタイマーを削除
@@ -79,7 +75,6 @@ void Enemy::Update()
 		bullet->Update();
 	}
 
-	
 	//範囲forでリストの全要素について回す
 	for (TimedCall* timedCall : this->timedCalls_)
 	{
@@ -91,9 +86,11 @@ void Enemy::Update()
 // 弾を発射した後にリセット
 void Enemy::AttackReset()
 {
-	// 弾を発射
-	Fire();
-
+	//弾を発射
+	if (isAttacEvent == true)
+	{
+		Fire();
+	}
 	// 発射タイマーをセットする
 	timedCalls_.push_back(new TimedCall(std::bind(&Enemy::AttackReset, this), kFireInterval));
 }
@@ -131,6 +128,7 @@ void Enemy::Draw(const ViewProjection& viewProjection)
 	}
 }
 
+
 // 接近フェーズ初期化
 void Enemy::ApproachInitialize() 
 {
@@ -151,7 +149,6 @@ void Enemy::Approach()
 	}
 
 	state->update(this, ApprochVelocity_); 
-
 }
 
 // 離脱フェーズ
@@ -160,14 +157,12 @@ void Enemy::Leave()
 	state->update(this, LeaveVelocity_); 
 }
 
-
-void Enemy::ChangeState(BaseEnemyState*newState)
+//フェーズの以降
+void Enemy::ChangeState(BaseEnemyState* newState)
 {
-
 	delete state; 
 	state = newState;
 }
-
 
 void EnemyStateApproach::update(Enemy* pEnemy, Vector3& velocity)
 { 
