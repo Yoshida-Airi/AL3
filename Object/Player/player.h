@@ -40,6 +40,10 @@ public:
 	/// </summary>
 	void Rotate();
 
+	// ワールド座標取得
+	Vector3 GetWorldPosition();
+
+
 private:
 	// ワールド変換データ
 	WorldTransform worldTransform_;
@@ -54,7 +58,7 @@ private:
 	float inputFloat3[3] = {0, 0, 0};
 	//弾
 	std::list<PlayerBullet*> bullets_;
-
+	
 	//攻撃
 	void Attack();
 

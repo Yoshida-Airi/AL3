@@ -26,6 +26,9 @@ void GameScene::Initialize() {
 	//敵キャラの生成
 	enemy_ = new Enemy();
 
+	//敵キャラに自キャラのアドレスを渡す
+	enemy_->SetPlayer(player_);
+
 	// ファイル名を指定してテクスチャを読み込む
 	textureHandle_ = TextureManager::Load("Sample.png");
 

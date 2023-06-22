@@ -3,6 +3,7 @@
 #include <Vector3.h>
 #include <assert.h>
 #include <cmath>
+#include<math.h>
 
 class WorldTransformEX {
 public:
@@ -35,7 +36,11 @@ public:
 	// Vector3の計算
 	Vector3 SumVector3(Vector3& num1, Vector3& num2);
 
+// 長さ(ノルム)
+	float Length(const Vector3& v);
 
+	// 正規化
+	Vector3 Normalize(const Vector3& v);
 };
 
 

@@ -4,6 +4,8 @@
 #include <WorldAffinMatrix.h>
 #include <assert.h>
 #include <cmath>
+#include <string>
+
 
 // 行列の掛け算の関数
 Matrix4x4 WorldTransformEX::Multiply(const Matrix4x4& m1, const Matrix4x4& m2) {
@@ -187,5 +189,25 @@ Vector3 WorldTransformEX::SumVector3(Vector3& num1, Vector3& num2) {
 	result.x = num1.x += num2.x;
 	result.y = num1.y += num2.y;
 	result.z = num1.z += num2.z;
+	return result;
+}
+
+
+// 長さ(ノルム)
+float WorldTransformEX::Length(const Vector3& v) {
+	float result;
+	result = powf(v.x, 2.0) + powf(v.y, 2.0) + powf(v.z, 2.0);
+
+	return sqrtf(result);
+};
+
+// 正規化
+Vector3 WorldTransformEX::Normalize(const Vector3& v) {
+	Vector3 result;
+	float x;
+	x = Length(v);
+	result.x = v.x / x;
+	result.y = v.y / x;
+	result.z = v.z / x;
 	return result;
 }

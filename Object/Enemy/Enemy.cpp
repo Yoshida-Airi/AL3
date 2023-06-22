@@ -1,4 +1,5 @@
 #include "Enemy.h"
+#include"player.h"
 
 Enemy::Enemy() 
 { 
@@ -28,8 +29,8 @@ void Enemy::Initialize(Model* model, const Vector3& position)
 {
 	// NULLポインタチェック
 	assert(model);
-
 	model_ = model;
+
 
 	// テクスチャ読み込み
 	textureHandle_ = TextureManager::Load("black.png");
@@ -104,9 +105,27 @@ void Enemy::Move(Vector3& velocity)
 // 弾の発射
 void Enemy::Fire()
 {
+	assert(player_);
+
 	// 弾の速度
-	const float kBulletSpeed = -1.0f;
-	Vector3 velocity(0, 0, kBulletSpeed);
+	const float kBulletSpeed = 3.0f;
+
+	//自キャラのワールド座標を取得する
+	Vector3 worldPlayer = player_->GetWorldPosition();
+	//敵キャラのワールド座標を取得する
+	Vector3 worldEnemy = GetWorldPosition();
+	//敵キャラ→自キャラの差分ベクトルを求める
+	Vector3 differenceVector;
+	differenceVector.x = worldEnemy.x - worldPlayer.x;
+	differenceVector.y = worldEnemy.y - worldPlayer.y;
+	differenceVector.z = worldEnemy.z - worldPlayer.z;
+	//正規化
+	AffinMatrix_.Normalize(differenceVector);
+
+	Vector3 velocity;
+	velocity.x = differenceVector.x * kBulletSpeed;
+	velocity.y = differenceVector.y * kBulletSpeed;
+	velocity.z = differenceVector.z * kBulletSpeed;
 
 	// 弾を生成し、初期化
 	EnemyBullet* newBullet = new EnemyBullet();
@@ -175,3 +194,21 @@ void EnemyStateLeave::update(Enemy* pEnemy, Vector3& velocity)
 	pEnemy->Move(velocity);
 }
 
+// ワールド座標を取得
+Vector3 Enemy::GetWorldPosition()
+{
+	// ワールド座標を入れる変数
+	Vector3 worldpos;
+	// ワールド行列の平行移動成分を取得(ワールド座標)
+	worldpos.x = worldTransform_.translation_.x;
+	worldpos.y = worldTransform_.translation_.y;
+	worldpos.z = worldTransform_.translation_.z;
+
+	return worldpos;
+}
+
+	// セッター
+void Enemy::SetPlayer(Player* player)
+{
+	player_ = player; 
+}

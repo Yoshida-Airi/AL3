@@ -6,7 +6,9 @@
 #include<list>
 #include "TimedCall.h"
 
+class Player;	// 自機クラスの前方宣言
 class Enemy;	//前方宣言
+
 
 
 class BaseEnemyState
@@ -88,6 +90,9 @@ public:
 	/// </summary>
 	void AttackReset();
 
+	//セッター
+	void SetPlayer(Player* player);
+
 public:	//静的メンバ変数
 	//発射間隔
 	static const int kFireInterval = 30;
@@ -112,9 +117,12 @@ private:	//メンバ変数
 	int32_t timer = 0;
 	//時限発動のリスト
 	std::list<TimedCall*> timedCalls_;
+	//自キャラ
+	Player* player_ = nullptr;
 
+	//発射が終わったか　true:終わった
 	bool isAttacEvent = false;
-	
+
 
 private:	//プライベートメソッド
 
@@ -124,7 +132,8 @@ private:	//プライベートメソッド
 	/// </summary>
 	void Fire();
 
-	
+	//ワールド座標取得
+	Vector3 GetWorldPosition();
 };
 
 
