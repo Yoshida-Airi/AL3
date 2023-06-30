@@ -121,7 +121,7 @@ void Enemy::Fire()
 	differenceVector.z = worldEnemy.z - worldPlayer.z;
 	//正規化
 	AffinMatrix_.Normalize(differenceVector);
-
+	//ベクトルの長さを速さに合わせる
 	Vector3 velocity;
 	velocity.x = differenceVector.x * kBulletSpeed;
 	velocity.y = differenceVector.y * kBulletSpeed;
