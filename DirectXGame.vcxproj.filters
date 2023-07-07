@@ -52,15 +52,6 @@
     <Filter Include="ソース ファイル\2d">
       <UniqueIdentifier>{814a0f6d-f847-4c45-856d-4688fa4c9e6c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object">
-      <UniqueIdentifier>{12b96df3-a862-4543-b1ed-4ecc8529cfbe}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Object\Player">
-      <UniqueIdentifier>{7f65d4d0-2f6b-46c0-91b8-69cffa566fc1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Object\Enemy">
-      <UniqueIdentifier>{1611825e-091b-49a5-8467-8aef6044dfba}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ヘッダー ファイル\Object">
       <UniqueIdentifier>{eb5e7839-35f8-4374-b36d-8b98e3dfcfa4}</UniqueIdentifier>
     </Filter>
@@ -69,6 +60,15 @@
     </Filter>
     <Filter Include="ヘッダー ファイル\Object\Enemy">
       <UniqueIdentifier>{459b0ad1-4744-4bdf-9680-261275b97feb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object">
+      <UniqueIdentifier>{12b96df3-a862-4543-b1ed-4ecc8529cfbe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Player">
+      <UniqueIdentifier>{7f65d4d0-2f6b-46c0-91b8-69cffa566fc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Enemy">
+      <UniqueIdentifier>{1611825e-091b-49a5-8467-8aef6044dfba}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -94,19 +94,19 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Object\Enemy\Enemy.cpp">
-      <Filter>Object\Enemy</Filter>
+      <Filter>ソース ファイル\Object\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="Object\Enemy\EnemyBullet.cpp">
-      <Filter>Object\Enemy</Filter>
+      <Filter>ソース ファイル\Object\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="Object\Player\Player.cpp">
-      <Filter>Object\Player</Filter>
+      <Filter>ソース ファイル\Object\Player</Filter>
     </ClCompile>
     <ClCompile Include="Object\Player\PlayerBullet.cpp">
-      <Filter>Object\Player</Filter>
+      <Filter>ソース ファイル\Object\Player</Filter>
     </ClCompile>
     <ClCompile Include="Object\Enemy\TimedCall.cpp">
-      <Filter>Object\Enemy</Filter>
+      <Filter>ソース ファイル\Object\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

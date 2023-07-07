@@ -54,6 +54,7 @@ void Enemy::Update()
 	//接近フェーズの呼び出し
 	Approach();
 
+
 	if (worldTransform_.translation_.z < 0.0f)
 	{
 		isAttacEvent = false;
@@ -61,8 +62,10 @@ void Enemy::Update()
 	}
 
 	// 終了したタイマーを削除
-	timedCalls_.remove_if([](TimedCall* timeCall) {
-		if (timeCall->isFinished() == true) {
+	timedCalls_.remove_if([](TimedCall* timeCall)
+	{
+		if (timeCall->isFinished() == true)
+		{
 			delete timeCall;
 			return true;
 		}
@@ -108,7 +111,7 @@ void Enemy::Fire()
 	assert(player_);
 
 	// 弾の速度
-	const float kBulletSpeed = 3.0f;
+	const float kBulletSpeed = 1.0f;
 
 	//自キャラのワールド座標を取得する
 	Vector3 worldPlayer = player_->GetWorldPosition();
@@ -116,16 +119,19 @@ void Enemy::Fire()
 	Vector3 worldEnemy = GetWorldPosition();
 	//敵キャラ→自キャラの差分ベクトルを求める
 	Vector3 differenceVector;
-	differenceVector.x = worldEnemy.x - worldPlayer.x;
-	differenceVector.y = worldEnemy.y - worldPlayer.y;
-	differenceVector.z = worldEnemy.z - worldPlayer.z;
+	differenceVector.x = worldPlayer.x - worldEnemy.x;
+	differenceVector.y = worldPlayer.y - worldEnemy.y;
+	differenceVector.z = worldPlayer.z - worldEnemy.z;
+
 	//正規化
-	AffinMatrix_.Normalize(differenceVector);
+	Vector3 normarizeVector;
+	normarizeVector = AffinMatrix_.Normalize(differenceVector);
+
 	//ベクトルの長さを速さに合わせる
 	Vector3 velocity;
-	velocity.x = differenceVector.x * kBulletSpeed;
-	velocity.y = differenceVector.y * kBulletSpeed;
-	velocity.z = differenceVector.z * kBulletSpeed;
+	velocity.x = normarizeVector.x * kBulletSpeed;
+	velocity.y = normarizeVector.y * kBulletSpeed;
+	velocity.z = normarizeVector.z * kBulletSpeed;
 
 	// 弾を生成し、初期化
 	EnemyBullet* newBullet = new EnemyBullet();
@@ -200,9 +206,9 @@ Vector3 Enemy::GetWorldPosition()
 	// ワールド座標を入れる変数
 	Vector3 worldpos;
 	// ワールド行列の平行移動成分を取得(ワールド座標)
-	worldpos.x = worldTransform_.translation_.x;
-	worldpos.y = worldTransform_.translation_.y;
-	worldpos.z = worldTransform_.translation_.z;
+	worldpos.x = worldTransform_.matWorld_.m[3][0];
+	worldpos.y = worldTransform_.matWorld_.m[3][1];
+	worldpos.z = worldTransform_.matWorld_.m[3][2];
 
 	return worldpos;
 }

@@ -177,9 +177,9 @@ Vector3 Player::GetWorldPosition()
 	Vector3 worldpos;
 
 	//ワールド行列の平行移動成分を取得(ワールド座標)
-	worldpos.x = worldTransform_.translation_.x;
-	worldpos.y = worldTransform_.translation_.y;
-	worldpos.z = worldTransform_.translation_.z;
+	worldpos.x = worldTransform_.matWorld_.m[3][0];
+	worldpos.y = worldTransform_.matWorld_.m[3][1];
+	worldpos.z = worldTransform_.matWorld_.m[3][2];
 
 	return worldpos;
 }
