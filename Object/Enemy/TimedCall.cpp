@@ -1,7 +1,8 @@
 #include "TimedCall.h"
 
 // コンストラクタ
-TimedCall::TimedCall(std::function<void()> method, uint32_t time) : method_(method), time_(time) {
+TimedCall::TimedCall(std::function<void()> method, uint32_t time) : method_(method), time_(time) 
+{
 
 }
 

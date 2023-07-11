@@ -40,6 +40,8 @@ void Enemy::Initialize(Model* model, const Vector3& position)
 	isAttacEvent = true;
 	// 接近フェーズ初期化
 	ApproachInitialize();
+	// 発射タイマーの初期化
+	AttackReset();
 	
 }
 
@@ -68,6 +70,12 @@ void Enemy::Update()
 		return false;
 	});
 
+		// 範囲forでリストの全要素について回す
+	for (TimedCall* timedCall : this->timedCalls_)
+	{
+		timedCall->Update();
+	}
+	
 
 	//弾更新
 	for (EnemyBullet* bullet : this->bullets_)
@@ -75,12 +83,7 @@ void Enemy::Update()
 		bullet->Update();
 	}
 
-	//範囲forでリストの全要素について回す
-	for (TimedCall* timedCall : this->timedCalls_)
-	{
-		timedCall->Update();
-	}
-	
+
 }
 
 // 弾を発射した後にリセット
@@ -132,8 +135,7 @@ void Enemy::Draw(const ViewProjection& viewProjection)
 // 接近フェーズ初期化
 void Enemy::ApproachInitialize() 
 {
-	// 発射タイマーの初期化
-	AttackReset();
+	
 }
 
 
