@@ -41,7 +41,8 @@ void Enemy::Initialize(Model* model, const Vector3& position)
 	isAttacEvent = true;
 	// 接近フェーズ初期化
 	ApproachInitialize();
-	
+	// 発射タイマーの初期化
+	AttackReset();
 }
 
 
@@ -157,8 +158,7 @@ void Enemy::Draw(const ViewProjection& viewProjection)
 // 接近フェーズ初期化
 void Enemy::ApproachInitialize() 
 {
-	// 発射タイマーの初期化
-	AttackReset();
+	
 }
 
 
