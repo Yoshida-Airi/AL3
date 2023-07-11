@@ -1,31 +1,27 @@
 #pragma once
-#include<functional>
+#include <functional>
 
 /// <summary>
 /// 時限発動
 /// </summary>
-class TimedCall
-{
+class TimedCall {
 public:
 	// コンストラクタ
 	TimedCall(std::function<void()> method, uint32_t time);
 
-	//更新
+	// 更新
 	void Update();
 
-	//完了ならtureを返す
+	// 完了ならtureを返す
 	bool isFinished();
 
-
 private:
-	//コールバック
+	// コールバック
 	std::function<void()> method_;
 
-	//残り時間
+	// 残り時間
 	uint32_t time_;
 
-	//完了フラグ
+	// 完了フラグ
 	bool isFinish = false;
-
-
 };

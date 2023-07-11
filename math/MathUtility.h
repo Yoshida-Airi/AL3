@@ -1,74 +1,41 @@
-﻿#pragma once
+#pragma once
+#include <Matrix4x4.h>
+#include <Vector3.h>
+#include <assert.h>
+#include <cmath>
+#include <math.h>
 
-#include "Vector2.h"
-#include "Vector3.h"
-#include "Matrix4.h"
+// 行列の掛け算の関数
+Matrix4x4 Multiply(const Matrix4x4& m1, const Matrix4x4& m2);
 
-namespace MathUtility {
+// 平行移動(translate)
+// 平行移動行列の関数
+Matrix4x4 MakeTranselateMatrix(const Vector3& transelate);
 
-const float PI = 3.141592654f;
+// 拡大縮小(scale)
+// 拡大縮小行列の関数
+Matrix4x4 MakeScaleMatrix(const Vector3& scale);
+// 回転(rotate)
 
-// ノルム(長さ)を求める
-float Vector2Length(const Vector2& v);
+// x軸回転行列の関数
+Matrix4x4 MakeRotateXMatrix(float radian);
 
-// 零ベクトルを返す
-const Vector3 Vector3Zero();
-// 2ベクトルが一致しているか調べる
-bool Vector3Equal(const Vector3& v1, const Vector3& v2);
-// ノルム(長さ)を求める
-float Vector3Length(const Vector3& v);
-// 正規化する
-Vector3& Vector3Normalize(Vector3& v);
-// 内積を求める
-float Vector3Dot(const Vector3& v1, const Vector3& v2);
-// 外積を求める
-Vector3 Vector3Cross(const Vector3& v1, const Vector3& v2);
+// y軸回転行列の関数
+Matrix4x4 MakeRotateYMatrix(float radian);
 
-// 2項演算子オーバーロード
-const Vector3 operator+(const Vector3& v1, const Vector3& v2);
-const Vector3 operator-(const Vector3& v1, const Vector3& v2);
-const Vector3 operator*(const Vector3& v, float s);
-const Vector3 operator*(float s, const Vector3& v);
-const Vector3 operator/(const Vector3& v, float s);
+// z軸回転行列の関数
+Matrix4x4 MakeRotateZMatrix(float radian);
 
-// 単位行列を求める
-Matrix4 Matrix4Identity();
-// 転置行列を求める
-Matrix4 Matrix4Transpose(const Matrix4& m);
-// 逆行列を求める
-Matrix4 Matrix4Inverse(const Matrix4& m, float* det = nullptr);
+// 3次元アフィン変換行列の関数
+Matrix4x4 MakeAffinMatrix(const Vector3& scale, const Vector3& rotate, const Vector3& translate);
 
-// 拡大縮小行列の作成
-Matrix4 Matrix4Scaling(float sx, float sy, float sz);
+Vector3 TransformNormal(const Vector3& v, const Matrix4x4& m);
 
-// 回転行列の作成
-Matrix4 Matrix4RotationX(float angle);
-Matrix4 Matrix4RotationY(float angle);
-Matrix4 Matrix4RotationZ(float angle);
+// Vector3の計算
+Vector3 SumVector3(Vector3& num1, Vector3& num2);
 
-// 平行移動行列の作成
-Matrix4 Matrix4Translation(float tx, float ty, float tz);
+// 長さ(ノルム)
+float Length(const Vector3& v);
 
-// ビュー行列の作成
-Matrix4 Matrix4LookAtLH(const Vector3& eye, const Vector3& target, const Vector3& up);
-// 並行投影行列の作成
-Matrix4 Matrix4Orthographic(
-  float viewLeft, float viewRight, float viewBottom, float viewTop, float nearZ, float farZ);
-// 透視投影行列の作成
-Matrix4 Matrix4Perspective(float fovAngleY, float aspectRatio, float nearZ, float farZ);
-
-// 座標変換（w除算なし）
-Vector3 Vector3Transform(const Vector3& v, const Matrix4& m);
-// 座標変換（w除算あり）
-Vector3 Vector3TransformCoord(const Vector3& v, const Matrix4& m);
-// ベクトル変換
-Vector3 Vector3TransformNormal(const Vector3& v, const Matrix4& m);
-
-// 2項演算子オーバーロード
-Matrix4 operator*(const Matrix4& m1, const Matrix4& m2);
-Vector3 operator*(const Vector3& v, const Matrix4& m);
-
-// 線形補間
-float Lerp(float a, float b, float t);
-
-} // namespace MathUtility
+// 正規化
+Vector3 Normalize(const Vector3& v);

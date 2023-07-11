@@ -1,9 +1,9 @@
 #pragma once
+#include "DebugCamera.h"
+#include "Input.h"
+#include "MathUtility.h"
 #include "Model.h"
-#include "WorldAffinMatrix.h"
-#include"Input.h"
-#include"DebugCamera.h"
-#include"PlayerBullet.h"
+#include "PlayerBullet.h"
 
 #include <list>
 /// <summary>
@@ -11,7 +11,6 @@
 /// </summary>
 class Player {
 public:
-
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
@@ -40,14 +39,15 @@ public:
 	/// </summary>
 	void Rotate();
 
-	// ワールド座標取得
+	/// <summary>
+	/// ワールド座標を取得
+	/// </summary>
+	/// <returns>プレイヤーのワールド座標</returns>
 	Vector3 GetWorldPosition();
-
 
 private:
 	// ワールド変換データ
 	WorldTransform worldTransform_;
-	WorldTransformEX transform;
 	// モデル
 	Model* model_ = nullptr;
 	// テクスチャハンドル
@@ -56,10 +56,9 @@ private:
 	Input* input_ = nullptr;
 	// ImGuiで値を入力する変数
 	float inputFloat3[3] = {0, 0, 0};
-	//弾
+	// 弾
 	std::list<PlayerBullet*> bullets_;
-	
-	//攻撃
-	void Attack();
 
+	// 攻撃
+	void Attack();
 };

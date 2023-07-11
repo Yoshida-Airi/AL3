@@ -1,10 +1,7 @@
 #include "EnemyBullet.h"
 
-//デストラクタ
-EnemyBullet::~EnemyBullet()
-{
-
-}
+// デストラクタ
+EnemyBullet::~EnemyBullet() {}
 
 void EnemyBullet::Initialize(Model* model, const Vector3& position, const Vector3& velocity) {
 	// NULLポインタチェック
@@ -24,14 +21,11 @@ void EnemyBullet::Initialize(Model* model, const Vector3& position, const Vector
 
 void EnemyBullet::Update() {
 	// 座標を移動させる(1フレーム分の移動量を足しこむ)
-	AffinMatrix_.SumVector3(worldTransform_.translation_, velocity_);
-
-
+	SumVector3(worldTransform_.translation_, velocity_);
 	// 行列更新
 	worldTransform_.UpdateMatrix();
 }
 
-void EnemyBullet::Draw(ViewProjection viewProjection) 
-{
+void EnemyBullet::Draw(ViewProjection viewProjection) {
 	model_->Draw(worldTransform_, viewProjection, textureHandle_);
 }

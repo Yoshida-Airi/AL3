@@ -1,14 +1,31 @@
 #pragma once
+#include "MathUtility.h"
 #include <Vector.h>
-#include<WorldTransform.h>
-#include <WorldAffinMatrix.h>
+#include <WorldTransform.h>
 #include <assert.h>
 #include <cmath>
-#include <string>
 
+// 長さ(ノルム)
+float Length(const Vector3& v) {
+	float result;
+	result = powf(v.x, 2.0) + powf(v.y, 2.0) + powf(v.z, 2.0);
+
+	return sqrtf(result);
+};
+
+// 正規化
+Vector3 Normalize(const Vector3& v) {
+	Vector3 result;
+	float x;
+	x = Length(v);
+	result.x = v.x / x;
+	result.y = v.y / x;
+	result.z = v.z / x;
+	return result;
+}
 
 // 行列の掛け算の関数
-Matrix4x4 WorldTransformEX::Multiply(const Matrix4x4& m1, const Matrix4x4& m2) {
+Matrix4x4 Multiply(const Matrix4x4& m1, const Matrix4x4& m2) {
 	Matrix4x4 resultMultiply;
 	for (int row = 0; row < 4; ++row) {
 		for (int column = 0; column < 4; ++column) {
@@ -22,7 +39,7 @@ Matrix4x4 WorldTransformEX::Multiply(const Matrix4x4& m1, const Matrix4x4& m2) {
 
 // 平行移動(translate)
 // 平行移動行列の関数
-Matrix4x4 WorldTransformEX::MakeTranselateMatrix(const Vector3& transelate) {
+Matrix4x4 MakeTranselateMatrix(const Vector3& transelate) {
 	Matrix4x4 result;
 	result.m[0][0] = 1.0f;
 	result.m[0][1] = 0.0f;
@@ -49,7 +66,7 @@ Matrix4x4 WorldTransformEX::MakeTranselateMatrix(const Vector3& transelate) {
 
 // 拡大縮小(scale)
 // 拡大縮小行列の関数
-Matrix4x4 WorldTransformEX::MakeScaleMatrix(const Vector3& scale) {
+Matrix4x4 MakeScaleMatrix(const Vector3& scale) {
 	Matrix4x4 result;
 	result.m[0][0] = scale.x;
 	result.m[0][1] = 0.0f;
@@ -77,7 +94,7 @@ Matrix4x4 WorldTransformEX::MakeScaleMatrix(const Vector3& scale) {
 // 回転(rotate)
 
 // x軸回転行列の関数
-Matrix4x4 WorldTransformEX::MakeRotateXMatrix(float radian) {
+Matrix4x4 MakeRotateXMatrix(float radian) {
 	Matrix4x4 resultMakeRotatedMatrix;
 	resultMakeRotatedMatrix.m[0][0] = 1;
 	resultMakeRotatedMatrix.m[0][1] = 0;
@@ -103,7 +120,7 @@ Matrix4x4 WorldTransformEX::MakeRotateXMatrix(float radian) {
 }
 
 // y軸回転行列の関数
-Matrix4x4 WorldTransformEX::MakeRotateYMatrix(float radian) {
+Matrix4x4 MakeRotateYMatrix(float radian) {
 	Matrix4x4 resultMakeRotatedMatrix;
 	resultMakeRotatedMatrix.m[0][0] = std::cos(radian);
 	resultMakeRotatedMatrix.m[0][1] = 0;
@@ -129,7 +146,7 @@ Matrix4x4 WorldTransformEX::MakeRotateYMatrix(float radian) {
 }
 
 // z軸回転行列の関数
-Matrix4x4 WorldTransformEX::MakeRotateZMatrix(float radian) {
+Matrix4x4 MakeRotateZMatrix(float radian) {
 	Matrix4x4 resultMakeRotatedMatrix;
 	resultMakeRotatedMatrix.m[0][0] = std::cos(radian);
 	resultMakeRotatedMatrix.m[0][1] = std::sin(radian);
@@ -155,8 +172,7 @@ Matrix4x4 WorldTransformEX::MakeRotateZMatrix(float radian) {
 }
 
 // 3次元アフィン変換行列の関数
-Matrix4x4 WorldTransformEX::MakeAffinMatrix(
-    const Vector3& scale, const Vector3& rotate, const Vector3& translate) {
+Matrix4x4 MakeAffinMatrix(const Vector3& scale, const Vector3& rotate, const Vector3& translate) {
 	Matrix4x4 resultMakeAffinMatrix;
 	Matrix4x4 resultMakeScaleMatrix = MakeScaleMatrix(scale);
 	Matrix4x4 resultMakeTranselateMatrix = MakeTranselateMatrix(translate);
@@ -173,9 +189,8 @@ Matrix4x4 WorldTransformEX::MakeAffinMatrix(
 	return resultMakeAffinMatrix;
 }
 
-Vector3 WorldTransformEX::TransformNormal(const Vector3& v, const Matrix4x4& m) {
-	Vector3 result =
-	{
+Vector3 TransformNormal(const Vector3& v, const Matrix4x4& m) {
+	Vector3 result = {
 	    v.x * m.m[0][0] + v.y * m.m[1][0] + v.z * m.m[2][0],
 	    v.x * m.m[0][1] + v.y * m.m[1][1] + v.z * m.m[2][1],
 	    v.x * m.m[0][2] + v.y * m.m[1][2] + v.z * m.m[2][2],
@@ -184,30 +199,10 @@ Vector3 WorldTransformEX::TransformNormal(const Vector3& v, const Matrix4x4& m) 
 	return result;
 }
 
-Vector3 WorldTransformEX::SumVector3(Vector3& num1, Vector3& num2) {
+Vector3 SumVector3(Vector3& num1, Vector3& num2) {
 	Vector3 result{};
 	result.x = num1.x += num2.x;
 	result.y = num1.y += num2.y;
 	result.z = num1.z += num2.z;
-	return result;
-}
-
-
-// 長さ(ノルム)
-float WorldTransformEX::Length(const Vector3& v) {
-	float result;
-	result = powf(v.x, 2.0) + powf(v.y, 2.0) + powf(v.z, 2.0);
-
-	return sqrtf(result);
-};
-
-// 正規化
-Vector3 WorldTransformEX::Normalize(const Vector3& v) {
-	Vector3 result;
-	float x;
-	x = Length(v);
-	result.x = v.x / x;
-	result.y = v.y / x;
-	result.z = v.z / x;
 	return result;
 }

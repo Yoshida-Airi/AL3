@@ -1,14 +1,12 @@
 #pragma once
-#include<Model.h>
-#include<WorldTransform.h>
-#include"WorldAffinMatrix.h"
-
+#include "MathUtility.h"
+#include <Model.h>
+#include <WorldTransform.h>
 
 /// <summary>
 /// 敵の弾
 /// </summary>
-class EnemyBullet
-{
+class EnemyBullet {
 public:
 	/// <summary>
 	/// デストラクタ
@@ -35,15 +33,12 @@ public:
 	void Draw(ViewProjection viewProjection);
 
 private:
-
 	// ワールド変換データ
 	WorldTransform worldTransform_;
-	WorldTransformEX AffinMatrix_;
 	// モデル
 	Model* model_ = nullptr;
 	// テクスチャハンドル
 	uint32_t textureHandle_ = 0u;
 	// 速度
 	Vector3 velocity_;
-
 };

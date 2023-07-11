@@ -1,7 +1,7 @@
 #pragma once
-#include<Model.h>
-#include<WorldTransform.h>
-#include"WorldAffinMatrix.h"
+#include "MathUtility.h"
+#include <Model.h>
+#include <WorldTransform.h>
 
 /// <summary>
 /// 自キャラの弾
@@ -31,20 +31,17 @@ public:
 private:
 	// ワールド変換データ
 	WorldTransform worldTransform_;
-	WorldTransformEX AffinMatrix_;
 	// モデル
 	Model* model_ = nullptr;
 	// テクスチャハンドル
 	uint32_t textureHandle_ = 0u;
 	// 速度
-	Vector3 velocity_ = {};
+	Vector3 velocity_;
 
-	//寿命<frm>
+	// 寿命<frm>
 	static const int32_t kLifeTime = 60 * 5;
-	//デスタイマー
+	// デスタイマー
 	int32_t deathTimer_ = kLifeTime;
-	//デスフラグ
+	// デスフラグ
 	bool isDead_ = false;
-
-
 };

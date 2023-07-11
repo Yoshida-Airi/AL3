@@ -3,17 +3,13 @@
 #include "Vector.h"
 #include <cassert>
 
-
-Player::~Player()
-{
-	for (PlayerBullet* bullet : bullets_)
-	{
+Player::~Player() {
+	for (PlayerBullet* bullet : bullets_) {
 		delete bullet;
 	}
 }
 
-void Player::Initialize(Model* model, uint32_t textureHandle) 
-{
+void Player::Initialize(Model* model, uint32_t textureHandle) {
 	// NULLポインタチェック
 	assert(model);
 
@@ -32,33 +28,27 @@ void Player::Initialize(Model* model, uint32_t textureHandle)
 	worldTransform_.translation_ = {0.0f, 0.0f, 0.0f};
 }
 
-void Player::Rotate()
-{	
+void Player::Rotate() {
 	const float kRotSpeed = 0.02f;
 
-	//押した方向で移動ベクトルを変更
-	if (input_->PushKey(DIK_A))
-	{
+	// 押した方向で移動ベクトルを変更
+	if (input_->PushKey(DIK_A)) {
 		worldTransform_.rotation_.y -= kRotSpeed;
-	}
-	else if (input_->PushKey(DIK_D))
-	{
-		worldTransform_.rotation_.y += kRotSpeed;	
+	} else if (input_->PushKey(DIK_D)) {
+		worldTransform_.rotation_.y += kRotSpeed;
 	}
 }
 
 // 攻撃処理
-void Player::Attack()
-{
-	if (input_->TriggerKey(DIK_SPACE))
-	{
-		//弾の速度
+void Player::Attack() {
+	if (input_->TriggerKey(DIK_SPACE)) {
+		// 弾の速度
 		const float kBulletSpeed = 1.0f;
 		Vector3 velocity(0, 0, kBulletSpeed);
 
-		//速度ベクトルを自機の向きに合わせて回転させる
-		velocity = transform.TransformNormal(velocity, worldTransform_.matWorld_);
-		
+		// 速度ベクトルを自機の向きに合わせて回転させる
+		velocity = TransformNormal(velocity, worldTransform_.matWorld_);
+
 		// 弾を生成し、初期化
 		PlayerBullet* newBullet = new PlayerBullet();
 		newBullet->Initialize(model_, worldTransform_.translation_, velocity);
@@ -68,17 +58,14 @@ void Player::Attack()
 	}
 }
 
-void Player::Update() 
-{
+void Player::Update() {
 
 	// キャラクターの移動ベクトル
 	Vector3 move = {0, 0, 0};
 
-	//デスフラグの立った弾を削除
-	bullets_.remove_if([](PlayerBullet* bullet) 
-	{
-		if (bullet->IsDead()) 
-		{
+	// デスフラグの立った弾を削除
+	bullets_.remove_if([](PlayerBullet* bullet) {
+		if (bullet->IsDead()) {
 			delete bullet;
 			return true;
 		}
@@ -92,25 +79,18 @@ void Player::Update()
 	const float kCharcterSpeed = 0.2f;
 
 	// 押した方向で移動ベクトルを変更（左右）
-	if (input_->PushKey(DIK_LEFT))
-	{
+	if (input_->PushKey(DIK_LEFT)) {
 		move.x -= kCharcterSpeed;
-	}
-	else if (input_->PushKey(DIK_RIGHT))
-	{
+	} else if (input_->PushKey(DIK_RIGHT)) {
 		move.x += kCharcterSpeed;
 	}
 
 	// 押した方向で移動ベクトルを変更（上下）
-	if (input_->PushKey(DIK_UP))
-	{
+	if (input_->PushKey(DIK_UP)) {
 		move.y += kCharcterSpeed;
-	} 
-	else if (input_->PushKey(DIK_DOWN)) 
-	{
+	} else if (input_->PushKey(DIK_DOWN)) {
 		move.y -= kCharcterSpeed;
 	}
-
 
 	// 座標移動(ベクトルの加算)
 	worldTransform_.translation_.x += move.x;
@@ -121,8 +101,7 @@ void Player::Update()
 	Attack();
 
 	// 弾更新
-	for (PlayerBullet* bullet : bullets_)
-	{
+	for (PlayerBullet* bullet : bullets_) {
 		bullet->Update();
 	}
 
@@ -136,17 +115,14 @@ void Player::Update()
 	worldTransform_.translation_.y = max(worldTransform_.translation_.y, -kMoveLimitY);
 	worldTransform_.translation_.y = min(worldTransform_.translation_.y, +kMoveLimitY);
 
-	//行列更新
+	// 行列更新
 	worldTransform_.UpdateMatrix();
 
 	// キャラクターの座標を画面表示する処理
 	ImGui::Begin("Debug1");
-	float playerPos[] =
-	{
-	    worldTransform_.translation_.x, 
-		worldTransform_.translation_.y,
-	    worldTransform_.translation_.z
-	};
+	float playerPos[] = {
+	    worldTransform_.translation_.x, worldTransform_.translation_.y,
+	    worldTransform_.translation_.z};
 	// float3スライダー
 	ImGui::SliderFloat3("player", playerPos, 100.0f, -100.0f);
 
@@ -160,27 +136,23 @@ void Player::Update()
 	ImGui::End();
 }
 
-void Player::Draw(ViewProjection viewProjection_)
-{
+void Player::Draw(ViewProjection viewProjection_) {
 	model_->Draw(worldTransform_, viewProjection_, textureHandle_);
 
-	for (PlayerBullet* bullet : bullets_)
-	{
+	for (PlayerBullet* bullet : bullets_) {
 		bullet->Draw(viewProjection_);
 	}
 }
 
-//ワールド座標を取得
-Vector3 Player::GetWorldPosition()
-{
-	//ワールド座標を入れる変数
+// ワールド座標を取得
+Vector3 Player::GetWorldPosition() {
+	// ワールド座標を入れる変数
 	Vector3 worldpos;
 
-	//ワールド行列の平行移動成分を取得(ワールド座標)
+	// ワールド行列の平行移動成分を取得(ワールド座標)
 	worldpos.x = worldTransform_.matWorld_.m[3][0];
 	worldpos.y = worldTransform_.matWorld_.m[3][1];
 	worldpos.z = worldTransform_.matWorld_.m[3][2];
 
 	return worldpos;
 }
-

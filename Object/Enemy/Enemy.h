@@ -1,55 +1,44 @@
 #pragma once
+#include "EnemyBullet.h"
+#include "MathUtility.h"
 #include "Model.h"
-#include "WorldAffinMatrix.h"
-#include <cassert>
-#include"EnemyBullet.h"
-#include<list>
 #include "TimedCall.h"
+#include <cassert>
+#include <list>
 
-class Player;	// 自機クラスの前方宣言
-class Enemy;	//前方宣言
+class Enemy;  // 前方宣言
+class Player; // 自機クラスの前方宣言
 
-
-
-class BaseEnemyState
-{
+class BaseEnemyState {
 protected:
 	Enemy* enemy_ = {0};
 
 public:
-
-	 // 仮想デストラクタ
+	// 仮想デストラクタ
 	virtual ~BaseEnemyState(){};
 
-	//純粋仮想関数
+	// 純粋仮想関数
 	virtual void update(Enemy* pEnemy, Vector3& velocity) = 0;
-
 };
 
-//接近
-class EnemyStateApproach : public BaseEnemyState
-{
+// 接近
+class EnemyStateApproach : public BaseEnemyState {
 public:
 	void update(Enemy* pEnemy, Vector3& velocity);
 };
 
-//離脱
-class EnemyStateLeave : public BaseEnemyState
-{
+// 離脱
+class EnemyStateLeave : public BaseEnemyState {
 public:
 	void update(Enemy* pEnemy, Vector3& velocity);
 };
 
-
-class Enemy 
-{
+class Enemy {
 public:
-
-	//コンストラクタ
+	// コンストラクタ
 	Enemy();
-	//デストラクタ
+	// デストラクタ
 	~Enemy();
-
 
 	void Initialize(Model* model, const Vector3& position);
 	void Update();
@@ -90,18 +79,22 @@ public:
 	/// </summary>
 	void AttackReset();
 
-	//セッター
+	// セッター
 	void SetPlayer(Player* player);
 
-public:	//静的メンバ変数
-	//発射間隔
+	/// <summary>
+	/// ワールド座標取得
+	/// </summary>
+	/// <returns>敵キャラのワールド座標</returns>
+	Vector3 GetWorldPosition();
+
+public: // 静的メンバ変数
+	// 発射間隔
 	static const int kFireInterval = 30;
 
-private:	//メンバ変数
+private: // メンバ変数
 	// ワールド変換データ
 	WorldTransform worldTransform_;
-	WorldTransformEX AffinMatrix_;
-	WorldTransformEX transform;
 	// モデル
 	Model* model_ = nullptr;
 	// テクスチャハンドル
@@ -109,33 +102,23 @@ private:	//メンバ変数
 	// 速度
 	Vector3 ApprochVelocity_;
 	Vector3 LeaveVelocity_;
-	//ステート
+	// ステート
 	BaseEnemyState* state;
 	// 弾
 	std::list<EnemyBullet*> bullets_;
-	//発射タイマー
+	// 発射タイマー
 	int32_t timer = 0;
-	//時限発動のリスト
+	// 時限発動のリスト
 	std::list<TimedCall*> timedCalls_;
-	//自キャラ
-	Player* player_ = nullptr;
 
-	//発射が終わったか　true:終わった
 	bool isAttacEvent = false;
 
-
-private:	//プライベートメソッド
-
+private: // プライベートメソッド
+	// 自キャラ
+	Player* player_ = nullptr;
 
 	/// <summary>
 	/// 弾発射
 	/// </summary>
 	void Fire();
-
-	//ワールド座標取得
-	Vector3 GetWorldPosition();
 };
-
-
-
-
