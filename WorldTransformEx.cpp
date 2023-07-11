@@ -3,8 +3,7 @@
 
 void WorldTransform::UpdateMatrix() 
 {
-	WorldTransformEX matrix;
-	matWorld_ = matrix.MakeAffinMatrix(scale_, rotation_, translation_);
+	matWorld_ = MakeAffinMatrix(scale_, rotation_, translation_);
 	TransferMatrix();
 }
 

@@ -110,12 +110,12 @@
     <ClCompile Include="base\DirectXCommon.cpp" />
     <ClCompile Include="base\WinApp.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="math\MathUtility.cpp" />
     <ClCompile Include="Object\Enemy\Enemy.cpp" />
     <ClCompile Include="Object\Enemy\EnemyBullet.cpp" />
     <ClCompile Include="Object\Enemy\TimedCall.cpp" />
     <ClCompile Include="Object\Player\Player.cpp" />
     <ClCompile Include="Object\Player\PlayerBullet.cpp" />
-    <ClCompile Include="WorldAffinMatix.cpp" />
     <ClCompile Include="scene\GameScene.cpp" />
     <ClCompile Include="WorldTransformEx.cpp" />
   </ItemGroup>
@@ -143,6 +143,7 @@
     <ClInclude Include="base\TextureManager.h" />
     <ClInclude Include="base\WinApp.h" />
     <ClInclude Include="input\Input.h" />
+    <ClInclude Include="math\MathUtility.h" />
     <ClInclude Include="Object\Enemy\Enemy.h" />
     <ClInclude Include="Object\Enemy\EnemyBullet.h" />
     <ClInclude Include="Object\Enemy\TimedCall.h" />
@@ -153,7 +154,6 @@
     <ClInclude Include="math\Vector3.h" />
     <ClInclude Include="math\Vector4.h" />
     <ClInclude Include="scene\GameScene.h" />
-    <ClInclude Include="WorldAffinMatrix.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\TerrainPS.hlsl">

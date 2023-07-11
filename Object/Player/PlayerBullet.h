@@ -1,7 +1,7 @@
 #pragma once
 #include<Model.h>
 #include<WorldTransform.h>
-#include"WorldAffinMatrix.h"
+#include"MathUtility.h"
 
 /// <summary>
 /// 自キャラの弾
@@ -31,7 +31,6 @@ public:
 private:
 	// ワールド変換データ
 	WorldTransform worldTransform_;
-	WorldTransformEX AffinMatrix_;
 	// モデル
 	Model* model_ = nullptr;
 	// テクスチャハンドル

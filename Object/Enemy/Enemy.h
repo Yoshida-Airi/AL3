@@ -1,13 +1,13 @@
 #pragma once
 #include "Model.h"
-#include "WorldAffinMatrix.h"
+#include "MathUtility.h"
 #include <cassert>
 #include"EnemyBullet.h"
 #include<list>
 #include "TimedCall.h"
 
 class Enemy;	//前方宣言
-
+class Player;	//自機クラスの前方宣言
 
 class BaseEnemyState
 {
@@ -88,6 +88,16 @@ public:
 	/// </summary>
 	void AttackReset();
 
+	// セッター
+	void SetPlayer(Player* player);
+
+	/// <summary>
+	/// ワールド座標取得
+	/// </summary>
+	/// <returns>敵キャラのワールド座標</returns>
+	Vector3 GetWorldPosition();
+
+
 public:	//静的メンバ変数
 	//発射間隔
 	static const int kFireInterval = 30;
@@ -95,8 +105,6 @@ public:	//静的メンバ変数
 private:	//メンバ変数
 	// ワールド変換データ
 	WorldTransform worldTransform_;
-	WorldTransformEX AffinMatrix_;
-	WorldTransformEX transform;
 	// モデル
 	Model* model_ = nullptr;
 	// テクスチャハンドル
@@ -118,12 +126,15 @@ private:	//メンバ変数
 
 private:	//プライベートメソッド
 
+	//自キャラ
+	Player* player_ = nullptr;
 
 	/// <summary>
 	/// 弾発射
 	/// </summary>
 	void Fire();
 
+	
 	
 };
 

@@ -24,7 +24,7 @@ void EnemyBullet::Initialize(Model* model, const Vector3& position, const Vector
 
 void EnemyBullet::Update() {
 	// 座標を移動させる(1フレーム分の移動量を足しこむ)
-	AffinMatrix_.SumVector3(worldTransform_.translation_, velocity_);
+	SumVector3(worldTransform_.translation_, velocity_);
 	// 行列更新
 	worldTransform_.UpdateMatrix();
 }

@@ -1,6 +1,6 @@
 #pragma once
 #include "Model.h"
-#include "WorldAffinMatrix.h"
+#include "MathUtility.h"
 #include"Input.h"
 #include"DebugCamera.h"
 #include"PlayerBullet.h"
@@ -40,10 +40,16 @@ public:
 	/// </summary>
 	void Rotate();
 
+	/// <summary>
+	/// ワールド座標を取得
+	/// </summary>
+	/// <returns>プレイヤーのワールド座標</returns>
+	Vector3 GetWorldPosition();
+
+
 private:
 	// ワールド変換データ
 	WorldTransform worldTransform_;
-	WorldTransformEX transform;
 	// モデル
 	Model* model_ = nullptr;
 	// テクスチャハンドル

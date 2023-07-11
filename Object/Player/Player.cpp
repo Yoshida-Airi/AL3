@@ -57,7 +57,7 @@ void Player::Attack()
 		Vector3 velocity(0, 0, kBulletSpeed);
 
 		//速度ベクトルを自機の向きに合わせて回転させる
-		velocity = transform.TransformNormal(velocity, worldTransform_.matWorld_);
+		velocity = TransformNormal(velocity, worldTransform_.matWorld_);
 		
 		// 弾を生成し、初期化
 		PlayerBullet* newBullet = new PlayerBullet();
@@ -171,3 +171,16 @@ void Player::Draw(ViewProjection viewProjection_)
 	}
 }
 
+// ワールド座標を取得
+Vector3 Player::GetWorldPosition()
+{
+	// ワールド座標を入れる変数
+	Vector3 worldpos;
+
+	// ワールド行列の平行移動成分を取得(ワールド座標)
+	worldpos.x = worldTransform_.matWorld_.m[3][0];
+	worldpos.y = worldTransform_.matWorld_.m[3][1];
+	worldpos.z = worldTransform_.matWorld_.m[3][2];
+
+	return worldpos;
+}
