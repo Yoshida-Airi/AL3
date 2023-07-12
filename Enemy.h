@@ -1,19 +1,15 @@
 #pragma once
+#include "EnemyState.h"
 #include "Model.h"
 #include "WorldAffinMatrix.h"
 #include <cassert>
-#include"EnemyState.h"
 
-
-class Enemy 
-{
+class Enemy {
 public:
-
-	//コンストラクタ
+	// コンストラクタ
 	Enemy();
-	//デストラクタ
+	// デストラクタ
 	~Enemy();
-
 
 	void Initialize(Model* model, const Vector3& position);
 	void Update();
@@ -25,24 +21,14 @@ public:
 	void ChangeState(BaseEnemyState* newState);
 
 	/// <summary>
-	/// 接近フェーズの更新関数
-	/// </summary>
-	void Approach();
-
-	/// <summary>
-	/// 離脱フェーズの更新関数
-	/// </summary>
-	void Leave();
-
-	/// <summary>
 	/// 移動
 	/// </summary>
 	void Move(Vector3& velocity);
 
-/// <summary>
-/// ゲッター
-/// </summary>
-	Vector3 GetWorldTrans() const { return worldTransform_.translation_; };
+	/// <summary>
+	/// ゲッター
+	/// </summary>
+	Vector3 GetWorldTrans() { return worldTransform_.translation_; };
 
 private:
 	// ワールド変換データ
@@ -52,17 +38,14 @@ private:
 	Model* model_ = nullptr;
 	// テクスチャハンドル
 	uint32_t textureHandle_ = 0u;
-	// 速度
-	Vector3 ApprochVelocity_;
-	Vector3 LeaveVelocity_;
-	//ステート
-	BaseEnemyState* state;
+
+	// ステート
+	BaseEnemyState* state = nullptr;
 
 private:
+
 	
+	// メンバ関数ポインタのテーブル
+	static void (Enemy::*spFuncTable[])();
 
 };
-
-
-
-

@@ -39,7 +39,7 @@ void GameScene::Initialize() {
 	player_->Initialize(model_, textureHandle_);
 	
 
-	enemy_->Initialize(model_, {0.0f, 2.0f, 30.0f});
+	enemy_->Initialize(model_, {20.0f, 0.0f, 20.0f});
 	//デバッグカメラの生成
 	debugCamera_ = new DebugCamera(1280, 720);
 
