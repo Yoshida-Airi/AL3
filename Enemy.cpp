@@ -1,19 +1,10 @@
 #include "Enemy.h"
 
-Enemy::Enemy() 
-{ 
-	state = new EnemyStateApproach();
-	ApprochVelocity_ = {0, 0, -0.5f};
-	LeaveVelocity_ = {-0.5f, 0.5f, 0};
-}
+Enemy::Enemy() { state = new EnemyStateApproach(); }
 
-Enemy::~Enemy()
-{
-	delete state; 
-}
+Enemy::~Enemy() { delete state; }
 
-void Enemy::Initialize( Model* model, const Vector3& position)
-{
+void Enemy::Initialize(Model* model, const Vector3& position) {
 	// NULLポインタチェック
 	assert(model);
 
@@ -25,48 +16,25 @@ void Enemy::Initialize( Model* model, const Vector3& position)
 	worldTransform_.Initialize();
 	// 初期座標の設定
 	worldTransform_.translation_ = position;
-
 }
 
-void Enemy::Update() 
-{
-	
+void Enemy::Update() {
+	state->update(this);
 	// 行列更新
 	worldTransform_.UpdateMatrix();
-
-	Approach();
-	if (worldTransform_.translation_.z < 0.0f)
-	{
-		Leave();
-	}
-
-
 }
 
 // 描画
-void Enemy::Draw(const ViewProjection& viewProjection)
-{
+void Enemy::Draw(const ViewProjection& viewProjection) {
 	model_->Draw(worldTransform_, viewProjection, textureHandle_);
 }
 
-// 接近フェーズ
-void Enemy::Approach()
-{ 
-	state->update(this, ApprochVelocity_); 
-}
-
-
-// 離脱フェーズ
-void Enemy::Leave() 
-{ 
-	state->update(this, LeaveVelocity_);
-}
-
-
-void Enemy::ChangeState(BaseEnemyState*newState)
-{
-	delete state; 
+void Enemy::ChangeState(BaseEnemyState* newState) {
+	delete state;
 	state = newState;
 }
 
-
+// 移動
+void Enemy::Move(Vector3& velocity) {
+	AffinMatrix_.SumVector3(worldTransform_.translation_, velocity);
+}
