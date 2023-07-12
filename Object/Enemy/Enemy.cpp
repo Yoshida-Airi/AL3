@@ -3,7 +3,7 @@
 
 Enemy::Enemy() {
 	state = new EnemyStateApproach();
-	ApprochVelocity_ = {0, 0, -0.5f};
+	ApprochVelocity_ = {0, 0, -0.0f};
 	LeaveVelocity_ = {-0.5f, 0.5f, 0};
 }
 
@@ -42,6 +42,15 @@ void Enemy::Initialize(Model* model, const Vector3& position) {
 void Enemy::Update() {
 	// 行列更新
 	worldTransform_.UpdateMatrix();
+
+		// デスフラグの立った弾を削除
+	bullets_.remove_if([](EnemyBullet* bullet) {
+		if (bullet->IsDead()==true) {
+			delete bullet;
+			return true;
+		}
+		return false;
+	});
 
 	// 接近フェーズの呼び出し
 	Approach();
@@ -121,6 +130,12 @@ void Enemy::Draw(const ViewProjection& viewProjection) {
 	for (EnemyBullet* bullet : this->bullets_) {
 		bullet->Draw(viewProjection);
 	}
+}
+
+//衝突判定
+void Enemy::OnCollision()
+{
+
 }
 
 // 接近フェーズ初期化

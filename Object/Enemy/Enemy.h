@@ -88,6 +88,17 @@ public:
 	/// <returns>敵キャラのワールド座標</returns>
 	Vector3 GetWorldPosition();
 
+	/// <summary>
+	/// 衝突を検出したら呼び出されるコールバック関数
+	/// </summary>
+	void OnCollision();
+
+	/// <summary>
+	/// 弾リストを取得
+	/// </summary>
+	/// <returns>弾リスト</returns>
+	const std::list<EnemyBullet*>& GetBullets() const { return bullets_; }
+
 public: // 静的メンバ変数
 	// 発射間隔
 	static const int kFireInterval = 30;

@@ -34,7 +34,18 @@ public:
 	/// <param name="viewProjection"></param>
 	void Draw(ViewProjection viewProjection);
 
+	/// <summary>
+	/// 衝突を検出したら呼び出されるコールバック関数
+	/// </summary>
+	void OnCollision();
+
 	void SetPlayer(Player* player) { player_ = player; };
+
+	
+	bool IsDead() const { return isDead_; };
+
+	//ワールド座標を取得
+	Vector3 GetWorldPosition();
 
 private:
 	// ワールド変換データ
@@ -47,4 +58,12 @@ private:
 	Vector3 velocity_ = {};
 	//自キャラ
 	Player* player_ = nullptr;
+
+	// 寿命<frm>
+	static const int32_t kLifeTime = 60 * 5;
+	// デスタイマー
+	int32_t deathTimer_ = kLifeTime;
+	// デスフラグ
+	bool isDead_ = false;
+
 };
