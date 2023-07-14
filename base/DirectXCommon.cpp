@@ -188,7 +188,7 @@ int32_t DirectXCommon::GetBackBufferHeight() const { return backBufferHeight_; }
 void DirectXCommon::InitializeDXGIDevice() {
 	HRESULT result = S_FALSE;
 
-#ifdef _DEBUG
+#ifdef _
 	ComPtr<ID3D12Debug> debugController;
 	//デバッグレイヤーをオンに
 	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController)))) {
