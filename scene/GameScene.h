@@ -11,6 +11,7 @@
 #include "WorldTransform.h"
 #include"DebugCamera.h"
 #include"Enemy.h"
+#include"Skydome.h"
 
 /// <summary>
 /// ゲームシーン
@@ -51,6 +52,8 @@ private: // メンバ変数
 	Player* player_ = nullptr;
 	//敵キャラ
 	Enemy* enemy_ = nullptr;
+	//天球
+	Skydome* skydome_ = nullptr;
 	//デバッグカメラ
 	DebugCamera* debugCamera_ = nullptr;
 	//デバッグカメラ有効
@@ -61,6 +64,7 @@ private: // メンバ変数
 
 	// 3Dモデルデータ
 	Model* model_ = nullptr;
+	Model* modelSkydome_ = nullptr;
 
 	// ビュープロジェクション
 	ViewProjection viewProjection_;

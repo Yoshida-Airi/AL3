@@ -70,6 +70,18 @@
     <Filter Include="ソース ファイル\Object\Enemy">
       <UniqueIdentifier>{1611825e-091b-49a5-8467-8aef6044dfba}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Object\Skydome">
+      <UniqueIdentifier>{ce8cad2d-bc72-4f12-8636-b51cd233c6a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Object\Skydome">
+      <UniqueIdentifier>{7833bfde-f7f6-45d5-acee-8d7e03b62c73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Utils">
+      <UniqueIdentifier>{c540681e-0dbc-4a21-b6b9-3d04734a3c51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Utils">
+      <UniqueIdentifier>{32f8b17d-6fe7-4015-aa41-8d6841795676}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -87,12 +99,6 @@
     <ClCompile Include="2d\ImGuiManager.cpp">
       <Filter>ソース ファイル\2d</Filter>
     </ClCompile>
-    <ClCompile Include="WorldAffinMatix.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="WorldTransformEx.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Object\Enemy\Enemy.cpp">
       <Filter>ソース ファイル\Object\Enemy</Filter>
     </ClCompile>
@@ -105,8 +111,17 @@
     <ClCompile Include="Object\Player\PlayerBullet.cpp">
       <Filter>ソース ファイル\Object\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Object\Enemy\TimedCall.cpp">
-      <Filter>ソース ファイル\Object\Enemy</Filter>
+    <ClCompile Include="Utils\TimedCall.cpp">
+      <Filter>ソース ファイル\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="math\MathUtility.cpp">
+      <Filter>ソース ファイル\math</Filter>
+    </ClCompile>
+    <ClCompile Include="math\WorldTransformEx.cpp">
+      <Filter>ソース ファイル\math</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Skydome\Skydome.cpp">
+      <Filter>ソース ファイル\Object\Skydome</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -194,9 +209,6 @@
     <ClInclude Include="2d\ImGuiManager.h">
       <Filter>ヘッダー ファイル\2d</Filter>
     </ClInclude>
-    <ClInclude Include="WorldAffinMatrix.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Object\Enemy\Enemy.h">
       <Filter>ヘッダー ファイル\Object\Enemy</Filter>
     </ClInclude>
@@ -209,8 +221,14 @@
     <ClInclude Include="Object\Player\PlayerBullet.h">
       <Filter>ヘッダー ファイル\Object\Player</Filter>
     </ClInclude>
-    <ClInclude Include="Object\Enemy\TimedCall.h">
-      <Filter>ヘッダー ファイル\Object\Enemy</Filter>
+    <ClInclude Include="math\MathUtility.h">
+      <Filter>ヘッダー ファイル\math</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\TimedCall.h">
+      <Filter>ヘッダー ファイル\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Skydome\Skydome.h">
+      <Filter>ヘッダー ファイル\Object\Skydome</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
