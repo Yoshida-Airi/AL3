@@ -111,13 +111,13 @@
     <ClCompile Include="base\WinApp.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="math\MathUtility.cpp" />
+    <ClCompile Include="math\WorldTransformEx.cpp" />
     <ClCompile Include="Object\Enemy\Enemy.cpp" />
     <ClCompile Include="Object\Enemy\EnemyBullet.cpp" />
     <ClCompile Include="Object\Enemy\TimedCall.cpp" />
     <ClCompile Include="Object\Player\Player.cpp" />
     <ClCompile Include="Object\Player\PlayerBullet.cpp" />
     <ClCompile Include="scene\GameScene.cpp" />
-    <ClCompile Include="WorldTransformEx.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="2d\ImGuiManager.h" />
