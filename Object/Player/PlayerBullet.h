@@ -26,6 +26,11 @@ public:
 	/// <param name="viewProjection"ビュープロジェクション（参照渡し）</param>
 	void Draw(ViewProjection viewProjection);
 
+	/// <summary>
+	/// 衝突を検出したら呼び出されるコールバック関数
+	/// </summary>
+	void OnCollision();
+
 	bool IsDead() const { return isDead_; };
 
 private:

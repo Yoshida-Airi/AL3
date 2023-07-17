@@ -46,6 +46,15 @@ void Enemy::Update() {
 	// 接近フェーズの呼び出し
 	Approach();
 
+	// デスフラグの立った弾を削除
+	bullets_.remove_if([](EnemyBullet* bullet) {
+		if (bullet->IsDead()) {
+			delete bullet;
+			return true;
+		}
+		return false;
+	});
+
 	if (worldTransform_.translation_.z < 0.0f) {
 		isAttacEvent = false;
 		Leave();
@@ -145,6 +154,12 @@ void Enemy::Leave() { state->update(this, LeaveVelocity_); }
 void Enemy::ChangeState(BaseEnemyState* newState) {
 	delete state;
 	state = newState;
+}
+
+//当たり判定
+void Enemy::OnCollision()
+{
+
 }
 
 void EnemyStateApproach::update(Enemy* pEnemy, Vector3& velocity) {

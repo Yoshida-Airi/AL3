@@ -45,6 +45,11 @@ public:
 	/// <returns>プレイヤーのワールド座標</returns>
 	Vector3 GetWorldPosition();
 
+	/// <summary>
+	/// 衝突を検出したら呼び出されるコールバック関数
+	/// </summary>
+	void OnCollision();
+
 private:
 	// ワールド変換データ
 	WorldTransform worldTransform_;

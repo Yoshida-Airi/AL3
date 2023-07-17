@@ -87,6 +87,11 @@ public:
 	/// </summary>
 	/// <returns>敵キャラのワールド座標</returns>
 	Vector3 GetWorldPosition();
+		
+	/// <summary>
+	/// 衝突を検出したら呼び出されるコールバック関数
+	/// </summary>
+	void OnCollision();
 
 public: // 静的メンバ変数
 	// 発射間隔
