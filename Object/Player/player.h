@@ -50,6 +50,9 @@ public:
 	/// </summary>
 	void OnCollision();
 
+	//弾リストを取得
+	const std::list<PlayerBullet*>& GetBullets() const { return bullets_; };
+
 private:
 	// ワールド変換データ
 	WorldTransform worldTransform_;

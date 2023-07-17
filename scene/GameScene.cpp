@@ -1,8 +1,7 @@
 #include "GameScene.h"
+#include "AxisIndicator.h"
 #include "TextureManager.h"
 #include <cassert>
-#include"AxisIndicator.h"
-
 
 GameScene::GameScene() {}
 
@@ -10,9 +9,9 @@ GameScene::~GameScene() {
 	delete model_;
 	// 自キャラの解放
 	delete player_;
-	//敵キャラの解放
+	// 敵キャラの解放
 	delete enemy_;
-	//デバッグカメラ
+	// デバッグカメラ
 	delete debugCamera_;
 }
 
@@ -23,10 +22,10 @@ void GameScene::Initialize() {
 	audio_ = Audio::GetInstance();
 	// 自キャラの生成
 	player_ = new Player();
-	//敵キャラの生成
+	// 敵キャラの生成
 	enemy_ = new Enemy();
 
-	//敵キャラに自キャラのアドレスを渡す
+	// 敵キャラに自キャラのアドレスを渡す
 	enemy_->SetPlayer(player_);
 
 	// ファイル名を指定してテクスチャを読み込む
@@ -40,47 +39,45 @@ void GameScene::Initialize() {
 
 	// 自キャラの初期化
 	player_->Initialize(model_, textureHandle_);
-	//敵の初期化
-	enemy_->Initialize(model_, {20.0f, 2.0f, 100.0f});
+	// 敵の初期化
+	enemy_->Initialize(model_, {20.0f, 2.0f, 50.0f});
 
-	//デバッグカメラの生成
+	// デバッグカメラの生成
 	debugCamera_ = new DebugCamera(1280, 720);
 
-	//軸方向表示の表示を有効にする
+	// 軸方向表示の表示を有効にする
 	AxisIndicator::GetInstance()->SetVisible(true);
-	//軸方向表示が参照するビュープロジェクションを指定する(アドレス渡し)
+	// 軸方向表示が参照するビュープロジェクションを指定する(アドレス渡し)
 	AxisIndicator::GetInstance()->SetTargetViewProjection(&viewProjection_);
 }
 
 void GameScene::Update() {
+
+	ChackAllCollisions();
+
 	// 自キャラの更新
 	player_->Update();
-	//敵キャラの更新
+	// 敵キャラの更新
 	enemy_->Update();
 
-
-	//デバッグカメラの更新
+	// デバッグカメラの更新
 	debugCamera_->Update();
 
-	#ifdef _DEBUG
-	if (input_->TriggerKey(DIK_C))
-	{
+#ifdef _DEBUG
+	if (input_->TriggerKey(DIK_C)) {
 		isDebugcameraActive_ = true;
 	}
-	//カメラの処理
-	if (isDebugcameraActive_)
-	{
+	// カメラの処理
+	if (isDebugcameraActive_) {
 		viewProjection_.matView = debugCamera_->GetViewProjection().matView;
 		viewProjection_.matProjection = debugCamera_->GetViewProjection().matProjection;
-		//ビュープロジェクション行列の転送
+		// ビュープロジェクション行列の転送
 		viewProjection_.TransferMatrix();
-	}
-	else
-	{
-		//ビュープロジェクション行列の更新と転送
+	} else {
+		// ビュープロジェクション行列の更新と転送
 		viewProjection_.UpdateMatrix();
 	}
-	#endif
+#endif
 }
 
 void GameScene::Draw() {
@@ -112,9 +109,9 @@ void GameScene::Draw() {
 
 	// 自キャラの描画
 	player_->Draw(viewProjection_);
-	//敵キャラの描画
+	// 敵キャラの描画
 	enemy_->Draw(viewProjection_);
-	
+
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
 #pragma endregion
@@ -129,6 +126,98 @@ void GameScene::Draw() {
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
+
+#pragma endregion
+}
+
+/// 衝突判定と応答
+void GameScene::ChackAllCollisions() {
+	// 判定対象AとBの座標
+	Vector3 posA, posB;
+
+	// 自弾リストの取得
+	const std::list<PlayerBullet*>& playerBullets = player_->GetBullets();
+	// 敵弾リストの取得
+	const std::list<EnemyBullet*>& enemyBullets = enemy_->GetBullet();
+
+	//半径
+	const float radius = 2.0f;
+
+#pragma region 自キャラと敵弾の当たり判定
+
+	//自キャラの座標
+	posA = player_->GetWorldPosition();
+
+	//自キャラと敵弾全ての当たり判定
+	for (EnemyBullet* bullet : enemyBullets) {
+		// 敵弾の座標
+		posB = bullet->GetWorldPosition();
+
+		//座標AとBの距離を求める
+		Vector3 distance = {posB.x - posA.x, posB.y - posA.y, posB.z - posA.z};
+
+		//球同士が当たっていれば
+		if ((distance.x*distance.x) + (distance.y*distance.y)+ (distance.z* distance.z) <= (radius* radius))
+		{
+			//自キャラの衝突時コールバックを呼び出す
+			player_->OnCollision();
+			//敵弾の衝突時コールバックを呼び出す
+			bullet->OnCollision();
+		}
+	}
+
+#pragma endregion
+
+#pragma region 自弾と敵キャラの当たり判定
+
+	//敵キャラの座標
+	posA = enemy_->GetWorldPosition();
+
+	//自弾と敵キャラの全ての当たり判定
+	for (PlayerBullet* bullet : playerBullets) {
+		// 自弾の座標
+		posB = bullet->GetWorldPosition();
+
+		// 座標AとBの距離を求める
+		Vector3 distance = {posB.x - posA.x, posB.y - posA.y, posB.z - posA.z};
+
+		// 球同士が当たっていれば
+		if ((distance.x * distance.x) + (distance.y * distance.y) + (distance.z * distance.z) <= (radius * radius)) {
+			// 敵キャラの衝突時コールバックを呼び出す
+			enemy_->OnCollision();
+			// 自弾の衝突時コールバックを呼び出す
+			bullet->OnCollision();
+		}
+	}
+
+#pragma endregion
+
+#pragma region 自弾と敵弾の当たり判定
+
+	for (PlayerBullet* playerBullet : playerBullets)
+	{
+		for (EnemyBullet* enemyBullet : enemyBullets)
+		{
+			//自弾の座標
+			posA = playerBullet->GetWorldPosition();
+			//敵弾の座標
+			posB = enemyBullet->GetWorldPosition();
+
+			// 座標AとBの距離を求める
+			Vector3 distance = {posB.x - posA.x, posB.y - posA.y, posB.z - posA.z};
+
+
+			// 球同士が当たっていれば
+			if ((distance.x * distance.x) + (distance.y * distance.y) + (distance.z * distance.z) <=
+			    (radius * radius)) {
+				// 敵キャラの衝突時コールバックを呼び出す
+				playerBullet->OnCollision();
+				// 自弾の衝突時コールバックを呼び出す
+				enemyBullet->OnCollision();
+			}
+
+		}
+	}
 
 #pragma endregion
 }

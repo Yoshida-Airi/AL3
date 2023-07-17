@@ -3,7 +3,7 @@
 
 Enemy::Enemy() {
 	state = new EnemyStateApproach();
-	ApprochVelocity_ = {0, 0, -0.5f};
+	ApprochVelocity_ = {0, 0, -0.0f};
 	LeaveVelocity_ = {-0.5f, 0.5f, 0};
 }
 

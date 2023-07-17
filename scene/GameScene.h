@@ -66,6 +66,11 @@ private: // メンバ変数
 	ViewProjection viewProjection_;
 
 	/// <summary>
+	/// 衝突判定と応答
+	/// </summary>
+	void ChackAllCollisions();
+
+	/// <summary>
 	/// ゲームシーン用
 	/// </summary>
 };
