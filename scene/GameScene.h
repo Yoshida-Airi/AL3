@@ -12,6 +12,8 @@
 #include"DebugCamera.h"
 #include"Enemy.h"
 #include"Skydome.h"
+#include"RailCamera.h"
+#include"WorldTransform.h"
 
 /// <summary>
 /// ゲームシーン
@@ -54,10 +56,13 @@ private: // メンバ変数
 	Enemy* enemy_ = nullptr;
 	//天球
 	Skydome* skydome_ = nullptr;
-	//デバッグカメラ
-	DebugCamera* debugCamera_ = nullptr;
-	//デバッグカメラ有効
-	bool isDebugcameraActive_ = false;
+	//レールカメラ
+	RailCamera* railCamera_ = nullptr;
+
+	////デバッグカメラ
+	//DebugCamera* debugCamera_ = nullptr;
+	////デバッグカメラ有効
+	//bool isDebugcameraActive_ = false;
 
 	// テクスチャを読み込む
 	uint32_t textureHandle_ = 0;
@@ -66,6 +71,8 @@ private: // メンバ変数
 	Model* model_ = nullptr;
 	Model* modelSkydome_ = nullptr;
 
+	//ワールドトランスフォーム
+	WorldTransform worldTransform_;
 	// ビュープロジェクション
 	ViewProjection viewProjection_;
 

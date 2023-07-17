@@ -22,8 +22,22 @@ float Length(const Vector3& v);
 // 正規化
 Vector3 Normalize(const Vector3& v);
 
+// 1.行列の加法
+Matrix4x4 Add(const Matrix4x4& m1, const Matrix4x4& m2);
+
+// 2.行列の減法
+Matrix4x4 Subtract(const Matrix4x4& m1, const Matrix4x4& m2);
+
 // 行列の掛け算の関数
 Matrix4x4 Multiply(const Matrix4x4& m1, const Matrix4x4& m2);
+
+// 4.逆行列
+Matrix4x4 Inverse(const Matrix4x4& m);
+////5.転置行列
+Matrix4x4 Transpose(const Matrix4x4& m);
+
+////6.単位行列の作成
+Matrix4x4 MakeIdentity4x4();
 
 // 平行移動(translate)
 // 平行移動行列の関数
