@@ -16,8 +16,10 @@ void Rain::Initialize(Model* model, const Vector3& position) {
 	worldTransform_.translation_ = position;
 
 	// 雨の大きさ
-	size_ = 0.2f;
-	worldTransform_.scale_ = {size_, size_, size_};
+	drawSize_ = 0.2f;
+	size_ = 2.0f;
+
+	worldTransform_.scale_ = {drawSize_, drawSize_, drawSize_};
 
 	// 速度
 	velocity_ = {0, 0};
@@ -29,6 +31,10 @@ void Rain::Initialize(Model* model, const Vector3& position) {
 
 	// 風速
 	windSpeed_ = {0.0f, 0.0f, 0.0f};
+	relativeVelocity_ = {0, 0, 0};
+
+
+	isRelative_ = false;
 }
 
 /// <summary>
@@ -43,7 +49,7 @@ void Rain::Update() {
 		min.x = -40.0f;
 		max.x = 40.0f;
 		min.y = 20.0f;
-		max.y = 80.0f;
+		max.y = 50.0f;
 		min.z = -40.0f;
 		max.z = 20.0f;
 
@@ -58,6 +64,8 @@ void Rain::Update() {
 	}
 
 	if (isActive_ == true) {
+
+		assert(player_);
 
 		Vector3 wind = {0, 0, 0};
 
@@ -92,15 +100,24 @@ void Rain::Update() {
 		Vector3 acceleration;
 		acceleration = {0.0f, kGravity_.y, 0.0f}; // 加速度
 
-		// 速度の更新
-		this->velocity_.x += (terminalVelocity.x + wind.x) * (1.0f / 60.0f);
-		this->velocity_.y += (terminalVelocity.y + wind.y) * (1.0f / 60.0f);
-		this->velocity_.z += (terminalVelocity.z + wind.z) * (1.0f / 60.0f);
 
+			
+
+		
+		// 速度の更新
+		this->velocity_.x = (terminalVelocity.x + wind.x) * (1.0f / 60.0f);
+		this->velocity_.y = (terminalVelocity.y + wind.y) * (1.0f / 60.0f);
+		this->velocity_.z = (terminalVelocity.z + wind.z) * (1.0f / 60.0f);
+
+
+
+
+		// 実際に速度を値に掛ける
 		worldTransform_.translation_.x += velocity_.x * (1.0f / 60.0f);
 		worldTransform_.translation_.y += velocity_.y * (1.0f / 60.0f);
 		worldTransform_.translation_.z += velocity_.z * (1.0f / 60.0f);
 
+		// 消えたらパラメータの初期化
 		if (worldTransform_.translation_.y <= -20 || worldTransform_.translation_.y >= 80) {
 			isActive_ = false;
 			velocity_ = {0, 0, 0};
@@ -117,7 +134,7 @@ void Rain::Update() {
 
 	float wind[] = {windSpeed_.x, windSpeed_.y, windSpeed_.z};
 
-	ImGui::SliderFloat3("windSpeed", wind, -50, 50);
+	ImGui::SliderFloat3("windSpeed", wind, -100, 100);
 
 	windSpeed_.x = wind[0];
 	windSpeed_.y = wind[1];
@@ -131,3 +148,5 @@ void Rain::Update() {
 /// </summary>
 /// <param name="viewProjection"ビュープロジェクション（参照渡し）</param>
 void Rain::Draw(ViewProjection viewProjection) { model_->Draw(worldTransform_, viewProjection); }
+
+void Rain::SetPlayer(Player* player) { player_ = player; }

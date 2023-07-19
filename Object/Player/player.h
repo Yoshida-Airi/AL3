@@ -46,10 +46,10 @@ public:
 	Vector3 GetWorldPosition();
 
 	/// <summary>
-	/// 
+	/// スピード
 	/// </summary>
-	/// <returns></returns>
-	Vector3 GetSpeed();
+	/// <returns>プレイヤーのスピード</returns>
+	Vector3 GetVelocity();
 
 	/// <summary>
 	/// 衝突を検出したら呼び出されるコールバック関数
@@ -72,6 +72,8 @@ private:
 	float inputFloat3[3] = {0, 0, 0};
 	// 弾
 	std::list<PlayerBullet*> bullets_;
+
+	Vector3 velocity_;
 
 	// 攻撃
 	void Attack();

@@ -27,6 +27,11 @@ public:
 	/// <param name="viewProjection"ビュープロジェクション（参照渡し）</param>
 	void Draw(ViewProjection viewProjection);
 
+	/// <summary>
+	/// プレイヤーのインスタンスをセットする
+	/// </summary>
+	void SetPlayer(Player* player); 
+
 private:
 	// ワールド変換データ
 	WorldTransform worldTransform_;
@@ -45,6 +50,7 @@ private:
 	Player* player_;
 
 	float mass_; // 質量
+	float drawSize_;
 	float size_;	//大きさ
 	Vector3 velocity_;
 
@@ -58,6 +64,9 @@ private:
 
 	Vector3 windSpeed_;	//風速
 	
-	bool isActive_ = false;
+	
+	Vector3 relativeVelocity_;
 
+	bool isActive_ = false;
+	bool isRelative_ = false;
 };

@@ -76,7 +76,7 @@ void Player::Update() {
 	Rotate();
 
 	// キャラクターの移動速さ
-	const float kCharcterSpeed = 0.2f;
+	const float kCharcterSpeed = 0.3f;
 
 	// 押した方向で移動ベクトルを変更（左右）
 	if (input_->PushKey(DIK_LEFT)) {
@@ -91,6 +91,11 @@ void Player::Update() {
 	} else if (input_->PushKey(DIK_DOWN)) {
 		move.y -= kCharcterSpeed;
 	}
+
+	//プレイヤーの速度を計算
+	velocity_.x = move.x;
+	velocity_.y = move.y;
+	velocity_.z = move.z;
 
 	// 座標移動(ベクトルの加算)
 	worldTransform_.translation_.x += move.x;
@@ -157,4 +162,18 @@ Vector3 Player::GetWorldPosition() {
 	return worldpos;
 }
 
-void Player::OnCollision() {}
+//速度
+Vector3 Player::GetVelocity()
+{ 
+	Vector3 playerSpeed;
+	playerSpeed.x = velocity_.x;
+	playerSpeed.y = velocity_.y;
+	playerSpeed.z = velocity_.z;
+
+	return playerSpeed;
+}
+
+void Player::OnCollision()
+{
+
+}

@@ -54,6 +54,8 @@ void GameScene::Initialize() {
 
 	// ビュープロジェクションの初期化
 	debugCamera_->SetFarZ(1000);
+
+
 	viewProjection_.Initialize();
 
 	// 自キャラの初期化
@@ -70,6 +72,9 @@ void GameScene::Initialize() {
 		Rain* newRain = new Rain();
 		// 雨の初期化
 		newRain->Initialize(modelRain_, {0, 30, 0});
+
+		newRain->SetPlayer(player_);
+		
 		// 雨を登録する
 		rains_.push_back(newRain);
 	}
@@ -100,19 +105,25 @@ void GameScene::Update() {
 	debugCamera_->Update();
 
 #ifdef _DEBUG
-	if (input_->TriggerKey(DIK_C)) {
+	if (input_->TriggerKey(DIK_C))
+	{
 		isDebugcameraActive_ = true;
 	}
 	// カメラの処理
 	if (isDebugcameraActive_) {
+
 		viewProjection_.matView = debugCamera_->GetViewProjection().matView;
 		viewProjection_.matProjection = debugCamera_->GetViewProjection().matProjection;
+
 		// ビュープロジェクション行列の転送
 		viewProjection_.TransferMatrix();
-	} else {
+
+	} else
+	{
 		// ビュープロジェクション行列の更新と転送
 		viewProjection_.UpdateMatrix();
 	}
+
 #endif
 }
 

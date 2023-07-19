@@ -76,7 +76,7 @@ private: // メンバ変数
 
 	// 雨粒
 	std::list<Rain*> rains_;
-	const int kNumParticles = 100;
+	const int kNumParticles = 200;
 	
 
 	/// <summary>
