@@ -15,31 +15,27 @@ void Rain::Initialize(Model* model, const Vector3& position) {
 
 	worldTransform_.translation_ = position;
 
-	
 	// 雨の大きさ
 	size_ = 0.2f;
 	worldTransform_.scale_ = {size_, size_, size_};
 
-	//速度
+	// 速度
 	velocity_ = {0, 0};
 
-	rainDensity_ = 100.0f;         // 雨粒の密度
-	airDensity_ = 1.293f;           // 空気の密度
-	k_ = 0.5f ;               // 空気抵抗係数
-	kGravity_ = {0.0f, -9.8f , 0.0f}; // 重力加速度
+	rainDensity_ = 100.0f;           // 雨粒の密度
+	airDensity_ = 1.293f;            // 空気の密度
+	k_ = 0.5f;                       // 空気抵抗係数
+	kGravity_ = {0.0f, -9.8f, 0.0f}; // 重力加速度
 
-	//風速
-	windSpeed_ = {00.0f, 0.0f, 0.0f};
-
+	// 風速
+	windSpeed_ = {0.0f, 0.0f, 0.0f};
 }
 
 /// <summary>
 /// 更新
 /// </summary>
-void Rain::Update()
-{
-	if (isActive_ == false)
-	{
+void Rain::Update() {
+	if (isActive_ == false) {
 		// エミッターの位置からランダムに位置を決める
 		Vector3 min;
 		Vector3 max;
@@ -60,20 +56,29 @@ void Rain::Update()
 
 		isActive_ = true;
 	}
-	
+
 	if (isActive_ == true) {
 
 		Vector3 wind = {0, 0, 0};
-		
 
 		// 風力を求める
+		if (windSpeed_.x >= 0) {
+			wind.x = 0.5f * airDensity_ * static_cast<float>(pow((windSpeed_.x), 2.0f));
+		} else {
+			wind.x = -(0.5f * airDensity_ * static_cast<float>(pow((windSpeed_.x), 2.0f)));
+		}
 
+		if (windSpeed_.y >= 0) {
+			wind.y = 0.5f * airDensity_ * static_cast<float>(pow((windSpeed_.y), 2.0f));
+		} else {
+			wind.y = -(0.5f * airDensity_ * static_cast<float>(pow((windSpeed_.y), 2.0f)));
+		}
 
-		wind.x = 0.5f * airDensity_ * static_cast<float>(pow((windSpeed_.x), 2.0f));
-		wind.y = 0.5f * airDensity_ * static_cast<float>(pow((windSpeed_.y), 2.0f));
-		wind.z = 0.5f * airDensity_ * static_cast<float>(pow((windSpeed_.z), 2.0f));
-		       
-	
+		if (windSpeed_.z >= 0) {
+			wind.z = 0.5f * airDensity_ * static_cast<float>(pow((windSpeed_.z), 2.0f));
+		} else {
+			wind.z = -(0.5f * airDensity_ * static_cast<float>(pow((windSpeed_.z), 2.0f)));
+		}
 
 		// 終端速度を求める
 		Vector3 terminalVelocity;
@@ -96,17 +101,13 @@ void Rain::Update()
 		worldTransform_.translation_.y += velocity_.y * (1.0f / 60.0f);
 		worldTransform_.translation_.z += velocity_.z * (1.0f / 60.0f);
 
-		
-		if (worldTransform_.translation_.y <= -20 || worldTransform_.translation_.y >= 80)
-		{
+		if (worldTransform_.translation_.y <= -20 || worldTransform_.translation_.y >= 80) {
 			isActive_ = false;
 			velocity_ = {0, 0, 0};
 			terminalVelocity = {0, 0, 0};
 			worldTransform_.translation_ = {0, 30, 0};
 			wind = {0, 0, 0};
 		}
-
-		
 	}
 
 	// 行列更新
@@ -116,14 +117,11 @@ void Rain::Update()
 
 	float wind[] = {windSpeed_.x, windSpeed_.y, windSpeed_.z};
 
-	ImGui::SliderFloat3("windSpeed", wind, 0, 50);
+	ImGui::SliderFloat3("windSpeed", wind, -50, 50);
 
 	windSpeed_.x = wind[0];
 	windSpeed_.y = wind[1];
 	windSpeed_.z = wind[2];
-
-
-
 
 	ImGui::End();
 }
@@ -132,8 +130,4 @@ void Rain::Update()
 /// 描画
 /// </summary>
 /// <param name="viewProjection"ビュープロジェクション（参照渡し）</param>
-void Rain::Draw(ViewProjection viewProjection) {
-	model_->Draw(worldTransform_, viewProjection);
-}
-
-
+void Rain::Draw(ViewProjection viewProjection) { model_->Draw(worldTransform_, viewProjection); }

@@ -6,6 +6,7 @@
 #include <math.h>
 #include <cassert>
 #include<list>
+#include"player.h"
 
 class Rain {
 public:
@@ -41,6 +42,8 @@ private:
 
 private:
 	
+	Player* player_;
+
 	float mass_; // 質量
 	float size_;	//大きさ
 	Vector3 velocity_;

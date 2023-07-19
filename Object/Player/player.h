@@ -46,6 +46,12 @@ public:
 	Vector3 GetWorldPosition();
 
 	/// <summary>
+	/// 
+	/// </summary>
+	/// <returns></returns>
+	Vector3 GetSpeed();
+
+	/// <summary>
 	/// 衝突を検出したら呼び出されるコールバック関数
 	/// </summary>
 	void OnCollision();
