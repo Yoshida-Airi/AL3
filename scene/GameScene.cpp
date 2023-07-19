@@ -53,12 +53,14 @@ void GameScene::Initialize() {
 
 void GameScene::Update() {
 
-	ChackAllCollisions();
-
 	// 自キャラの更新
 	player_->Update();
 	// 敵キャラの更新
 	enemy_->Update();
+
+	//当たり判定
+	ChackAllCollisions();
+
 
 	// デバッグカメラの更新
 	debugCamera_->Update();
