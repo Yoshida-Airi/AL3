@@ -12,6 +12,8 @@
 #include"DebugCamera.h"
 #include"Enemy.h"
 #include"Skydome.h"
+#include"Rain.h"
+
 
 /// <summary>
 /// ゲームシーン
@@ -54,6 +56,8 @@ private: // メンバ変数
 	Enemy* enemy_ = nullptr;
 	//天球
 	Skydome* skydome_ = nullptr;
+	
+
 	//デバッグカメラ
 	DebugCamera* debugCamera_ = nullptr;
 	//デバッグカメラ有効
@@ -65,9 +69,15 @@ private: // メンバ変数
 	// 3Dモデルデータ
 	Model* model_ = nullptr;
 	Model* modelSkydome_ = nullptr;
+	Model* modelRain_ = nullptr;
 
 	// ビュープロジェクション
 	ViewProjection viewProjection_;
+
+	// 雨粒
+	std::list<Rain*> rains_;
+	const int kNumParticles = 100;
+	
 
 	/// <summary>
 	/// 衝突判定と応答
