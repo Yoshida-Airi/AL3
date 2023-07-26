@@ -67,9 +67,10 @@ void GameScene::Initialize() {
 	Enemy* enemy = new Enemy();
 	// 敵キャラに自キャラのアドレスを渡す
 	enemy->SetPlayer(player_);
+	enemy->SetGameScene(this);
 	// 敵の初期化
 	enemy->Initialize(model_, {20.0f, 2.0f, 50.0f});
-	enemy->SetGameScene(this);
+	
 	//リストに登録
 	enemys_.push_back(enemy);
 
@@ -133,7 +134,6 @@ void GameScene::Update() {
 	railCamera_->Update();
 	viewProjection_.matView = railCamera_->GetViewProjection().matView;
 	viewProjection_.matProjection = railCamera_->GetViewProjection().matProjection;
-
 	viewProjection_.TransferMatrix();
 
 }

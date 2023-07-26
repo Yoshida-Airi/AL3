@@ -1,7 +1,6 @@
-#include"GameScene.h"
 #include "Enemy.h"
 #include "player.h"
-
+#include"GameScene.h"
 
 
 Enemy::Enemy() {
@@ -73,9 +72,9 @@ void Enemy::Update() {
 // 弾を発射した後にリセット
 void Enemy::AttackReset() {
 	// 弾を発射
-
+	if (isAttacEvent == true) {
 		Fire();
-
+	}
 	// 発射タイマーをセットする
 	timedCalls_.push_back(new TimedCall(std::bind(&Enemy::AttackReset, this), kFireInterval));
 }
@@ -106,7 +105,7 @@ void Enemy::Fire() {
 
 	// 弾を生成し、初期化
 	EnemyBullet* newBullet = new EnemyBullet();
-	newBullet->Initialize(model_, GetWorldPosition(), velocity);
+	newBullet->Initialize(model_,worldTransform_.translation_, velocity);
 	newBullet->SetPlayer(player_);
 	// 弾を登録する
 	gameScene_->AddEnemyBullet(newBullet);
