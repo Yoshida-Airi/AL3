@@ -1,5 +1,4 @@
 #pragma once
-#include "EnemyBullet.h"
 #include "MathUtility.h"
 #include "Model.h"
 #include "TimedCall.h"
@@ -8,6 +7,7 @@
 
 class Enemy;  // 前方宣言
 class Player; // 自機クラスの前方宣言
+class GameScene;	//ゲームシーンの前方宣言
 
 class BaseEnemyState {
 protected:
@@ -81,6 +81,7 @@ public:
 
 	// セッター
 	void SetPlayer(Player* player);
+	void SetGameScene(GameScene* gameScene);
 
 	/// <summary>
 	/// ワールド座標取得
@@ -93,8 +94,8 @@ public:
 	/// </summary>
 	void OnCollision();
 
-	//弾リストを取得
-	const std::list<EnemyBullet*>& GetBullet() { return bullets_; };
+	
+	bool IsDead() const { return isDead_; };
 
 public: // 静的メンバ変数
 	// 発射間隔
@@ -112,18 +113,23 @@ private: // メンバ変数
 	Vector3 LeaveVelocity_;
 	// ステート
 	BaseEnemyState* state;
-	// 弾
-	std::list<EnemyBullet*> bullets_;
+
 	// 発射タイマー
 	int32_t timer = 0;
 	// 時限発動のリスト
 	std::list<TimedCall*> timedCalls_;
 
-	bool isAttacEvent = false;
-
-private: // プライベートメソッド
 	// 自キャラ
 	Player* player_ = nullptr;
+
+	// ゲームシーン
+	GameScene* gameScene_ = nullptr;
+
+	bool isAttacEvent = false;
+	bool isDead_ = false;
+
+private: // プライベートメソッド
+	
 
 	/// <summary>
 	/// 弾発射

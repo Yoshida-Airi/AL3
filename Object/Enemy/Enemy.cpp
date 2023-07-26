@@ -1,5 +1,8 @@
+#include"GameScene.h"
 #include "Enemy.h"
 #include "player.h"
+
+
 
 Enemy::Enemy() {
 	state = new EnemyStateApproach();
@@ -11,9 +14,6 @@ Enemy::~Enemy() {
 	// 解放処理
 	delete state;
 
-	for (EnemyBullet* bullet : this->bullets_) {
-		delete bullet;
-	}
 
 	for (TimedCall* timeCall : this->timedCalls_) {
 		delete timeCall;
@@ -46,14 +46,6 @@ void Enemy::Update() {
 	// 接近フェーズの呼び出し
 	Approach();
 
-	// デスフラグの立った弾を削除
-	bullets_.remove_if([](EnemyBullet* bullet) {
-		if (bullet->IsDead()) {
-			delete bullet;
-			return true;
-		}
-		return false;
-	});
 
 	if (worldTransform_.translation_.z < 0.0f) {
 		isAttacEvent = false;
@@ -74,18 +66,16 @@ void Enemy::Update() {
 		timedCall->Update();
 	}
 
-	// 弾更新
-	for (EnemyBullet* bullet : this->bullets_) {
-		bullet->Update();
-	}
+	worldTransform_.TransferMatrix();
+
 }
 
 // 弾を発射した後にリセット
 void Enemy::AttackReset() {
 	// 弾を発射
-	if (isAttacEvent == true) {
+
 		Fire();
-	}
+
 	// 発射タイマーをセットする
 	timedCalls_.push_back(new TimedCall(std::bind(&Enemy::AttackReset, this), kFireInterval));
 }
@@ -107,6 +97,7 @@ void Enemy::Fire() {
 	Vector3 velocity = Subtract(worldPlayer, worldEnemy);
 	// 正規化
 	velocity = Normalize(velocity);
+
 	// ベクトルの長さを速さに合わせる
 	velocity.x *= kBulletSpeed;
 	velocity.y *= kBulletSpeed;
@@ -115,21 +106,16 @@ void Enemy::Fire() {
 
 	// 弾を生成し、初期化
 	EnemyBullet* newBullet = new EnemyBullet();
+	newBullet->Initialize(model_, GetWorldPosition(), velocity);
 	newBullet->SetPlayer(player_);
-	newBullet->Initialize(model_, worldTransform_.translation_, velocity);
-
 	// 弾を登録する
-	bullets_.push_back(newBullet);
+	gameScene_->AddEnemyBullet(newBullet);
+
 }
 
 // 描画
 void Enemy::Draw(const ViewProjection& viewProjection) {
 	model_->Draw(worldTransform_, viewProjection, textureHandle_);
-
-	// 弾描画
-	for (EnemyBullet* bullet : this->bullets_) {
-		bullet->Draw(viewProjection);
-	}
 }
 
 // 接近フェーズ初期化
@@ -157,10 +143,7 @@ void Enemy::ChangeState(BaseEnemyState* newState) {
 }
 
 //当たり判定
-void Enemy::OnCollision()
-{
-
-}
+void Enemy::OnCollision() { isDead_ = true; };
 
 void EnemyStateApproach::update(Enemy* pEnemy, Vector3& velocity) {
 	pEnemy->Move(velocity);
@@ -185,4 +168,9 @@ Vector3 Enemy::GetWorldPosition() {
 void Enemy::SetPlayer(Player* player)
 {
 	player_ = player;
+}
+
+void Enemy::SetGameScene(GameScene* gameScene) 
+{ 
+	gameScene_ = gameScene; 
 }
