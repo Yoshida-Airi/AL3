@@ -4,9 +4,7 @@
 
 
 Enemy::Enemy() {
-	state = new EnemyStateApproach();
-	ApprochVelocity_ = {0, 0, -0.0f};
-	LeaveVelocity_ = {-0.5f, 0.5f, 0};
+
 }
 
 Enemy::~Enemy() {
@@ -31,25 +29,19 @@ void Enemy::Initialize(Model* model, const Vector3& position) {
 	worldTransform_.Initialize();
 	// 初期座標の設定
 	worldTransform_.translation_ = position;
-	isAttacEvent = true;
-	// 接近フェーズ初期化
-	ApproachInitialize();
-	// 発射タイマーの初期化
-	AttackReset();
+
+	state = new EnemyStateApproach();
+	state->Initialize(this);
+
+
 }
 
 void Enemy::Update() {
 	// 行列更新
 	worldTransform_.UpdateMatrix();
 
-	// 接近フェーズの呼び出し
-	Approach();
-
-
-	if (worldTransform_.translation_.z < 0.0f) {
-		isAttacEvent = false;
-		Leave();
-	}
+	//敵の状態遷移
+	state->update(this);
 
 	// 終了したタイマーを削除
 	timedCalls_.remove_if([](TimedCall* timeCall) {
@@ -72,9 +64,9 @@ void Enemy::Update() {
 // 弾を発射した後にリセット
 void Enemy::AttackReset() {
 	// 弾を発射
-	if (isAttacEvent == true) {
-		Fire();
-	}
+
+	Fire();
+
 	// 発射タイマーをセットする
 	timedCalls_.push_back(new TimedCall(std::bind(&Enemy::AttackReset, this), kFireInterval));
 }
@@ -117,50 +109,35 @@ void Enemy::Draw(const ViewProjection& viewProjection) {
 	model_->Draw(worldTransform_, viewProjection, textureHandle_);
 }
 
-// 接近フェーズ初期化
-void Enemy::ApproachInitialize() {}
 
-// 接近フェーズ(更新)
-void Enemy::Approach() {
-	// 発射タイマーカウントダウン
-	timer--;
-	if (timer == 0) {
-		// 発射タイマーを初期化
-		timer = kFireInterval;
-	}
-
-	state->update(this, ApprochVelocity_);
-}
-
-// 離脱フェーズ
-void Enemy::Leave() { state->update(this, LeaveVelocity_); }
 
 // フェーズの以降
 void Enemy::ChangeState(BaseEnemyState* newState) {
-	delete state;
 	state = newState;
 }
 
 //当たり判定
 void Enemy::OnCollision() { isDead_ = true; };
 
-void EnemyStateApproach::update(Enemy* pEnemy, Vector3& velocity) {
+void EnemyStateApproach::Initialize(Enemy* pEnemy) { pEnemy->AttackReset(); }
+
+void EnemyStateApproach::update(Enemy* pEnemy) {
+	// 速度
+	Vector3 velocity;
+	velocity = {0, 0, -0.0f};
 	pEnemy->Move(velocity);
-	pEnemy->ChangeState(new EnemyStateLeave());
+	if (pEnemy->GetWorldPosition().z < 0.0f) {
+		pEnemy->ChangeState(new EnemyStateLeave());
+	}
 }
 
-void EnemyStateLeave::update(Enemy* pEnemy, Vector3& velocity) { pEnemy->Move(velocity); }
+void EnemyStateLeave::Initialize(Enemy* pEnemy) { pEnemy->GetWorldPosition(); }
 
-// ワールド座標を取得
-Vector3 Enemy::GetWorldPosition() {
-	// ワールド座標を入れる変数
-	Vector3 worldpos;
-	// ワールド行列の平行移動成分を取得(ワールド座標)
-	worldpos.x = worldTransform_.matWorld_.m[3][0];
-	worldpos.y = worldTransform_.matWorld_.m[3][1];
-	worldpos.z = worldTransform_.matWorld_.m[3][2];
+void EnemyStateLeave::update(Enemy* pEnemy) {
 
-	return worldpos;
+	Vector3 velocity;
+	velocity = {-0.5f, 0.5f, 0};
+	pEnemy->Move(velocity);
 }
 
 // セッター

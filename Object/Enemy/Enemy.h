@@ -18,19 +18,22 @@ public:
 	virtual ~BaseEnemyState(){};
 
 	// 純粋仮想関数
-	virtual void update(Enemy* pEnemy, Vector3& velocity) = 0;
+	virtual void Initialize(Enemy* pEnemy) = 0;
+	virtual void update(Enemy* pEnemy) = 0;
 };
 
 // 接近
 class EnemyStateApproach : public BaseEnemyState {
 public:
-	void update(Enemy* pEnemy, Vector3& velocity);
+	void Initialize(Enemy* pEnemy);
+	void update(Enemy* pEnemy);
 };
 
 // 離脱
 class EnemyStateLeave : public BaseEnemyState {
 public:
-	void update(Enemy* pEnemy, Vector3& velocity);
+	void Initialize(Enemy* pEnemy);
+	void update(Enemy* pEnemy);
 };
 
 class Enemy {
@@ -50,21 +53,6 @@ public:
 	void ChangeState(BaseEnemyState* newState);
 
 	/// <summary>
-	/// 接近フェーズの初期化
-	/// </summary>
-	void ApproachInitialize();
-
-	/// <summary>
-	/// 接近フェーズの更新関数
-	/// </summary>
-	void Approach();
-
-	/// <summary>
-	/// 離脱フェーズの更新関数
-	/// </summary>
-	void Leave();
-
-	/// <summary>
 	/// 移動
 	/// </summary>
 	void Move(Vector3& velocity);
@@ -72,7 +60,7 @@ public:
 	/// <summary>
 	/// ゲッター
 	/// </summary>
-	Vector3 GetWorldTrans() const { return worldTransform_.translation_; };
+	Vector3 GetWorldPosition() const { return worldTransform_.translation_; };
 
 	/// <summary>
 	/// 弾を発射し、タイマーをリセットするコールバック関数
@@ -83,11 +71,7 @@ public:
 	void SetPlayer(Player* player);
 	void SetGameScene(GameScene* gameScene);
 
-	/// <summary>
-	/// ワールド座標取得
-	/// </summary>
-	/// <returns>敵キャラのワールド座標</returns>
-	Vector3 GetWorldPosition();
+
 		
 	/// <summary>
 	/// 衝突を検出したら呼び出されるコールバック関数

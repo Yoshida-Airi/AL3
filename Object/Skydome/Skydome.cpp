@@ -15,9 +15,11 @@ void Skydome::Initialize(Model* model, const Vector3& position) {
 	worldTransform_.translation_ = position;
 
 	// 天球の大きさ(大きさによってはカメラのfarZをSetterで設定しよう)
-	worldTransform_.scale_.x = 100.0f;
-	worldTransform_.scale_.y = 100.0f;
-	worldTransform_.scale_.z = 100.0f;
+	
+
+	worldTransform_.scale_.x = 500.0f;
+	worldTransform_.scale_.y = 500.0f;
+	worldTransform_.scale_.z = 500.0f;
 
 }
 
