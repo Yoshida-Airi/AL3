@@ -2,9 +2,6 @@
 
 Enemy::Enemy() 
 { 
-	state = new EnemyStateApproach();
-	ApprochVelocity_ = {0, 0, -0.5f};
-	LeaveVelocity_ = {-0.5f, 0.5f, 0};
 }
 
 Enemy::~Enemy()
@@ -39,9 +36,10 @@ void Enemy::Initialize(Model* model, const Vector3& position)
 	worldTransform_.translation_ = position;
 	isAttacEvent = true;
 	// 接近フェーズ初期化
-	ApproachInitialize();
-	// 発射タイマーの初期化
-	AttackReset();
+	state = new EnemyStateApproach();
+	state->Initialize(this);
+
+
 	
 }
 
@@ -53,13 +51,9 @@ void Enemy::Update()
 	worldTransform_.UpdateMatrix();
 
 	//接近フェーズの呼び出し
-	Approach();
+	state->update(this);
 
-	if (worldTransform_.translation_.z < 0.0f)
-	{
-		isAttacEvent = false;
-		Leave();
-	}
+	
 
 	// 終了したタイマーを削除
 	timedCalls_.remove_if([](TimedCall* timeCall) {
@@ -83,19 +77,26 @@ void Enemy::Update()
 		bullet->Update();
 	}
 
+	//// 発射タイマーカウントダウン
+	//timer--;
+	//if (timer == 0) {
+	//	// 発射タイマーを初期化
+	//	timer = kFireInterval;
+	//}
 
 }
 
 // 弾を発射した後にリセット
 void Enemy::AttackReset()
 {
-	//弾を発射
-	if (isAttacEvent == true)
-	{
-		Fire();
-	}
+
+	Fire();
+	
 	// 発射タイマーをセットする
 	timedCalls_.push_back(new TimedCall(std::bind(&Enemy::AttackReset, this), kFireInterval));
+
+
+
 }
 
 // 移動
@@ -132,48 +133,35 @@ void Enemy::Draw(const ViewProjection& viewProjection)
 }
 
 
-// 接近フェーズ初期化
-void Enemy::ApproachInitialize() 
-{
-	
-}
 
-
-// 接近フェーズ(更新)
-void Enemy::Approach()
-{ 
-	//発射タイマーカウントダウン
-	timer--;
-	if (timer == 0)
-	{
-		//発射タイマーを初期化
-		timer = kFireInterval;
-	}
-
-	state->update(this, ApprochVelocity_); 
-}
-
-// 離脱フェーズ
-void Enemy::Leave() 
-{
-	state->update(this, LeaveVelocity_); 
-}
 
 //フェーズの以降
 void Enemy::ChangeState(BaseEnemyState* newState)
 {
-	delete state; 
 	state = newState;
 }
 
-void EnemyStateApproach::update(Enemy* pEnemy, Vector3& velocity)
+
+void EnemyStateApproach::Initialize(Enemy* pEnemy) { pEnemy->AttackReset(); }
+
+void EnemyStateApproach::update(Enemy* pEnemy)
 { 
+	// 速度
+	Vector3 velocity;
+	velocity = {0, 0, -0.5f};
 	pEnemy->Move(velocity);
-	pEnemy->ChangeState(new EnemyStateLeave());
+	if (pEnemy->GetWorldTrans().z < 0.0f) {
+		pEnemy->ChangeState(new EnemyStateLeave());
+	}
 }
 
-void EnemyStateLeave::update(Enemy* pEnemy, Vector3& velocity)
+void EnemyStateLeave::Initialize(Enemy* pEnemy) { pEnemy->GetWorldTrans(); }
+
+void EnemyStateLeave::update(Enemy* pEnemy)
 { 
+	
+	Vector3 velocity;
+	velocity = {-0.5f, 0.5f, 0};
 	pEnemy->Move(velocity);
 }
 

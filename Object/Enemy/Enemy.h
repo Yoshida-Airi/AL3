@@ -20,7 +20,8 @@ public:
 	virtual ~BaseEnemyState(){};
 
 	//純粋仮想関数
-	virtual void update(Enemy* pEnemy, Vector3& velocity) = 0;
+	virtual void Initialize(Enemy* pEnemy) = 0;
+	virtual void update(Enemy* pEnemy) = 0;
 
 };
 
@@ -28,14 +29,16 @@ public:
 class EnemyStateApproach : public BaseEnemyState
 {
 public:
-	void update(Enemy* pEnemy, Vector3& velocity);
+	void Initialize(Enemy* pEnemy);
+	void update(Enemy* pEnemy);
 };
 
 //離脱
 class EnemyStateLeave : public BaseEnemyState
 {
 public:
-	void update(Enemy* pEnemy, Vector3& velocity);
+	void Initialize(Enemy* pEnemy);
+	void update(Enemy* pEnemy);
 };
 
 
@@ -58,20 +61,7 @@ public:
 	/// </summary>
 	void ChangeState(BaseEnemyState* newState);
 
-	/// <summary>
-	/// 接近フェーズの初期化
-	/// </summary>
-	void ApproachInitialize();
 
-	/// <summary>
-	/// 接近フェーズの更新関数
-	/// </summary>
-	void Approach();
-
-	/// <summary>
-	/// 離脱フェーズの更新関数
-	/// </summary>
-	void Leave();
 
 	/// <summary>
 	/// 移動
@@ -101,9 +91,7 @@ private:	//メンバ変数
 	Model* model_ = nullptr;
 	// テクスチャハンドル
 	uint32_t textureHandle_ = 0u;
-	// 速度
-	Vector3 ApprochVelocity_;
-	Vector3 LeaveVelocity_;
+	
 	//ステート
 	BaseEnemyState* state;
 	// 弾
