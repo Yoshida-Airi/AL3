@@ -95,7 +95,7 @@ void GameScene::Update() {
 	// 自キャラの更新
 	player_->Update();
 
-	
+	//敵の生成
 	UpdateEnemyPopCommands();
 
 	// 敵キャラの更新
