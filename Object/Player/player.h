@@ -62,6 +62,8 @@ public:
 private:
 	// ワールド変換データ
 	WorldTransform worldTransform_;
+	// 3Dレティクル用ワールドトランスフォーム
+	WorldTransform worldTransform3DReticle_;
 	// モデル
 	Model* model_ = nullptr;
 	// テクスチャハンドル
@@ -72,6 +74,7 @@ private:
 	float inputFloat3[3] = {0, 0, 0};
 	// 弾
 	std::list<PlayerBullet*> bullets_;
+	
 
 	// 攻撃
 	void Attack();
