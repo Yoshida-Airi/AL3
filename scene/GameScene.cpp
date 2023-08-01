@@ -50,7 +50,8 @@ void GameScene::Initialize() {
 	model_ = Model::Create();
 	modelSkydome_ = Model::CreateFromOBJ("skydome", true);
 
-	
+	//レティクルのテクスチャ
+	TextureManager::Load("reticle.png");
 
 	// ワールドトランスフォームの初期化
 	worldTransform_.Initialize();
@@ -93,7 +94,7 @@ void GameScene::Update() {
 
 
 	// 自キャラの更新
-	player_->Update();
+	player_->Update(viewProjection_);
 
 	//敵の生成
 	UpdateEnemyPopCommands();
@@ -199,6 +200,8 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
+	player_->DrawUI();
+
 
 	// スプライト描画後処理
 	Sprite::PostDraw();

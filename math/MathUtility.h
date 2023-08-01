@@ -46,8 +46,13 @@ Matrix4x4 MakeTranselateMatrix(const Vector3& transelate);
 // 拡大縮小(scale)
 // 拡大縮小行列の関数
 Matrix4x4 MakeScaleMatrix(const Vector3& scale);
-// 回転(rotate)
 
+// 3.座標変換
+Vector3 Transform(const Vector3& vector, const Matrix4x4& matrix);
+
+
+
+// 回転(rotate)
 // x軸回転行列の関数
 Matrix4x4 MakeRotateXMatrix(float radian);
 
@@ -61,6 +66,17 @@ Matrix4x4 MakeRotateZMatrix(float radian);
 Matrix4x4 MakeAffinMatrix(const Vector3& scale, const Vector3& rotate, const Vector3& translate);
 
 Vector3 TransformNormal(const Vector3& v, const Matrix4x4& m);
+
+// 1.透視投影行列
+Matrix4x4 MakePerspectiveFovMatrix(float forY, float aspectRatio, float nearClip, float farClip);
+// 2.正射影行列
+Matrix4x4 MakeOrthographicmatrix(
+    float left, float top, float right, float bottom, float nearClip, float farClip);
+
+// 3.ビューポート変換行列
+Matrix4x4 MakeViewportMatrix(
+    float left, float top, float width, float height, float minDepth, float maxDepth);
+
 
 // Vector3の計算
 Vector3 SumVector3(Vector3& num1, Vector3& num2);

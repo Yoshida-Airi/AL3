@@ -4,6 +4,7 @@
 #include "MathUtility.h"
 #include "Model.h"
 #include "PlayerBullet.h"
+#include"Sprite.h"
 
 #include <list>
 /// <summary>
@@ -26,7 +27,7 @@ public:
 	/// <summary>
 	/// 更新
 	/// </summary>
-	void Update();
+	void Update(const ViewProjection viewProjection_);
 
 	/// <summary>
 	/// 描画
@@ -35,15 +36,26 @@ public:
 	void Draw(ViewProjection viewProjection);
 
 	/// <summary>
+	/// UI描画
+	/// </summary>
+	void DrawUI();
+
+	/// <summary>
 	/// 旋回
 	/// </summary>
 	void Rotate();
 
 	/// <summary>
-	/// ワールド座標を取得
+	/// 自機のワールド座標を取得
 	/// </summary>
 	/// <returns>プレイヤーのワールド座標</returns>
 	Vector3 GetWorldPosition();
+
+	/// <summary>
+	/// レティクルのワールド座標を取得
+	/// </summary>
+	/// <returns></returns>
+	Vector3 GetReticleWorldPosition();
 
 	/// <summary>
 	/// 衝突を検出したら呼び出されるコールバック関数
@@ -75,6 +87,8 @@ private:
 	// 弾
 	std::list<PlayerBullet*> bullets_;
 	
+	//2Dレティクル用スプライト
+	Sprite* sprite2DReticle_ = nullptr;
 
 	// 攻撃
 	void Attack();
