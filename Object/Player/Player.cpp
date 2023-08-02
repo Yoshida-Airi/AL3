@@ -261,7 +261,6 @@ void Player::SettingReticle(const ViewProjection viewProjection_)
 void Player::SettingMouse(const ViewProjection viewProjection_)
 {
 
-
 	//マウス座標(スクリーン座標)を取得
 	POINT mousePosition;
 	GetCursorPos(&mousePosition);
@@ -304,7 +303,8 @@ void Player::SettingMouse(const ViewProjection viewProjection_)
 
 	//ニアクリップ面上のワールド座標から一定距離前進したところに3Dレティクルを配置
 	// カメラから照準オブジェクトの距離
-	const float kDistanceTestObject = 10.0f;
+	const float kDistanceTestObject = 100.0f;
+
 
 	worldTransform3DReticle_.translation_ =
 	    Add(posNear, Multiply(kDistanceTestObject, mouseDirection));
