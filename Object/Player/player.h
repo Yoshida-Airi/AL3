@@ -90,6 +90,21 @@ private:
 	//2Dレティクル用スプライト
 	Sprite* sprite2DReticle_ = nullptr;
 
+
+private:
+
 	// 攻撃
 	void Attack();
+
+	/// <summary>
+	/// レティクルの設定
+	/// </summary>
+	/// <param name="viewProjection_"></param>
+	void SettingReticle(const ViewProjection viewProjection_);
+
+	/// <summary>
+	/// マウスの設定
+	/// </summary>
+	void SettingMouse(const ViewProjection viewProjection_);
+
 };
