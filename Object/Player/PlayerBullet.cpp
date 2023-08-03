@@ -23,6 +23,7 @@ void PlayerBullet::Update() {
 	// 行列更新
 	worldTransform_.UpdateMatrix();
 
+
 	// 時間経過でデス
 	if (--deathTimer_ <= 0) {
 		isDead_ = true;
