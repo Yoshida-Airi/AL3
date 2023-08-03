@@ -318,8 +318,6 @@ void Player::SettingMouse(const ViewProjection viewProjection_)
 	// カメラから照準オブジェクトの距離
 	const float kDistanceTestObject = 50.0f;
 
-	// 自機のワールド座標から3Dレティクルのワールド座標を計算
-
 	// 自機から3Dレティクルへのオフセット(Z+向き)
 	Vector3 offset = {0, 0, 1.0f};
 	// 自機のワールド行列の回転を反映
@@ -327,8 +325,8 @@ void Player::SettingMouse(const ViewProjection viewProjection_)
 	// ベクトルの長さを整える
 	offset = Multiply(kDistanceTestObject, Normalize(offset));
 	// 3Dレティクルの座標を設定
-	worldTransform3DReticle_.translation_ = Add (offset,
-	Add(posNear, Multiply(kDistanceTestObject, mouseDirection)));
+	worldTransform3DReticle_.translation_ =
+	    Add(offset, Add(posNear, Multiply(kDistanceTestObject, mouseDirection)));
 	
 	worldTransform3DReticle_.UpdateMatrix();
 
