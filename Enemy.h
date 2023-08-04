@@ -1,26 +1,36 @@
 #pragma once
 #include "Model.h"
-#include "WorldAffinMatrix.h"
 #include <cassert>
-#include"WorldAffinMatrix.h"
+
+#include"MathUtility.h"
+#include"IEnemyState.h"
+
+#include"EnemyStateApproach.h"
 
 class Enemy 
 {
 public:
-	void Initialize(
-	    Model* model, const Vector3& position, const Vector3& velocityA, const Vector3& velocityB);
+
+	~Enemy();
+
+	void Initialize(Model* model, const Vector3& position);
 	void Update();
 	void Draw(const ViewProjection& viewProjection);
 
-	enum class Phase {
-		Approach, // 接近する
-		Leave,    // 離脱する
-	};
+	void Move(Vector3& velocity);
+
+	/// <summary>
+	/// ゲッター
+	/// </summary>
+	Vector3 GetWorldPosition() const { return worldTransform_.translation_; };
+
+	// フェーズの以降
+	void ChangeState(BaseEnemyState* newState);
 
 private:
 	// ワールド変換データ
 	WorldTransform worldTransform_;
-	WorldTransformEX AffinMatrix_;
+	
 	// モデル
 	Model* model_ = nullptr;
 	// テクスチャハンドル
@@ -28,20 +38,12 @@ private:
 	// 速度
 	Vector3 ApprochVelocity_;
 	Vector3 LeaveVelocity_;
-	//フェーズ
-	Phase phase_ = {};
-	
+
+	// ステート
+	BaseEnemyState* state;
 
 private:
-	/// <summary>
-	/// 接近フェーズの更新関数
-	/// </summary>
-	void Approach();
-
-	/// <summary>
-	/// 離脱フェーズの更新関数
-	/// </summary>
-	void Leave();
+	
 
 	//メンバ関数ポインタのテーブル
 	static void (Enemy::*spFuncTable[])();

@@ -1,6 +1,6 @@
 #pragma once
 #include "Model.h"
-#include "WorldAffinMatrix.h"
+#include "MathUtility.h"
 #include"Input.h"
 #include"DebugCamera.h"
 #include"PlayerBullet.h"
@@ -43,7 +43,6 @@ public:
 private:
 	// ワールド変換データ
 	WorldTransform worldTransform_;
-	WorldTransformEX transform;
 	// モデル
 	Model* model_ = nullptr;
 	// テクスチャハンドル
