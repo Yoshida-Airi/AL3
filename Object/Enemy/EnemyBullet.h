@@ -1,5 +1,6 @@
 #pragma once
 #include "MathUtility.h"
+#include "player.h"
 #include <Model.h>
 #include <WorldTransform.h>
 
@@ -32,6 +33,8 @@ public:
 	/// <param name="viewProjection"></param>
 	void Draw(ViewProjection viewProjection);
 
+	void SetPlayer(Player* player) { player_ = player; };
+
 private:
 	// ワールド変換データ
 	WorldTransform worldTransform_;
@@ -40,5 +43,7 @@ private:
 	// テクスチャハンドル
 	uint32_t textureHandle_ = 0u;
 	// 速度
-	Vector3 velocity_;
+	Vector3 velocity_ = {};
+	// 自キャラ
+	Player* player_ = nullptr;
 };

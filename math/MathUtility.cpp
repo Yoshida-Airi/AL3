@@ -5,6 +5,41 @@
 #include <assert.h>
 #include <cmath>
 
+// 加算
+Vector3 Add(const Vector3& v1, const Vector3& v2) {
+	Vector3 result;
+	result.x = v1.x + v2.x;
+	result.y = v1.y + v2.y;
+	result.z = v1.z + v2.z;
+
+	return result;
+}
+
+// 減算
+Vector3 Subtract(const Vector3& v1, const Vector3& v2) {
+	Vector3 result;
+	result.x = v1.x - v2.x;
+	result.y = v1.y - v2.y;
+	result.z = v1.z - v2.z;
+	return result;
+}
+
+// スカラー倍
+Vector3 Multiply(float scalar, const Vector3& v) {
+	Vector3 result;
+	result.x = scalar * v.x;
+	result.y = scalar * v.y;
+	result.z = scalar * v.z;
+	return result;
+}
+
+// 内積
+float Dot(const Vector3& v1, const Vector3& v2) {
+	float result;
+	result = v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
+	return result;
+}
+
 // 長さ(ノルム)
 float Length(const Vector3& v) {
 	float result;
@@ -204,5 +239,32 @@ Vector3 SumVector3(Vector3& num1, Vector3& num2) {
 	result.x = num1.x += num2.x;
 	result.y = num1.y += num2.y;
 	result.z = num1.z += num2.z;
+	return result;
+}
+
+// 線形補間
+Vector3 Lerp(const Vector3& v1, const Vector3& v2, float t) {
+	Vector3 P;
+	P.x = v1.x + t * (v2.x - v1.x);
+	P.y = v1.y + t * (v2.y - v1.y);
+	P.z = v1.z + t * (v2.z - v1.z);
+	return P;
+}
+
+// 球面線形補間
+Vector3 Slerp(const Vector3& v1, const Vector3& v2, float t) {
+
+	float angle = std::acos(Dot(v1, v2));
+
+	float sinTheta = std::sin(angle);
+
+	float PositonStart = std::sin(angle * (1 - t));
+	float PositonEnd = std::sin(angle * t);
+
+	Vector3 result;
+	result.x = (PositonStart * v1.x + PositonEnd * v2.x) / sinTheta;
+	result.y = (PositonStart * v1.y + PositonEnd * v2.y) / sinTheta;
+	result.z = (PositonStart * v1.z + PositonEnd * v2.z) / sinTheta;
+
 	return result;
 }

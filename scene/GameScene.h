@@ -1,7 +1,9 @@
 #pragma once
 
 #include "Audio.h"
+#include "DebugCamera.h"
 #include "DirectXCommon.h"
+#include "Enemy.h"
 #include "Input.h"
 #include "Model.h"
 #include "Player.h"
@@ -9,8 +11,6 @@
 #include "Sprite.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
-#include"DebugCamera.h"
-#include"Enemy.h"
 
 /// <summary>
 /// ゲームシーン
@@ -49,11 +49,11 @@ private: // メンバ変数
 	Audio* audio_ = nullptr;
 	// 自キャラ
 	Player* player_ = nullptr;
-	//敵キャラ
+	// 敵キャラ
 	Enemy* enemy_ = nullptr;
-	//デバッグカメラ
+	// デバッグカメラ
 	DebugCamera* debugCamera_ = nullptr;
-	//デバッグカメラ有効
+	// デバッグカメラ有効
 	bool isDebugcameraActive_ = false;
 
 	// テクスチャを読み込む

@@ -1,8 +1,7 @@
 #include "GameScene.h"
+#include "AxisIndicator.h"
 #include "TextureManager.h"
 #include <cassert>
-#include"AxisIndicator.h"
-
 
 GameScene::GameScene() {}
 
@@ -10,9 +9,9 @@ GameScene::~GameScene() {
 	delete model_;
 	// 自キャラの解放
 	delete player_;
-	//敵キャラの解放
+	// 敵キャラの解放
 	delete enemy_;
-	//デバッグカメラ
+	// デバッグカメラ
 	delete debugCamera_;
 }
 
@@ -23,10 +22,10 @@ void GameScene::Initialize() {
 	audio_ = Audio::GetInstance();
 	// 自キャラの生成
 	player_ = new Player();
-	//敵キャラの生成
+	// 敵キャラの生成
 	enemy_ = new Enemy();
 
-	//敵キャラに自キャラのアドレスを渡す
+	// 敵キャラに自キャラのアドレスを渡す
 	enemy_->SetPlayer(player_);
 
 	// ファイル名を指定してテクスチャを読み込む
@@ -40,47 +39,42 @@ void GameScene::Initialize() {
 
 	// 自キャラの初期化
 	player_->Initialize(model_, textureHandle_);
-	//敵の初期化
+	// 敵の初期化
 	enemy_->Initialize(model_, {20.0f, 2.0f, 100.0f});
 
-	//デバッグカメラの生成
+	// デバッグカメラの生成
 	debugCamera_ = new DebugCamera(1280, 720);
 
-	//軸方向表示の表示を有効にする
+	// 軸方向表示の表示を有効にする
 	AxisIndicator::GetInstance()->SetVisible(true);
-	//軸方向表示が参照するビュープロジェクションを指定する(アドレス渡し)
+	// 軸方向表示が参照するビュープロジェクションを指定する(アドレス渡し)
 	AxisIndicator::GetInstance()->SetTargetViewProjection(&viewProjection_);
 }
 
 void GameScene::Update() {
 	// 自キャラの更新
 	player_->Update();
-	//敵キャラの更新
+	// 敵キャラの更新
 	enemy_->Update();
 
-
-	//デバッグカメラの更新
+	// デバッグカメラの更新
 	debugCamera_->Update();
 
-	#ifdef _DEBUG
-	if (input_->TriggerKey(DIK_C))
-	{
+#ifdef _DEBUG
+	if (input_->TriggerKey(DIK_C)) {
 		isDebugcameraActive_ = true;
 	}
-	//カメラの処理
-	if (isDebugcameraActive_)
-	{
+	// カメラの処理
+	if (isDebugcameraActive_) {
 		viewProjection_.matView = debugCamera_->GetViewProjection().matView;
 		viewProjection_.matProjection = debugCamera_->GetViewProjection().matProjection;
-		//ビュープロジェクション行列の転送
+		// ビュープロジェクション行列の転送
 		viewProjection_.TransferMatrix();
-	}
-	else
-	{
-		//ビュープロジェクション行列の更新と転送
+	} else {
+		// ビュープロジェクション行列の更新と転送
 		viewProjection_.UpdateMatrix();
 	}
-	#endif
+#endif
 }
 
 void GameScene::Draw() {
@@ -112,9 +106,9 @@ void GameScene::Draw() {
 
 	// 自キャラの描画
 	player_->Draw(viewProjection_);
-	//敵キャラの描画
+	// 敵キャラの描画
 	enemy_->Draw(viewProjection_);
-	
+
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
 #pragma endregion

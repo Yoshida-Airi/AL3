@@ -94,25 +94,18 @@ void Enemy::Fire() {
 	Vector3 worldPlayer = player_->GetWorldPosition();
 	// 敵キャラのワールド座標を取得する
 	Vector3 worldEnemy = GetWorldPosition();
-
 	// 敵キャラ→自キャラの差分ベクトルを求める
-	Vector3 differenceVector;
-	differenceVector.x = worldPlayer.x - worldEnemy.x;
-	differenceVector.y = worldPlayer.y - worldEnemy.y;
-	differenceVector.z = worldPlayer.z - worldEnemy.z;
-
+	Vector3 velocity = Subtract(worldPlayer, worldEnemy);
 	// 正規化
-	Vector3 normarizeVector;
-	normarizeVector = Normalize(differenceVector);
-
+	velocity = Normalize(velocity);
 	// ベクトルの長さを速さに合わせる
-	Vector3 velocity;
-	velocity.x = normarizeVector.x * kBulletSpeed;
-	velocity.y = normarizeVector.y * kBulletSpeed;
-	velocity.z = normarizeVector.z * kBulletSpeed;
+	velocity.x *= kBulletSpeed;
+	velocity.y *= kBulletSpeed;
+	velocity.z *= kBulletSpeed;
 
 	// 弾を生成し、初期化
 	EnemyBullet* newBullet = new EnemyBullet();
+	newBullet->SetPlayer(player_);
 	newBullet->Initialize(model_, worldTransform_.translation_, velocity);
 
 	// 弾を登録する
