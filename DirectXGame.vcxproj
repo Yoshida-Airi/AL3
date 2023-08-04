@@ -63,7 +63,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)2d;$(ProjectDir)3d;$(ProjectDir)audio;$(ProjectDir)base;$(ProjectDir)input;$(ProjectDir)scene;$(ProjectDir)math;$(ProjectDir)Object;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)2d;$(ProjectDir)3d;$(ProjectDir)audio;$(ProjectDir)base;$(ProjectDir)input;$(ProjectDir)scene;$(ProjectDir)math;$(ProjectDir)Object;$(ProjectDir)Object\Player;$(ProjectDir)Object\Enemy;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
@@ -86,7 +86,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)2d;$(ProjectDir)3d;$(ProjectDir)audio;$(ProjectDir)base;$(ProjectDir)input;$(ProjectDir)scene;$(ProjectDir)math;$(ProjectDir)Object;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)2d;$(ProjectDir)3d;$(ProjectDir)audio;$(ProjectDir)base;$(ProjectDir)input;$(ProjectDir)scene;$(ProjectDir)math;$(ProjectDir)Object;$(ProjectDir)Object\Player;$(ProjectDir)Object\Enemy;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <Optimization>MinSpace</Optimization>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -109,15 +109,15 @@
     <ClCompile Include="2d\ImGuiManager.cpp" />
     <ClCompile Include="base\DirectXCommon.cpp" />
     <ClCompile Include="base\WinApp.cpp" />
-    <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="EnemyStateApproach.cpp" />
-    <ClCompile Include="EnemyStateLeave.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="MathUtility.cpp" />
-    <ClCompile Include="PlayerBullet.cpp" />
-    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="math\MathUtility.cpp" />
+    <ClCompile Include="math\WorldTransformEx.cpp" />
+    <ClCompile Include="Object\Enemy\Enemy.cpp" />
+    <ClCompile Include="Object\Player\Player.cpp" />
+    <ClCompile Include="Object\Player\PlayerBullet.cpp" />
+    <ClCompile Include="scene\EnemyStateApproach.cpp" />
+    <ClCompile Include="scene\EnemyStateLeave.cpp" />
     <ClCompile Include="scene\GameScene.cpp" />
-    <ClCompile Include="WorldTransformEx.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="2d\ImGuiManager.h" />
@@ -142,19 +142,19 @@
     <ClInclude Include="base\SafeDelete.h" />
     <ClInclude Include="base\TextureManager.h" />
     <ClInclude Include="base\WinApp.h" />
-    <ClInclude Include="Enemy.h" />
-    <ClInclude Include="EnemyStateApproach.h" />
-    <ClInclude Include="EnemyStateLeave.h" />
-    <ClInclude Include="IEnemyState.h" />
     <ClInclude Include="input\Input.h" />
-    <ClInclude Include="MathUtility.h" />
-    <ClInclude Include="player.h" />
-    <ClInclude Include="PlayerBullet.h" />
+    <ClInclude Include="math\MathUtility.h" />
     <ClInclude Include="math\Matrix4x4.h" />
     <ClInclude Include="math\Vector2.h" />
     <ClInclude Include="math\Vector3.h" />
     <ClInclude Include="math\Vector4.h" />
+    <ClInclude Include="Object\Enemy\Enemy.h" />
+    <ClInclude Include="Object\Player\player.h" />
+    <ClInclude Include="Object\Player\PlayerBullet.h" />
+    <ClInclude Include="scene\EnemyStateApproach.h" />
+    <ClInclude Include="scene\EnemyStateLeave.h" />
     <ClInclude Include="scene\GameScene.h" />
+    <ClInclude Include="scene\IEnemyState.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\TerrainPS.hlsl">

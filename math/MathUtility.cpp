@@ -1,6 +1,5 @@
 #pragma once
 #include "MathUtility.h"
-#include <Vector.h>
 #include <WorldTransform.h>
 #include <assert.h>
 #include <cmath>
