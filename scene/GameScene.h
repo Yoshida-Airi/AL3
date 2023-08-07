@@ -11,6 +11,7 @@
 #include "WorldTransform.h"
 #include"DebugCamera.h"
 #include"Enemy.h"
+#include"CollisionManager.h"
 
 /// <summary>
 /// ゲームシーン
@@ -49,6 +50,10 @@ private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
 	Audio* audio_ = nullptr;
+
+	//当たり判定処理
+	CollisionManager* colliderManager_ = nullptr;
+
 	// 自キャラ
 	Player* player_ = nullptr;
 	//敵キャラ
@@ -67,15 +72,4 @@ private: // メンバ変数
 	// ビュープロジェクション
 	ViewProjection viewProjection_;
 
-	/// <summary>
-	/// 衝突判定と応答
-	/// </summary>
-	void ChackAllCollisions();
-
-	/// <summary>
-	/// コライダー2つの衝突判定と応答
-	/// </summary>
-	/// <param name="colliderA">コライダーA</param>
-	/// <param name="colliderB">コライダーB</param>
-	void CheakCollisionPair(Collider* colliderA, Collider* colliderB);
 };
