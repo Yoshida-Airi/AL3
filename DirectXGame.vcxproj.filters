@@ -87,12 +87,6 @@
     <ClCompile Include="2d\ImGuiManager.cpp">
       <Filter>ソース ファイル\2d</Filter>
     </ClCompile>
-    <ClCompile Include="WorldAffinMatix.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="WorldTransformEx.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Object\Enemy\Enemy.cpp">
       <Filter>ソース ファイル\Object\Enemy</Filter>
     </ClCompile>
@@ -105,8 +99,17 @@
     <ClCompile Include="Object\Player\PlayerBullet.cpp">
       <Filter>ソース ファイル\Object\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Object\Enemy\TimedCall.cpp">
-      <Filter>ソース ファイル\Object\Enemy</Filter>
+    <ClCompile Include="Collider.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="math\MathUtility.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="math\WorldTransformEx.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\TimedCall.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -194,9 +197,6 @@
     <ClInclude Include="2d\ImGuiManager.h">
       <Filter>ヘッダー ファイル\2d</Filter>
     </ClInclude>
-    <ClInclude Include="WorldAffinMatrix.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Object\Enemy\Enemy.h">
       <Filter>ヘッダー ファイル\Object\Enemy</Filter>
     </ClInclude>
@@ -209,8 +209,17 @@
     <ClInclude Include="Object\Player\PlayerBullet.h">
       <Filter>ヘッダー ファイル\Object\Player</Filter>
     </ClInclude>
-    <ClInclude Include="Object\Enemy\TimedCall.h">
-      <Filter>ヘッダー ファイル\Object\Enemy</Filter>
+    <ClInclude Include="Collider.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="math\MathUtility.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\TimedCall.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionConfig.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -7,6 +7,7 @@
 #include <list>
 
 #include"Collider.h"
+#include"CollisionConfig.h"
 
 class Enemy;  // 前方宣言
 class Player; // 自機クラスの前方宣言

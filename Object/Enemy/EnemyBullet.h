@@ -5,6 +5,7 @@
 #include"player.h"
 
 #include"Collider.h"
+#include"CollisionConfig.h"
 
 /// <summary>
 /// 敵の弾

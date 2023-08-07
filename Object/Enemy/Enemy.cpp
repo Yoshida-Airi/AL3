@@ -24,6 +24,12 @@ void Enemy::Initialize(Model* model, const Vector3& position) {
 	// NULLポインタチェック
 	assert(model);
 
+	// 衝突属性を設定
+	SetCollisionAttribute(kCollisionAttributeEnemy);
+	// 衝突対象を自分の属性以外に設定
+	SetCollisionMask(kCollisionAttributePlayer);
+
+
 	model_ = model;
 
 	// テクスチャ読み込み

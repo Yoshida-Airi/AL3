@@ -139,39 +139,61 @@ void GameScene::ChackAllCollisions() {
 	// 敵弾リストの取得
 	const std::list<EnemyBullet*>& enemyBullets = enemy_->GetBullet();
 
-#pragma region 自キャラと敵弾の当たり判定
 
-	// 敵弾全てについて
-	for (EnemyBullet* enemyBullet : enemyBullets) {
-		// ペアの衝突判定
-		CheakCollisionPair(player_, enemyBullet);
+	//コライダー
+	std::list<Collider*> colliders_;
+
+	//コライダーをリストに登録
+	colliders_.push_back(player_);
+	colliders_.push_back(enemy_);
+
+	//自弾全てについて
+	for (PlayerBullet* playerBullet : playerBullets)
+	{
+		colliders_.push_back(playerBullet);
 	}
 
-#pragma endregion
-
-#pragma region 自弾と敵キャラの当たり判定
-
-	// 敵弾全てについて
-	for (PlayerBullet* bullet : playerBullets) {
-		// ペアの衝突判定
-		CheakCollisionPair(enemy_, bullet);
+	//敵弾全てについて
+	for (EnemyBullet* enemyBullet : enemyBullets)
+	{
+		colliders_.push_back(enemyBullet);
 	}
 
-#pragma endregion
+	//リスト内のペアを総当たり
+	std::list<Collider*>::iterator itrA = colliders_.begin();
+	for (; itrA != colliders_.end(); ++itrA)
+	{
+		//イテレータAからコライダーAを取得する
+		Collider* colliderA = *itrA;
 
-#pragma region 自弾と敵弾の当たり判定
+		//イテレータBはイテレータAの次の要素から回す(重複判定を回避)
 
-	for (PlayerBullet* playerBullet : playerBullets) {
-		for (EnemyBullet* enemyBullet : enemyBullets) {
-			// ペアの衝突判定
-			CheakCollisionPair(playerBullet, enemyBullet);
+		std::list<Collider*>::iterator itrB = itrA;
+		itrB++;
+
+		for (; itrB != colliders_.end(); ++itrB)
+		{
+			// イテレータBからコライダーBを取得する
+			Collider* colliderB = *itrB;
+
+			//ペアの当たり判定
+			//コライダーAトコライダーBの当たり判定
+			CheakCollisionPair(colliderA, colliderB);
+
 		}
 	}
 
-#pragma endregion
 }
 
 void GameScene::CheakCollisionPair(Collider* colliderA, Collider* colliderB) {
+
+	//衝突フィルタリング
+	if (colliderA->GetCollisionAttribute() != colliderB->GetCollisionMask() ||
+		colliderB->GetCollisionAttribute() != colliderA->GetCollisionMask())
+	{
+		return;
+	}
+
 	// コライダーAのワールド座標を取得
 	Vector3 posA = colliderA->GetWorldPosition();
 	// コライダーBのワールド座標を取得

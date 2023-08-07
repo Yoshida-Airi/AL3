@@ -6,6 +6,7 @@
 #include "PlayerBullet.h"
 
 #include"Collider.h"
+#include"CollisionConfig.h"
 
 #include <list>
 /// <summary>
