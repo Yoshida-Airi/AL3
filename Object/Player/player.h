@@ -5,11 +5,14 @@
 #include "Model.h"
 #include "PlayerBullet.h"
 
+#include"Collider.h"
+
 #include <list>
 /// <summary>
 /// 自キャラ
 /// </summary>
-class Player {
+class Player : public Collider
+{
 public:
 	/// <summary>
 	/// デストラクタ
@@ -43,12 +46,12 @@ public:
 	/// ワールド座標を取得
 	/// </summary>
 	/// <returns>プレイヤーのワールド座標</returns>
-	Vector3 GetWorldPosition();
+	Vector3 GetWorldPosition() override;
 
 	/// <summary>
 	/// 衝突を検出したら呼び出されるコールバック関数
 	/// </summary>
-	void OnCollision();
+	void OnCollision() override;
 
 	//弾リストを取得
 	const std::list<PlayerBullet*>& GetBullets() const { return bullets_; };

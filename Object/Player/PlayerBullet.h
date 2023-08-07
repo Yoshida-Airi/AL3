@@ -3,10 +3,13 @@
 #include <Model.h>
 #include <WorldTransform.h>
 
+#include"Collider.h"
+
 /// <summary>
 /// 自キャラの弾
 /// </summary>
-class PlayerBullet {
+class PlayerBullet : public Collider
+{
 public:
 	/// <summary>
 	/// 初期化
@@ -29,12 +32,12 @@ public:
 	/// <summary>
 	/// 衝突を検出したら呼び出されるコールバック関数
 	/// </summary>
-	void OnCollision();
+	void OnCollision() override;
 
 	bool IsDead() const { return isDead_; };
 
 	// ワールド座標を取得
-	Vector3 GetWorldPosition();
+	Vector3 GetWorldPosition() override;
 
 private:
 	// ワールド変換データ

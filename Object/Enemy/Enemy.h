@@ -6,10 +6,13 @@
 #include <cassert>
 #include <list>
 
+#include"Collider.h"
+
 class Enemy;  // 前方宣言
 class Player; // 自機クラスの前方宣言
 
-class BaseEnemyState {
+class BaseEnemyState
+{
 protected:
 	Enemy* enemy_ = {0};
 
@@ -33,7 +36,7 @@ public:
 	void update(Enemy* pEnemy, Vector3& velocity);
 };
 
-class Enemy {
+class Enemy : public Collider {
 public:
 	// コンストラクタ
 	Enemy();
@@ -86,12 +89,12 @@ public:
 	/// ワールド座標取得
 	/// </summary>
 	/// <returns>敵キャラのワールド座標</returns>
-	Vector3 GetWorldPosition();
+	Vector3 GetWorldPosition() override;
 		
 	/// <summary>
 	/// 衝突を検出したら呼び出されるコールバック関数
 	/// </summary>
-	void OnCollision();
+	void OnCollision() override;
 
 	//弾リストを取得
 	const std::list<EnemyBullet*>& GetBullet() { return bullets_; };

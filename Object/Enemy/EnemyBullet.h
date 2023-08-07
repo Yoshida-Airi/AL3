@@ -4,11 +4,13 @@
 #include <WorldTransform.h>
 #include"player.h"
 
+#include"Collider.h"
 
 /// <summary>
 /// 敵の弾
 /// </summary>
-class EnemyBullet {
+class EnemyBullet : public Collider
+{
 public:
 	/// <summary>
 	/// デストラクタ
@@ -44,7 +46,7 @@ public:
 	bool IsDead() const { return isDead_; };
 
 	// ワールド座標を取得
-	Vector3 GetWorldPosition();
+	Vector3 GetWorldPosition() override;
 
 private:
 	// ワールド変換データ
