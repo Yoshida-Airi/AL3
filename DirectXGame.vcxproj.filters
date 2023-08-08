@@ -70,12 +70,6 @@
     <Filter Include="ソース ファイル\Object\Enemy">
       <UniqueIdentifier>{1611825e-091b-49a5-8467-8aef6044dfba}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Object\Collider">
-      <UniqueIdentifier>{0a54f67e-8725-4c09-93e5-718780aa9d00}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Object\Collider">
-      <UniqueIdentifier>{3f1f7a0f-e563-43f9-8695-51244097b875}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -114,11 +108,11 @@
     <ClCompile Include="Utils\TimedCall.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Object\Collider\CollisionManager.cpp">
-      <Filter>ソース ファイル\Object\Collider</Filter>
+    <ClCompile Include="CollisionManager.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Object\Collider\Collider.cpp">
-      <Filter>ソース ファイル\Object\Collider</Filter>
+    <ClCompile Include="Collider.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -224,14 +218,14 @@
     <ClInclude Include="Utils\TimedCall.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Object\Collider\CollisionManager.h">
-      <Filter>ヘッダー ファイル\Object\Collider</Filter>
+    <ClInclude Include="Collider.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Object\Collider\CollisionConfig.h">
-      <Filter>ヘッダー ファイル\Object\Collider</Filter>
+    <ClInclude Include="CollisionConfig.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Object\Collider\Collider.h">
-      <Filter>ヘッダー ファイル\Object\Collider</Filter>
+    <ClInclude Include="CollisionManager.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
