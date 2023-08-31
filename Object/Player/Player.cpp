@@ -26,9 +26,16 @@ void Player::Initialize(Model* model, uint32_t textureHandle,Vector3 positon) {
 
 	//2Dレティクル用テクスチャ取得
 	uint32_t textureReticle = TextureManager::Load("reticle.png");
+	uint32_t textureHP = TextureManager::Load("Heart.png");
+
 	//スプライト生成
 	sprite2DReticle_ =
 	    Sprite::Create(textureReticle, {640.0f, 360.0f}, {1.0f, 1.0f, 1.0f, 1.0f}, {0.5f, 0.5f});
+
+	HPSprite1_ = Sprite::Create(textureHP, {36.0f, 40.0f}, {1.0f, 1.0f, 1.0f, 1.0f}, {0.5f, 0.5f});
+	HPSprite2_ = Sprite::Create(textureHP, {64.0f, 40.0f}, {1.0f, 1.0f, 1.0f, 1.0f}, {0.5f, 0.5f});
+	HPSprite3_ = Sprite::Create(textureHP, {92.0f, 40.0f}, {1.0f, 1.0f, 1.0f, 1.0f}, {0.5f, 0.5f});
+
 
 
 	// シングルトンインスタンスを取得する
@@ -107,6 +114,9 @@ void Player::Attack() {
 }
 
 void Player::Update(const ViewProjection viewProjection_) {
+
+	//HPの設定
+	SetHp();
 
 	// キャラクターの移動ベクトル
 	Vector3 move = {0, 0, 0};
@@ -216,6 +226,8 @@ void Player::DrawUI()
 { 
 	//照準描画
 	sprite2DReticle_->Draw();
+	DrawHP();
+
 }
 
 // ワールド座標を取得
@@ -395,5 +407,33 @@ void Player::SettingMouse(const ViewProjection viewProjection_)
 	    worldTransform3DReticle_.translation_.y, worldTransform3DReticle_.translation_.z);
 	ImGui::End();
 
+
+}
+
+void Player::SetHp() {
+	if (Hit == true) {
+		HP -= 1;
+	}
+}
+
+void Player::DrawHP()
+{
+	if (HP == 3)
+	{
+		HPSprite1_->Draw();
+		HPSprite2_->Draw();
+		HPSprite3_->Draw();
+	}
+
+	if (HP == 2)
+	{
+		HPSprite1_->Draw();
+		HPSprite2_->Draw();
+	}
+
+	if (HP == 1)
+	{
+		HPSprite1_->Draw();
+	}
 
 }

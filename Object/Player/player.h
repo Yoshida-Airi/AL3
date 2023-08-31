@@ -89,7 +89,12 @@ private:
 	
 	//2Dレティクル用スプライト
 	Sprite* sprite2DReticle_ = nullptr;
+	Sprite* HPSprite1_ = {};
+	Sprite* HPSprite2_ = {};
+	Sprite* HPSprite3_ = {};
 
+	int HP = 3;
+	bool Hit = false;
 
 private:
 
@@ -106,5 +111,13 @@ private:
 	/// マウスの設定
 	/// </summary>
 	void SettingMouse(const ViewProjection viewProjection_);
+
+	/// <summary>
+	/// HPの設定
+	/// </summary>
+	void SetHp();
+
+	//HPの描画
+	void DrawHP();
 
 };
