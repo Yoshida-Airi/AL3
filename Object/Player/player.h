@@ -22,7 +22,7 @@ public:
 	/// </summary>
 	/// <param name="model">モデル</param>
 	/// <param name="textureHandle">テクスチャハンドル</param>
-	void Initialize(Model* model, uint32_t textureHandle,Vector3 positon);
+	void Initialize(Model* model, Model* bulletModel, Vector3 positon);
 
 	/// <summary>
 	/// 更新
@@ -71,6 +71,11 @@ public:
 	/// <param name="parent">親となるワールドトランスフォーム</param>
 	void SetParent(const WorldTransform* parent);
 
+	bool GetAlive() const { return Alive; };
+
+	void Reset();
+			
+
 private:
 	// ワールド変換データ
 	WorldTransform worldTransform_;
@@ -78,6 +83,7 @@ private:
 	WorldTransform worldTransform3DReticle_;
 	// モデル
 	Model* model_ = nullptr;
+	Model* bulletModel_ = nullptr;
 	// テクスチャハンドル
 	uint32_t textureHandle_ = 0u;
 	// キーボード入力
@@ -94,7 +100,7 @@ private:
 	Sprite* HPSprite3_ = {};
 
 	int HP = 3;
-	bool Hit = false;
+	bool Alive = true;
 
 private:
 

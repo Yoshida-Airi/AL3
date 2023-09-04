@@ -5,6 +5,7 @@
 #include<iostream>
 #include<fstream>
 #include<string>
+#include"Audio.h"
 
 GameScene::GameScene() {}
 
@@ -36,7 +37,11 @@ void GameScene::Initialize() {
 
 	dxCommon_ = DirectXCommon::GetInstance();
 	input_ = Input::GetInstance();
-	audio_ = Audio::GetInstance();
+
+
+	
+	
+	scene_ = GAME;
 
 	// 敵のデータ取得
 	LoadEnemyPopData();
@@ -44,11 +49,15 @@ void GameScene::Initialize() {
 
 	// ファイル名を指定してテクスチャを読み込む
 	textureHandle_ = TextureManager::Load("Sample.png");
-
+	
 
 	// 3Dモデルデータの生成
 	model_ = Model::Create();
 	modelSkydome_ = Model::CreateFromOBJ("skydome", true);
+	modelPlayer_ = Model::CreateFromOBJ("player", true);
+	modelPlayerBullet_ = Model::CreateFromOBJ("cube", true);
+	modelEnemyBullet_ = Model::CreateFromOBJ("PlayerBullet", true);
+	modelEnemy_ = Model::CreateFromOBJ("Enemy", true);
 
 	//レティクルのテクスチャ
 	TextureManager::Load("reticle.png");
@@ -71,7 +80,7 @@ void GameScene::Initialize() {
 	railCamera_->Initialize(worldTransform_, worldTransform_.rotation_);
 	// 自キャラの初期化
 	Vector3 playerPosition(0, 0, 30);
-	player_->Initialize(model_, textureHandle_, playerPosition);
+	player_->Initialize(modelPlayer_, modelPlayerBullet_, playerPosition);
 
 	
 
@@ -89,6 +98,7 @@ void GameScene::Initialize() {
 
 void GameScene::Update() {
 
+	ifAudio = true;
 
 	viewProjection_.UpdateMatrix();
 
@@ -139,6 +149,19 @@ void GameScene::Update() {
 	viewProjection_.matView = railCamera_->GetViewProjection().matView;
 	viewProjection_.matProjection = railCamera_->GetViewProjection().matProjection;
 	viewProjection_.TransferMatrix();
+
+
+
+	if (player_->GetAlive()==false)
+	{
+		playerAlive_ = false;
+	}
+
+	if (playerAlive_ == false)
+	{
+
+		scene_ = OVER;
+	}
 
 }
 
@@ -217,7 +240,7 @@ void GameScene::SpawnEnemy(const Vector3& position)
 	enemy->SetPlayer(player_);
 	enemy->SetGameScene(this);
 	// 敵の初期化
-	enemy->Initialize(model_, position);
+	enemy->Initialize(modelEnemyBullet_, modelEnemy_, position);
 
 	// リストに登録
 	enemys_.push_back(enemy);
@@ -397,4 +420,11 @@ void GameScene::ChackAllCollisions() {
 	}
 
 #pragma endregion
+}
+
+void GameScene::Reset() 
+{ 
+	
+	player_->Reset();
+
 }

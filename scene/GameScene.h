@@ -16,6 +16,9 @@
 #include "WorldTransform.h"
 #include "WorldTransform.h"
 #include<sstream>
+
+#include"SceneState.h"
+
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -69,6 +72,9 @@ public: // メンバ関数
 	/// <summary>
 	void UpdateEnemyPopCommands();
 
+	Scene GetScene() const { return scene_; };
+
+	void Reset();
 
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
@@ -87,6 +93,8 @@ private: // メンバ変数
 	// 敵弾リスト
 	std::list<EnemyBullet*> enemyBullets_;
 
+	
+
 	////デバッグカメラ
 	// DebugCamera* debugCamera_ = nullptr;
 	////デバッグカメラ有効
@@ -94,11 +102,15 @@ private: // メンバ変数
 
 	// テクスチャを読み込む
 	uint32_t textureHandle_ = 0;
-
+	
 
 	// 3Dモデルデータ
 	Model* model_ = nullptr;
 	Model* modelSkydome_ = nullptr;
+	Model* modelPlayer_ = nullptr;
+	Model* modelPlayerBullet_ = nullptr;
+	Model* modelEnemyBullet_ = nullptr;
+	Model* modelEnemy_ = nullptr;
 
 	// ワールドトランスフォーム
 	WorldTransform worldTransform_;
@@ -111,6 +123,15 @@ private: // メンバ変数
 	bool isWaitTime_ = true;	//待機中フラグ　true::待機中
 	int32_t waitTimer_ = 0;	//待機タイマー
 
+	Scene scene_;
+
+	bool playerAlive_ = true;
+
+	uint32_t soundData2_ = 0;
+
+	bool sceneState_ = false;
+
+	bool ifAudio = false;
 
 private:
 	/// <summary>

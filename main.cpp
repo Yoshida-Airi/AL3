@@ -6,6 +6,9 @@
 #include "PrimitiveDrawer.h"
 #include "TextureManager.h"
 #include "WinApp.h"
+#include"SceneState.h"
+#include"TitleScene.h"
+#include"GameOverScene.h"
 
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
@@ -16,11 +19,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	Audio* audio = nullptr;
 	AxisIndicator* axisIndicator = nullptr;
 	PrimitiveDrawer* primitiveDrawer = nullptr;
+
+	TitleScene* titleScene = nullptr;
 	GameScene* gameScene = nullptr;
+	GameOverScene* gameoverScene = nullptr;
 
 	// ゲームウィンドウの作成
 	win = WinApp::GetInstance();
-	win->CreateGameWindow(L"LE2B_28_ヨシダ_アイリ_AL3");
+	win->CreateGameWindow(L"LE2B_28_ヨシダ_アイリ_タコの惑星");
 
 	// DirectX初期化処理
 	dxCommon = DirectXCommon::GetInstance();
@@ -57,9 +63,23 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	primitiveDrawer->Initialize();
 #pragma endregion
 
+	// シーン切り替え
+	Scene scene = TITLE;
+
+	//タイトルシーンの初期化
+	titleScene = new TitleScene();
+	titleScene->Initialize();
+
 	// ゲームシーンの初期化
 	gameScene = new GameScene();
 	gameScene->Initialize();
+
+	//ゲームオーバーシーンの初期化
+	gameoverScene = new GameOverScene();
+	gameoverScene->Initialize();
+
+	
+
 
 	// メインループ
 	while (true) {
@@ -72,19 +92,74 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		imguiManager->Begin();
 		// 入力関連の毎フレーム処理
 		input->Update();
-		// ゲームシーンの毎フレーム処理
-		gameScene->Update();
+
 		// 軸表示の更新
 		axisIndicator->Update();
-		// ImGui受付終了
-		imguiManager->End();
+		
+
 
 		// 描画開始
 		dxCommon->PreDraw();
-		// ゲームシーンの描画
-		gameScene->Draw();
-		// 軸表示の描画
-		axisIndicator->Draw();
+
+		//シーン遷移
+		switch (scene) 
+		{
+		case TITLE:
+
+			titleScene->Update();
+
+			titleScene->Draw();
+		
+			scene = titleScene->GetScene();
+
+
+			break;
+		case GAME:
+
+
+			// ゲームシーンの毎フレーム処理
+			gameScene->Update();
+
+			// ゲームシーンの描画
+			gameScene->Draw();
+
+			scene = gameScene->GetScene();
+
+			
+		
+			
+
+			break;
+		case CLEAR:
+			break;
+		case OVER:
+
+
+
+			gameoverScene->Update();
+			gameoverScene->Draw();
+			
+		
+			if (gameoverScene->GetState() == true)
+			{
+				return 0;
+			}
+
+			
+
+			break;
+		default:
+			break;
+		}
+
+	
+
+		// ImGui受付終了
+		imguiManager->End();
+	
+		//// 軸表示の描画
+		//axisIndicator->Draw();
+		
 		// プリミティブ描画のリセット
 		primitiveDrawer->Reset();
 		// ImGui描画

@@ -43,7 +43,7 @@ public:
 	// デストラクタ
 	~Enemy();
 
-	void Initialize(Model* model, const Vector3& position);
+	void Initialize(Model* model, Model* enemy, const Vector3& position);
 	void Update();
 	void Draw(const ViewProjection& viewProjection);
 
@@ -81,6 +81,8 @@ public:
 	
 	bool IsDead() const { return isDead_; };
 
+	void Reset();
+
 public: // 静的メンバ変数
 	// 発射間隔
 	static const int kFireInterval = 30;
@@ -90,6 +92,7 @@ private: // メンバ変数
 	WorldTransform worldTransform_;
 	// モデル
 	Model* model_ = nullptr;
+	Model* enemyModel_ = nullptr;
 	// テクスチャハンドル
 	uint32_t textureHandle_ = 0u;
 	// 速度

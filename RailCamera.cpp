@@ -34,28 +34,28 @@ void RailCamera::Update()
 	viewProjection_.matView = Inverse(worldTransform_.matWorld_);
 
 	
-	//カメラの座標を画面表示する処理
-	ImGui::Begin("Camera");
-	float CameraPos[] = {
-	    worldTransform_.translation_.x, worldTransform_.translation_.y,
-	    worldTransform_.translation_.z};
+	////カメラの座標を画面表示する処理
+	//ImGui::Begin("Camera");
+	//float CameraPos[] = {
+	//    worldTransform_.translation_.x, worldTransform_.translation_.y,
+	//    worldTransform_.translation_.z};
 
-	ImGui::SliderFloat3("position", CameraPos, 30.0f, -30.0f);
+	//ImGui::SliderFloat3("position", CameraPos, 30.0f, -30.0f);
 
-	worldTransform_.translation_.x = CameraPos[0];
-	worldTransform_.translation_.y = CameraPos[1];
-	worldTransform_.translation_.z = CameraPos[2];
+	//worldTransform_.translation_.x = CameraPos[0];
+	//worldTransform_.translation_.y = CameraPos[1];
+	//worldTransform_.translation_.z = CameraPos[2];
 
-	float CameraRotate[] = {
-	    worldTransform_.rotation_.x, worldTransform_.rotation_.y, worldTransform_.rotation_.z};
+	//float CameraRotate[] = {
+	//    worldTransform_.rotation_.x, worldTransform_.rotation_.y, worldTransform_.rotation_.z};
 
-	//カメラの角度
-	ImGui::SliderFloat3("Rotate", CameraRotate, 30.0f, -30.0f);
+	////カメラの角度
+	//ImGui::SliderFloat3("Rotate", CameraRotate, 30.0f, -30.0f);
 
-	worldTransform_.rotation_.x = CameraRotate[0];
-	worldTransform_.rotation_.y = CameraRotate[1];
-	worldTransform_.rotation_.z = CameraRotate[2];
-	
-	ImGui::End();
+	//worldTransform_.rotation_.x = CameraRotate[0];
+	//worldTransform_.rotation_.y = CameraRotate[1];
+	//worldTransform_.rotation_.z = CameraRotate[2];
+	//
+	//ImGui::End();
 
 }

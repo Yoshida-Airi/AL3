@@ -10,13 +10,14 @@ Player::~Player() {
 	delete sprite2DReticle_;
 }
 
-void Player::Initialize(Model* model, uint32_t textureHandle,Vector3 positon) {
+void Player::Initialize(Model* model,Model*bulletModel, Vector3 positon) {
 	// NULLポインタチェック
 	assert(model);
+	assert(bulletModel);
 
 	// 引数として受け取ったデータをメンバ変数に記録する
 	model_ = model;
-	textureHandle_ = textureHandle;
+	bulletModel_ = bulletModel;
 
 	// ワールド変換の初期化
 	worldTransform_.Initialize();
@@ -83,7 +84,7 @@ void Player::Attack() {
 
 			// 弾を生成し、初期化
 			PlayerBullet* newBullet = new PlayerBullet();
-			newBullet->Initialize(model_, GetWorldPosition(), velocity);
+			newBullet->Initialize(bulletModel_, GetWorldPosition(), velocity);
 
 			// 弾を登録する
 			bullets_.push_back(newBullet);
@@ -106,7 +107,7 @@ void Player::Attack() {
 
 		// 弾を生成し、初期化
 		PlayerBullet* newBullet = new PlayerBullet();
-		newBullet->Initialize(model_, GetWorldPosition(), velocity);
+		newBullet->Initialize(bulletModel_, GetWorldPosition(), velocity);
 
 		// 弾を登録する
 		bullets_.push_back(newBullet);
@@ -193,32 +194,32 @@ void Player::Update(const ViewProjection viewProjection_) {
 
 	worldTransform_.TransferMatrix();
 
-	// キャラクターの座標を画面表示する処理
-	ImGui::Begin("Debug1");
-	float playerPos[] = {
-	    worldTransform_.translation_.x, worldTransform_.translation_.y,
-	    worldTransform_.translation_.z};
-	// float3スライダー
-	ImGui::SliderFloat3("player", playerPos, 100.0f, -100.0f);
+	//// キャラクターの座標を画面表示する処理
+	//ImGui::Begin("Debug1");
+	//float playerPos[] = {
+	//    worldTransform_.translation_.x, worldTransform_.translation_.y,
+	//    worldTransform_.translation_.z};
+	//// float3スライダー
+	//ImGui::SliderFloat3("player", playerPos, 100.0f, -100.0f);
 
-	ImGui::Text("DebugCamera : C");
-	ImGui::Text("Move : CursorKey");
+	//ImGui::Text("DebugCamera : C");
+	//ImGui::Text("Move : CursorKey");
 
-	worldTransform_.translation_.x = playerPos[0];
-	worldTransform_.translation_.y = playerPos[1];
-	worldTransform_.translation_.z = playerPos[2];
+	//worldTransform_.translation_.x = playerPos[0];
+	//worldTransform_.translation_.y = playerPos[1];
+	//worldTransform_.translation_.z = playerPos[2];
 
-	ImGui::End();
+	//ImGui::End();
 }
 
 void Player::Draw(ViewProjection viewProjection_) {
-	model_->Draw(worldTransform_, viewProjection_, textureHandle_);
+	model_->Draw(worldTransform_, viewProjection_);
 
 	for (PlayerBullet* bullet : bullets_) {
 		bullet->Draw(viewProjection_);
 	}
 
-	model_->Draw(worldTransform3DReticle_, viewProjection_);
+	bulletModel_->Draw(worldTransform3DReticle_, viewProjection_);
 
 }
 
@@ -258,7 +259,9 @@ Vector3 Player::GetReticleWorldPosition()
 
 void Player::OnCollision()
 {
-
+	
+	HP -= 1;
+	
 }
 
 //親子関係を結ぶ
@@ -300,14 +303,14 @@ void Player::SettingReticle(const ViewProjection viewProjection_)
 	// スプライトのレティクルに座標設定
 	sprite2DReticle_->SetPosition(Vector2(positionReticle.x, positionReticle.y));
 
-	ImGui::Begin("Player");
-	ImGui::Text(
-	    "2DReticle:(%f,%f)", sprite2DReticle_->GetPosition().x, sprite2DReticle_->GetPosition().y);
+	//ImGui::Begin("Player");
+	//ImGui::Text(
+	//    "2DReticle:(%f,%f)", sprite2DReticle_->GetPosition().x, sprite2DReticle_->GetPosition().y);
 
-	ImGui::Text(
-	    "3DReticle:(%+.2f,%+.2f,%+.2f)", worldTransform3DReticle_.translation_.x,
-	    worldTransform3DReticle_.translation_.y, worldTransform3DReticle_.translation_.z);
-	ImGui::End();
+	//ImGui::Text(
+	//    "3DReticle:(%+.2f,%+.2f,%+.2f)", worldTransform3DReticle_.translation_.x,
+	//    worldTransform3DReticle_.translation_.y, worldTransform3DReticle_.translation_.z);
+	//ImGui::End();
 
 
 }
@@ -397,22 +400,22 @@ void Player::SettingMouse(const ViewProjection viewProjection_)
 
 	worldTransform3DReticle_.UpdateMatrix();
 
-	ImGui::Begin("Player");
-	ImGui::Text(
-	    "2DReticle:(%f,%f)", sprite2DReticle_->GetPosition().x, sprite2DReticle_->GetPosition().y);
-	ImGui::Text("Near:(%+2f,%+2f,%+2f)", posNear.x, posNear.y, posNear.z);
-	ImGui::Text("Far:(%+2f,%+2f,%+2f)", posFar.x, posFar.y, posFar.z);
-	ImGui::Text(
-	    "3DReticle:(%+2f,%+2f,%+2f)", worldTransform3DReticle_.translation_.x,
-	    worldTransform3DReticle_.translation_.y, worldTransform3DReticle_.translation_.z);
-	ImGui::End();
+	//ImGui::Begin("Player");
+	//ImGui::Text(
+	//    "2DReticle:(%f,%f)", sprite2DReticle_->GetPosition().x, sprite2DReticle_->GetPosition().y);
+	//ImGui::Text("Near:(%+2f,%+2f,%+2f)", posNear.x, posNear.y, posNear.z);
+	//ImGui::Text("Far:(%+2f,%+2f,%+2f)", posFar.x, posFar.y, posFar.z);
+	//ImGui::Text(
+	//    "3DReticle:(%+2f,%+2f,%+2f)", worldTransform3DReticle_.translation_.x,
+	//    worldTransform3DReticle_.translation_.y, worldTransform3DReticle_.translation_.z);
+	//ImGui::End();
 
 
 }
 
 void Player::SetHp() {
-	if (Hit == true) {
-		HP -= 1;
+	if (HP == 0) {
+		Alive = false;
 	}
 }
 
@@ -435,5 +438,13 @@ void Player::DrawHP()
 	{
 		HPSprite1_->Draw();
 	}
+
+}
+
+void Player::Reset() {
+	this->HP = 3;
+	Alive = true;
+
+
 
 }

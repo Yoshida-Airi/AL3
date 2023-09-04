@@ -17,11 +17,12 @@ Enemy::~Enemy() {
 	}
 }
 
-void Enemy::Initialize(Model* model, const Vector3& position) {
+void Enemy::Initialize(Model* model,Model*enemy, const Vector3& position) {
 	// NULLポインタチェック
 	assert(model);
 
 	model_ = model;
+	enemyModel_ = enemy;
 
 	// テクスチャ読み込み
 	textureHandle_ = TextureManager::Load("black.png");
@@ -58,6 +59,12 @@ void Enemy::Update() {
 	}
 
 	worldTransform_.TransferMatrix();
+
+}
+
+void Enemy::Reset()
+{
+	
 
 }
 
@@ -106,7 +113,7 @@ void Enemy::Fire() {
 
 // 描画
 void Enemy::Draw(const ViewProjection& viewProjection) {
-	model_->Draw(worldTransform_, viewProjection, textureHandle_);
+	enemyModel_->Draw(worldTransform_, viewProjection);
 }
 
 

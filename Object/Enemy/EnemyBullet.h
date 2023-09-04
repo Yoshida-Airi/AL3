@@ -34,6 +34,8 @@ public:
 	/// <param name="viewProjection"></param>
 	void Draw(ViewProjection viewProjection);
 
+	void Reset();
+
 	/// <summary>
 	/// 衝突を検出したら呼び出されるコールバック関数
 	/// </summary>
