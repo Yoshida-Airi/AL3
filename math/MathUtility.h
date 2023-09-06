@@ -53,6 +53,10 @@ Vector3 Transform(const Vector3& vector, const Matrix4x4& matrix);
 
 
 // 回転(rotate)
+// 全軸の回転関数
+Matrix4x4 MakeRotateMatrix(const Vector3& radian);
+
+
 // x軸回転行列の関数
 Matrix4x4 MakeRotateXMatrix(float radian);
 

@@ -12,9 +12,12 @@
 #include "SafeDelete.h"
 #include "Skydome.h"
 #include "Sprite.h"
+#include"Ground.h"
+#include"FollowCamera.h"
+
 #include "ViewProjection.h"
 #include "WorldTransform.h"
-#include "WorldTransform.h"
+
 #include<sstream>
 /// <summary>
 /// ゲームシーン
@@ -47,27 +50,6 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
-	/// <summary>
-	/// 敵弾を追加する
-	/// </summary>
-	/// <param name="enemyBullet">敵弾</param>
-	void AddEnemyBullet(EnemyBullet* enemyBullet);
-
-	
-	/// <summary>
-	/// 敵の発生
-	/// </summary>
-	void SpawnEnemy(const Vector3& position);
-
-	/// <summary>
-	/// 敵発生データの読み込み
-	/// </summary>
-	void LoadEnemyPopData();
-
-	/// <summary>
-	/// 敵発生コマンドの更新
-	/// <summary>
-	void UpdateEnemyPopCommands();
 
 
 private: // メンバ変数
@@ -76,16 +58,10 @@ private: // メンバ変数
 	Audio* audio_ = nullptr;
 	// 自キャラ
 	Player* player_ = nullptr;
-	// 天球
-	Skydome* skydome_ = nullptr;
-	// レールカメラ
-	RailCamera* railCamera_ = nullptr;
-
-	// 敵リスト
-	std::list<Enemy*> enemys_;
-
-	// 敵弾リスト
-	std::list<EnemyBullet*> enemyBullets_;
+	
+	//カメラ
+	FollowCamera* camera_ = nullptr;
+	
 
 	////デバッグカメラ
 	// DebugCamera* debugCamera_ = nullptr;
@@ -98,25 +74,22 @@ private: // メンバ変数
 
 	// 3Dモデルデータ
 	Model* model_ = nullptr;
-	Model* modelSkydome_ = nullptr;
 
 	// ワールドトランスフォーム
 	WorldTransform worldTransform_;
 	// ビュープロジェクション
 	ViewProjection viewProjection_;
 
-	// 敵発生コマンド
-	std::stringstream enemyPopCommands;
 
 	bool isWaitTime_ = true;	//待機中フラグ　true::待機中
 	int32_t waitTimer_ = 0;	//待機タイマー
 
 
 private:
-	/// <summary>
-	/// 衝突判定と応答
-	/// </summary>
-	void ChackAllCollisions();
+	///// <summary>
+	///// 衝突判定と応答
+	///// </summary>
+	//void ChackAllCollisions();
 
 	
 };

@@ -62,9 +62,6 @@ public:
 	/// </summary>
 	void OnCollision();
 
-	//弾リストを取得
-	const std::list<PlayerBullet*>& GetBullets() const { return bullets_; };
-
 	/// <summary>
 	/// 親となるワールドトランスフォームをセット
 	/// </summary>
@@ -84,8 +81,7 @@ private:
 	Input* input_ = nullptr;
 	// ImGuiで値を入力する変数
 	float inputFloat3[3] = {0, 0, 0};
-	// 弾
-	std::list<PlayerBullet*> bullets_;
+	
 	
 	//2Dレティクル用スプライト
 	Sprite* sprite2DReticle_ = nullptr;

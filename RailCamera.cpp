@@ -9,6 +9,7 @@ void RailCamera::Initialize(WorldTransform worldTransform, Vector3& radian)
 	worldTransform_ = worldTransform;
 	worldTransform_.rotation_ = radian;
 
+	
 	worldTransform_.translation_.z = -10;
 	//ビュープロジェクションの初期化
 	viewProjection_.farZ = 1000;
@@ -22,7 +23,7 @@ void RailCamera::Initialize(WorldTransform worldTransform, Vector3& radian)
 void RailCamera::Update()
 {
 	//ワールドトランスフォームの座標の数値を加算したりする(移動)
-	worldTransform_.translation_.z += 0.03f;
+	worldTransform_.translation_.z += 0.00f;
 	//ワールドトランスフォームの角度の数値を加算したりする(回転)
 	/*worldTransform_.rotation_.x += 0.001f;*/
 	//ワールドトランスフォームのワールド行列再計算

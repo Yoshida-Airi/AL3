@@ -328,6 +328,21 @@ Vector3 Transform(const Vector3& vector, const Matrix4x4& matrix) {
 }
 
 // 回転(rotate)
+
+Matrix4x4 MakeRotateMatrix(const Vector3& radian) {
+	Matrix4x4 rotateX{};
+	Matrix4x4 rotateY{};
+	Matrix4x4 rotateZ{};
+	rotateX = MakeRotateXMatrix(radian.x);
+	rotateY = MakeRotateYMatrix(radian.y);
+	rotateZ = MakeRotateZMatrix(radian.z);
+
+	Matrix4x4 result{};
+	result = Multiply(rotateX, Multiply(rotateY, rotateZ));
+
+	return result;
+}
+
 // x軸回転行列の関数
 Matrix4x4 MakeRotateXMatrix(float radian) {
 	Matrix4x4 resultMakeRotatedMatrix;
