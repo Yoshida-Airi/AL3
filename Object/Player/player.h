@@ -47,11 +47,6 @@ public:
 	/// <returns>プレイヤーのワールド座標</returns>
 	Vector3 GetWorldPosition();
 
-	/// <summary>
-	/// レティクルのワールド座標を取得
-	/// </summary>
-	/// <returns></returns>
-	Vector3 GetReticleWorldPosition();
 
 	/// <summary>
 	/// 衝突を検出したら呼び出されるコールバック関数
@@ -67,8 +62,7 @@ public:
 private:
 	// ワールド変換データ
 	WorldTransform worldTransform_;
-	// 3Dレティクル用ワールドトランスフォーム
-	WorldTransform worldTransform3DReticle_;
+	
 	// モデル
 	Model* model_ = nullptr;
 	// テクスチャハンドル
@@ -78,21 +72,12 @@ private:
 	// ImGuiで値を入力する変数
 	float inputFloat3[3] = {0, 0, 0};
 	
-	
-	//2Dレティクル用スプライト
-	Sprite* sprite2DReticle_ = nullptr;
-
 
 private:
 
 	// 攻撃
 	void Attack();
 
-	/// <summary>
-	/// レティクルの設定
-	/// </summary>
-	/// <param name="viewProjection_"></param>
-	void SettingReticle(const ViewProjection viewProjection_);
 
 	/// <summary>
 	/// マウスの設定
