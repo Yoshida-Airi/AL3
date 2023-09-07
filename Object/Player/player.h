@@ -40,10 +40,6 @@ public:
 	/// </summary>
 	void DrawUI();
 
-	/// <summary>
-	/// 旋回
-	/// </summary>
-	void Rotate();
 
 	/// <summary>
 	/// 自機のワールド座標を取得

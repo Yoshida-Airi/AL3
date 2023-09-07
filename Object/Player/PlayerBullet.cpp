@@ -18,16 +18,11 @@ void PlayerBullet::Initialize(Model* model, const Vector3& position, const Vecto
 }
 
 void PlayerBullet::Update() {
-	// 座標を移動させる(1フレーム分の移動量を足しこむ)
-	SumVector3(worldTransform_.translation_, velocity_);
+	
 	// 行列更新
 	worldTransform_.UpdateMatrix();
 
 
-	// 時間経過でデス
-	if (--deathTimer_ <= 0) {
-		isDead_ = true;
-	}
 }
 
 void PlayerBullet::Draw(ViewProjection viewProjection) {
@@ -36,8 +31,7 @@ void PlayerBullet::Draw(ViewProjection viewProjection) {
 
 void PlayerBullet::OnCollision()
 {
-	//デスフラグを立てる
-	isDead_ = true;
+
 }
 
 // ワールド座標を取得
