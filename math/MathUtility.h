@@ -88,5 +88,10 @@ Vector3 SumVector3(Vector3& num1, Vector3& num2);
 // 線形補間
 Vector3 Lerp(const Vector3& s, const Vector3& e, float t);
 
+float Lerp(const float& a, const float& b, float t);
+
 // 球面線形補間
 Vector3 Slerp(const Vector3& v1, const Vector3& v2, float t);
+
+//最短角度補間
+float LerpShortAngle(float a, float b, float t);

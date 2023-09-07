@@ -72,6 +72,7 @@ private:
 	// ImGuiで値を入力する変数
 	float inputFloat3[3] = {0, 0, 0};
 	
+	float angle_;
 
 private:
 

@@ -3,7 +3,9 @@
 #include <Vector.h>
 #include <WorldTransform.h>
 #include <assert.h>
+#include <numbers>
 #include <cmath>
+
 
 // 加算
 Vector3 Add(const Vector3& v1, const Vector3& v2) {
@@ -549,6 +551,14 @@ Vector3 Lerp(const Vector3& v1, const Vector3& v2, float t) {
 	return P;
 }
 
+float Lerp(const float& a, const float& b, float t) {
+	float result{};
+
+	result = a + b * t;
+
+	return result;
+}
+
 // 球面線形補間
 Vector3 Slerp(const Vector3& v1, const Vector3& v2, float t) {
 
@@ -566,3 +576,37 @@ Vector3 Slerp(const Vector3& v1, const Vector3& v2, float t) {
 
 	return result;
 }
+
+// 最短角度補間
+float LerpShortAngle(float a, float b, float t)
+{
+	// 角度差分を求める
+	float diff = b - a;
+
+	diff = std::fmod(diff, 2 * (float)std::numbers::pi);
+	if (diff < 2 * (float)-std::numbers::pi)
+	{
+		diff += 2 * (float)std::numbers::pi;
+	}
+	else if (diff >= 2 * std::numbers::pi)
+	{
+		diff -= 2 * (float)std::numbers::pi;
+	}
+
+	diff = std::fmod(diff, 2 * (float)std::numbers::pi);
+	if (diff < (float)-std::numbers::pi) 
+	{
+		diff += 2 * (float)std::numbers::pi;
+	} 
+	else if (diff >= (float)std::numbers::pi)
+	{
+		diff -= 2 * (float)std::numbers::pi;
+	}
+
+	return Lerp(a, diff, t);
+}
+
+
+
+
+

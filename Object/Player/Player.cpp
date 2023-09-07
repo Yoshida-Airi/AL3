@@ -103,9 +103,19 @@ void Player::Update(const ViewProjection viewProjection_) {
 		}
 
 		if (isMoving) {
-			// 移動量に速さを反映
-			Normalize(move);
-			move = Multiply(kCharcterSpeed, move);
+			// 移動量の速さを反映
+			move = Multiply(kCharcterSpeed, Normalize(move));
+
+			// 回転行列
+			Matrix4x4 rotateMatrix = MakeRotateMatrix(viewProjection_.rotation_);
+			// 移動ベクトルをカメラの角度だけ回転
+			move = TransformNormal(move, rotateMatrix);
+
+			// 移動量
+			worldTransform_.translation_ = Add(worldTransform_.translation_, move);
+
+			// 目標角度の算出
+			angle_ = std::atan2(move.x, move.z);
 
 		}
 
@@ -130,7 +140,7 @@ void Player::Update(const ViewProjection viewProjection_) {
 
 
 	// Y軸周り角度(θy)
-	worldTransform_.rotation_.y = std::atan2(move.x, move.z);
+	worldTransform_.rotation_.y = LerpShortAngle(worldTransform_.rotation_.y, angle_, 0.1f);
 	
 
 
